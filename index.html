@@ -65,82 +65,78 @@
   font-weight: normal; font-style: normal; font-display: swap;
 }
 *,*::before,*::after{box-sizing:border-box}
-:root{--p5-bg:#0A0A0A;--p5-panel:#161616;--p5-red:#D80000;--p5-white:#FFFFFF;--p5-gray:#888888;--p5-rule:#2A2A2A}
+:root{--p5-bg:#0A0A0A;--p5-panel:rgba(20,20,20,0.75);--p5-red:#ff0000;--p5-white:#FFFFFF;--p5-gray:#888888;--p5-rule:#333333;--p5-radius:12px}
 html{font-size:16px;-webkit-font-smoothing:antialiased}
-body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var(--p5-bg);color:var(--p5-white);min-height:100vh;overflow:hidden}
+body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var(--p5-bg);color:var(--p5-white);min-height:100vh;display:flex;align-items:center;justify-content:center}
 .hidden{display:none!important}
-.p5-app{display:flex;min-height:100vh;max-height:100vh}
-.p5-sidebar{width:35%;min-width:300px;max-width:420px;background:var(--p5-panel);border-right:1px solid var(--p5-rule);display:flex;flex-direction:column;max-height:100vh;position:sticky;top:0;overflow-y:auto;z-index:10}
-.p5-main{flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;padding:32px 40px;gap:24px;position:sticky;top:0;align-self:flex-start;overflow-y:auto;max-height:100vh;min-width:0}
+.p5-app{width:100%;max-width:1400px;margin:0 auto;padding:32px 24px}
+.p5-container{display:flex;gap:24px;align-items:flex-start}
 .is-flashing::after{content:'';position:fixed;inset:0;background:var(--p5-white);z-index:100;animation:p5-flash .18s ease-out forwards;pointer-events:none}
 @keyframes p5-flash{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
-.p5-sidebar-header{display:flex;align-items:center;gap:14px;padding:20px 24px 16px;border-bottom:2px solid var(--p5-red);flex-shrink:0}
-.p5-sidebar-logo{width:40px;height:auto;flex-shrink:0}
-.p5-sidebar-titles{display:flex;flex-direction:column}
-.p5-sidebar-title-optima{font-family:'Optima nova LT';font-size:13px;line-height:1.15;color:var(--p5-white);letter-spacing:2px;text-transform:uppercase}
-.p5-sidebar-title-krsm{font-family:'KoreanKRSM';font-size:11px;line-height:1.2;color:var(--p5-white);letter-spacing:1.5px;text-transform:uppercase}
-.p5-sidebar-title-jp{font-family:'SlumpDB';font-size:10px;line-height:1.3;color:var(--p5-gray);letter-spacing:1px}
-.p5-sidebar-content{padding:10px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
-.menus{display:flex;flex-direction:column;gap:12px;margin:0}
-.menuDivs{padding-left:10px;position:relative;width:100%;margin:0;display:flex;flex-direction:column}
-.menuDivs::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--p5-red);border-radius:1px}
-.menuLabels{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray);text-transform:uppercase;margin-bottom:5px;text-align:left}
-.menuOptions{-webkit-appearance:none;appearance:none;width:100%;padding:7px 28px 7px 10px;background:#1E1E1E;border:1px solid var(--p5-rule);border-radius:0;color:var(--p5-white);font-family:'KoreanKRSM';font-size:12px;cursor:pointer;transition:border-color .2s,background .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3.5l3 3 3-3' stroke='%23D80000' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:10px}
+.p5-sidebar{width:340px;flex-shrink:0;background:var(--p5-panel);border:1px solid var(--p5-rule);border-radius:var(--p5-radius);padding:20px;display:flex;flex-direction:column;gap:16px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.p5-sidebar-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:2px solid var(--p5-red)}
+.p5-sidebar-logo{width:38px;height:auto;flex-shrink:0}
+.p5-sidebar-titles{display:flex;flex-direction:column;gap:1px}
+.p5-sidebar-title-optima{font-family:'Optima nova LT';font-size:12px;letter-spacing:2px;text-transform:uppercase;line-height:1.2}
+.p5-sidebar-title-krsm{font-family:'KoreanKRSM';font-size:10px;letter-spacing:1.5px;text-transform:uppercase;line-height:1.2}
+.p5-sidebar-title-jp{font-family:'SlumpDB';font-size:9px;color:var(--p5-gray);letter-spacing:1px;line-height:1.3}
+.p5-sidebar-content{display:flex;flex-direction:column;gap:14px}
+.menus{display:flex;flex-direction:column;gap:10px}
+.menu-group{display:flex;flex-direction:column;gap:4px}
+.menu-label{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray);text-transform:uppercase}
+.menuOptions{-webkit-appearance:none;appearance:none;width:100%;padding:8px 28px 8px 10px;background:rgba(0,0,0,0.35);border:1px solid var(--p5-rule);border-radius:6px;color:var(--p5-white);font-family:'KoreanKRSM';font-size:12px;cursor:pointer;transition:border-color .15s,background .15s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3.5l3 3 3-3' stroke='%23ff0000' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:10px}
 .menuOptions:hover{border-color:var(--p5-red)}
-.menuOptions:focus{border-color:var(--p5-red);outline:none;background-color:#252525}
-.menuOptions option{background:#1E1E1E;color:var(--p5-white);padding:6px}
-.p5-divider{height:2px;background:var(--p5-red);margin:2px 0;position:relative;width:100%;clip-path:polygon(0 0,calc(100% - 12px) 0,calc(100% - 3px) 100%,0 100%);flex-shrink:0}
-#enterName,#enterDialogue{padding-left:10px;position:relative;width:100%}
-#enterName::before,#enterDialogue::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--p5-red);border-radius:1px}
-#nameHeader,#dialogueHeader{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray);text-transform:uppercase;margin-bottom:5px;text-align:left}
-#textField,#nameField{width:100%;padding:7px 10px;margin:0 0 12px;background:#1E1E1E;border:1px solid var(--p5-rule);border-radius:0;color:var(--p5-white);font-family:'KoreanKRSM';font-size:12px;line-height:1.4;resize:vertical;transition:border-color .2s,background .2s;box-shadow:none}
-#textField:focus,#nameField:focus{border-color:var(--p5-red);outline:none;background:#252525}
-#nameField{margin-bottom:0;white-space:nowrap;overflow:hidden}
-#nameNote{font-family:'KoreanKRSM';font-size:8px;color:#555;margin-top:3px;margin-bottom:0;display:block}
-#fontDiv{padding-left:10px;position:relative;width:100%;margin-top:0;display:flex;flex-direction:column}
-#fontDiv::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--p5-red);border-radius:1px}
-#fontHeader{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray);text-transform:uppercase;margin-bottom:6px;text-align:left}
+.menuOptions:focus{border-color:var(--p5-red);outline:none;background:rgba(255,0,0,0.04)}
+.menuOptions option{background:#1E1E1E;color:var(--p5-white)}
+.p5-divider{height:2px;background:var(--p5-red);margin:2px 0;width:100%;clip-path:polygon(0 0,calc(100% - 12px) 0,calc(100% - 3px) 100%,0 100%);flex-shrink:0}
+.text-group{display:flex;flex-direction:column;gap:4px}
+.text-label{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray);text-transform:uppercase}
+#textField,#nameField{width:100%;padding:8px 10px;background:rgba(0,0,0,0.35);border:1px solid var(--p5-rule);border-radius:6px;color:var(--p5-white);font-family:'KoreanKRSM';font-size:12px;line-height:1.4;resize:vertical;transition:border-color .15s,background .15s}
+#textField:focus,#nameField:focus{border-color:var(--p5-red);outline:none;background:rgba(255,0,0,0.04)}
+#nameField{white-space:nowrap;overflow:hidden}
+#nameNote{font-family:'KoreanKRSM';font-size:8px;color:#555;margin:0}
+.font-group{display:flex;flex-direction:column;gap:6px}
+.font-label{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray);text-transform:uppercase}
 #fontChoices{display:flex;flex-wrap:wrap;gap:4px}
-.fonts{display:inline-block;padding:3px 8px;background:transparent;border:1px solid var(--p5-rule);border-radius:0;color:var(--p5-gray);font-size:9px;line-height:1.4;white-space:nowrap;cursor:pointer;transition:border-color .2s,color .2s,background .2s;margin:0;box-shadow:none;user-select:none}
-.fonts:hover{border-color:var(--p5-red);color:var(--p5-white);background:rgba(216,0,0,.08)}
+.fonts{display:inline-block;padding:4px 10px;background:rgba(0,0,0,0.3);border:1px solid var(--p5-rule);border-radius:6px;color:var(--p5-gray);font-size:10px;line-height:1.4;white-space:nowrap;cursor:pointer;transition:border-color .15s,color .15s,background .15s;user-select:none}
+.fonts:hover{border-color:var(--p5-red);color:var(--p5-white);background:rgba(255,0,0,0.08)}
 .fonts.active-font{border-color:var(--p5-red);background:var(--p5-red);color:var(--p5-white)}
-#upload{width:100%;margin:0;padding:7px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;border:1px dashed var(--p5-rule);color:var(--p5-gray);font-family:'KoreanKRSM';font-size:11px;text-align:center;cursor:pointer;transition:border-color .2s,color .2s;box-shadow:none}
-#upload:hover{border-color:var(--p5-red);color:var(--p5-white);background:rgba(216,0,0,.05)}
+#upload{width:100%;padding:10px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:rgba(0,0,0,0.3);border:1px dashed var(--p5-rule);border-radius:8px;color:var(--p5-gray);font-family:'KoreanKRSM';font-size:11px;text-align:center;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+#upload:hover{border-color:var(--p5-red);color:var(--p5-white);background:rgba(255,0,0,0.04)}
 #uploadSizeMessage{font-size:8px;color:#555;margin:0}
 #hiddenUpload{display:none}
-.p5-actions{display:flex;gap:12px;align-items:stretch;width:100%}
-.p5-btn{font-family:'Optima nova LT';font-size:16px;letter-spacing:3px;text-transform:uppercase;padding:12px 32px;cursor:pointer;transition:background .25s,color .25s,border-color .25s;border:2px solid var(--p5-red);background:transparent;color:var(--p5-red)}
-.p5-btn:hover{background:var(--p5-white);color:var(--p5-bg);border-color:var(--p5-white)}
-.p5-btn:active{transform:scale(.97)}
-.p5-btn-download{flex:2}
-.p5-btn-reset{flex:1;font-size:12px;letter-spacing:2px;color:var(--p5-gray);border-color:var(--p5-rule)}
-.p5-btn-reset:hover{background:var(--p5-white);color:var(--p5-bg);border-color:var(--p5-white)}
-.p5-viewport{position:relative;line-height:0;border:2px solid var(--p5-red);flex-shrink:0}
+.p5-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px}
+.p5-viewport{position:relative;line-height:0;border:2px solid var(--p5-red);border-radius:8px;overflow:hidden}
 .p5-viewport::before{content:'';position:absolute;top:-6px;left:-6px;width:18px;height:18px;border-top:2px solid var(--p5-red);border-left:2px solid var(--p5-red);z-index:5;pointer-events:none}
 .p5-viewport::after{content:'';position:absolute;bottom:-6px;right:-6px;width:18px;height:18px;border-bottom:2px solid var(--p5-red);border-right:2px solid var(--p5-red);z-index:5;pointer-events:none}
-#canvasDiv{position:relative;width:1275px;height:500px;background-image:url('./generators/P5/images/backgroundDot.png');background-size:1275px 500px;line-height:0;max-width:100%;overflow:hidden}
-#canvasDiv canvas{position:absolute;left:0;top:0}
+#canvasDiv{position:relative;width:1275px;max-width:100%;aspect-ratio:1275/500;background-image:url('./generators/P5/images/backgroundDot.png');background-size:cover;line-height:0;overflow:hidden}
+#canvasDiv canvas{position:absolute;left:0;top:0;width:100%;height:100%}
 #portraitCanvas{z-index:0}
 #boxCanvas{z-index:1}
 #tileCanvas{z-index:2}
 #nameCanvas{z-index:3}
 #textCanvas{z-index:4;letter-spacing:.5px}
+.p5-actions{display:flex;gap:12px}
+.p5-btn{font-family:'Optima nova LT';font-size:14px;letter-spacing:2px;text-transform:uppercase;padding:12px 24px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;border:2px solid var(--p5-red);border-radius:8px;background:transparent;color:var(--p5-red)}
+.p5-btn:hover{background:var(--p5-white);color:var(--p5-bg);border-color:var(--p5-white)}
+.p5-btn:active{transform:scale(.97)}
+.p5-btn-download{flex:2}
+.p5-btn-reset{flex:1;font-size:11px;letter-spacing:1.5px;color:var(--p5-gray);border-color:var(--p5-rule)}
+.p5-btn-reset:hover{background:var(--p5-white);color:var(--p5-bg);border-color:var(--p5-white)}
 @media(max-width:1100px){
-  .p5-app{flex-direction:column;max-height:none}
+  .p5-container{flex-direction:column}
   body{overflow:auto}
-  .p5-sidebar{width:100%;min-width:0;max-width:none;max-height:none;position:static;border-right:none;border-bottom:1px solid var(--p5-rule)}
-  .p5-main{position:static;max-height:none;padding:24px 20px;overflow:visible}
-  #canvasDiv{max-width:100%;height:auto}
-  .p5-actions{flex-direction:column;width:100%}
+  .p5-sidebar{width:100%}
+  .p5-main{width:100%}
+  .p5-actions{flex-direction:column}
   .p5-btn{width:100%}
 }
 @media(max-width:700px){
-  .p5-sidebar-content{padding:8px 14px 16px}
-  .p5-sidebar-header{padding:12px 14px 10px}
-  .p5-main{padding:16px 12px;gap:16px}
-  .p5-btn{font-size:13px;padding:10px 20px;letter-spacing:2px}
+  .p5-app{padding:16px 12px}
+  .p5-sidebar{padding:14px}
+  .p5-btn{font-size:12px;padding:10px 16px}
   .p5-btn-reset{font-size:10px}
-  .fonts{font-size:8px;padding:2px 6px}
+  .fonts{font-size:9px;padding:3px 8px}
 }
 @media(max-width:500px){
   .p5-sidebar-header{flex-direction:column;align-items:flex-start;gap:6px}
@@ -155,138 +151,140 @@ body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var
 <body>
 
 <div class="p5-app">
-  <aside class="p5-sidebar">
-    <div class="p5-sidebar-header">
-      <img alt="Persona 5 logo" class="p5-sidebar-logo" src="./images/logos/persona5logo.png" width="44" height="27">
-      <div class="p5-sidebar-titles">
-        <div class="p5-sidebar-title-optima">DIALOGUE GENERATOR</div>
-        <div class="p5-sidebar-title-krsm">DIALOGUE GENERATOR</div>
-        <div class="p5-sidebar-title-jp" lang="ja">&#x5BFE;&#x8A71;&#x30B8;&#x30A7;&#x30CD;&#x30EC;&#x30FC;&#x30BF;</div>
-      </div>
-    </div>
-    <div class="p5-sidebar-content">
-      <div class="menus">
-        <div class="menuDivs">
-          <div class="menuLabels">Character</div>
-          <select id="charMenu" class="menuOptions">
-            <option value="Akane">Akane Hasegawa</option>
-            <option value="Konoe">Akira Konoe</option>
-            <option value="Alice">Alice Hiiragi</option>
-            <option value="Natsume">Ango Natsume</option>
-            <option value="Ann" selected>Ann Takamaki</option>
-            <option value="Caroline">Caroline</option>
-            <option value="Chihaya">Chihaya Mifune</option>
-            <option value="Hiraguchi">Coach Hiraguchi</option>
-            <option value="Futaba">Futaba Sakura</option>
-            <option value="Akechi">Goro Akechi</option>
-            <option value="Haru">Haru Okumura</option>
-            <option value="Hifumi">Hifumi Togo</option>
-            <option value="Ohya">Ichiko Ohya</option>
-            <option value="Madarame">Ichiryusai Madarame</option>
-            <option value="Igor">Igor</option>
-            <option value="Jose">Jose</option>
-            <option value="Kaneshiro">Junya Kaneshiro</option>
-            <option value="Owada">Jyun Owada</option>
-            <option value="Justine">Justine</option>
-            <option value="Okumura">Kunikazu Okumura</option>
-            <option value="Ichinose">Kuon Ichinose</option>
-            <option value="Lavenza">Lavenza</option>
-            <option value="Makoto">Makoto Niijima</option>
-            <option value="Mariko">Mariko Hyodo</option>
-            <option value="Shido">Masayoshi Shido</option>
-            <option value="Mika">Mika</option>
-            <option value="Kaburagi">Miyako Kaburagi</option>
-            <option value="Morgana">Morgana</option>
-            <option value="Hiruta">Mr. Hiruta</option>
-            <option value="Inui">Mr. Inui</option>
-            <option value="Ushimaru">Mr. Ushimaru</option>
-            <option value="Chouno">Ms. Chouno</option>
-            <option value="Usami">Ms. Usami</option>
-            <option value="Iwai">Munehisa Iwai</option>
-            <option value="Nakanohara">Natsuhiko Nakanohara</option>
-            <option value="None">No Portrait</option>
-            <option value="Principal">Principal Kobayakawa</option>
-            <option value="Joker">Protagonist</option>
-            <option value="Rumi">Rumi</option>
-            <option value="Ryuji">Ryuji Sakamoto</option>
-            <option value="Kawakami">Sadayo Kawakami</option>
-            <option value="Sae">Sae Niijima</option>
-            <option value="Shibusawa">Shibusawa</option>
-            <option value="Shiho">Shiho Suzui</option>
-            <option value="Shinichi">Shinichi Yoshizawa</option>
-            <option value="Shinya">Shinya Oda</option>
-            <option value="Director">SIU Director</option>
-            <option value="Sojiro">Sojiro Sakura</option>
-            <option value="Sophia">Sophia</option>
-            <option value="Sugimura">Sugimura</option>
-            <option value="Kamoshida">Suguru Kamoshida</option>
-            <option value="Sumire">Sumire Yoshizawa</option>
-            <option value="Takemi">Tae Takemi</option>
-            <option value="Maruki">Takuto Maruki</option>
-            <option value="Tanaka">Tanaka</option>
-            <option value="Yoshida">Toranosuke Yoshida</option>
-            <option value="Wakaba">Wakaba Isshiki</option>
-            <option value="Yusuke">Yusuke Kitagawa</option>
-            <option value="Mishima">Yuuki Mishima</option>
-            <option value="Zenkichi">Zenkichi Hasegawa</option>
-          </select>
-        </div>
-        <div class="menuDivs">
-          <div class="menuLabels">Emotion</div>
-          <select id="emoteMenu" class="menuOptions"></select>
-        </div>
-        <div class="menuDivs">
-          <div class="menuLabels">Costume</div>
-          <select id="costumeMenu" class="menuOptions"></select>
-        </div>
-        <div class="menuDivs">
-          <div class="menuLabels">Box</div>
-          <select id="boxMenu" class="menuOptions">
-            <option value="main">Persona 5/Royal</option>
-            <option value="noPortrait">Persona 5 (No Portrait)</option>
-            <option value="strikers">Strikers/Scramble</option>
-            <option value="dancing">Dancing in Starlight</option>
-          </select>
+  <div class="p5-container">
+    <aside class="p5-sidebar">
+      <div class="p5-sidebar-header">
+        <img alt="Persona 5 logo" class="p5-sidebar-logo" src="./images/logos/persona5logo.png" width="38" height="23">
+        <div class="p5-sidebar-titles">
+          <div class="p5-sidebar-title-optima">DIALOGUE GENERATOR</div>
+          <div class="p5-sidebar-title-krsm">DIALOGUE GENERATOR</div>
+          <div class="p5-sidebar-title-jp" lang="ja">&#x5BFE;&#x8A71;&#x30B8;&#x30A7;&#x30CD;&#x30EC;&#x30FC;&#x30BF;</div>
         </div>
       </div>
-      <div class="p5-divider"></div>
-      <div id="enterName">
-        <div id="nameHeader">Name</div>
-        <textarea id="nameField" rows="1" cols="45">Ann</textarea>
-        <div id="nameNote">Character auto-fills; edit freely</div>
+      <div class="p5-sidebar-content">
+        <div class="menus">
+          <div class="menu-group">
+            <div class="menu-label">Character</div>
+            <select id="charMenu" class="menuOptions">
+              <option value="Akane">Akane Hasegawa</option>
+              <option value="Konoe">Akira Konoe</option>
+              <option value="Alice">Alice Hiiragi</option>
+              <option value="Natsume">Ango Natsume</option>
+              <option value="Ann" selected>Ann Takamaki</option>
+              <option value="Caroline">Caroline</option>
+              <option value="Chihaya">Chihaya Mifune</option>
+              <option value="Hiraguchi">Coach Hiraguchi</option>
+              <option value="Futaba">Futaba Sakura</option>
+              <option value="Akechi">Goro Akechi</option>
+              <option value="Haru">Haru Okumura</option>
+              <option value="Hifumi">Hifumi Togo</option>
+              <option value="Ohya">Ichiko Ohya</option>
+              <option value="Madarame">Ichiryusai Madarame</option>
+              <option value="Igor">Igor</option>
+              <option value="Jose">Jose</option>
+              <option value="Kaneshiro">Junya Kaneshiro</option>
+              <option value="Owada">Jyun Owada</option>
+              <option value="Justine">Justine</option>
+              <option value="Okumura">Kunikazu Okumura</option>
+              <option value="Ichinose">Kuon Ichinose</option>
+              <option value="Lavenza">Lavenza</option>
+              <option value="Makoto">Makoto Niijima</option>
+              <option value="Mariko">Mariko Hyodo</option>
+              <option value="Shido">Masayoshi Shido</option>
+              <option value="Mika">Mika</option>
+              <option value="Kaburagi">Miyako Kaburagi</option>
+              <option value="Morgana">Morgana</option>
+              <option value="Hiruta">Mr. Hiruta</option>
+              <option value="Inui">Mr. Inui</option>
+              <option value="Ushimaru">Mr. Ushimaru</option>
+              <option value="Chouno">Ms. Chouno</option>
+              <option value="Usami">Ms. Usami</option>
+              <option value="Iwai">Munehisa Iwai</option>
+              <option value="Nakanohara">Natsuhiko Nakanohara</option>
+              <option value="None">No Portrait</option>
+              <option value="Principal">Principal Kobayakawa</option>
+              <option value="Joker">Protagonist</option>
+              <option value="Rumi">Rumi</option>
+              <option value="Ryuji">Ryuji Sakamoto</option>
+              <option value="Kawakami">Sadayo Kawakami</option>
+              <option value="Sae">Sae Niijima</option>
+              <option value="Shibusawa">Shibusawa</option>
+              <option value="Shiho">Shiho Suzui</option>
+              <option value="Shinichi">Shinichi Yoshizawa</option>
+              <option value="Shinya">Shinya Oda</option>
+              <option value="Director">SIU Director</option>
+              <option value="Sojiro">Sojiro Sakura</option>
+              <option value="Sophia">Sophia</option>
+              <option value="Sugimura">Sugimura</option>
+              <option value="Kamoshida">Suguru Kamoshida</option>
+              <option value="Sumire">Sumire Yoshizawa</option>
+              <option value="Takemi">Tae Takemi</option>
+              <option value="Maruki">Takuto Maruki</option>
+              <option value="Tanaka">Tanaka</option>
+              <option value="Yoshida">Toranosuke Yoshida</option>
+              <option value="Wakaba">Wakaba Isshiki</option>
+              <option value="Yusuke">Yusuke Kitagawa</option>
+              <option value="Mishima">Yuuki Mishima</option>
+              <option value="Zenkichi">Zenkichi Hasegawa</option>
+            </select>
+          </div>
+          <div class="menu-group">
+            <div class="menu-label">Emotion</div>
+            <select id="emoteMenu" class="menuOptions"></select>
+          </div>
+          <div class="menu-group">
+            <div class="menu-label">Costume</div>
+            <select id="costumeMenu" class="menuOptions"></select>
+          </div>
+          <div class="menu-group">
+            <div class="menu-label">Box</div>
+            <select id="boxMenu" class="menuOptions">
+              <option value="main">Persona 5/Royal</option>
+              <option value="noPortrait">Persona 5 (No Portrait)</option>
+              <option value="strikers">Strikers/Scramble</option>
+              <option value="dancing">Dancing in Starlight</option>
+            </select>
+          </div>
+        </div>
+        <div class="p5-divider"></div>
+        <div class="text-group">
+          <div class="text-label">Name</div>
+          <textarea id="nameField" rows="1" cols="45">Ann</textarea>
+          <div id="nameNote">Character auto-fills; edit freely</div>
+        </div>
+        <div class="text-group">
+          <div class="text-label">Dialogue</div>
+          <textarea id="textField" placeholder="Hey, Inmate! Character portraits contain spoilers!" rows="3" cols="45"></textarea>
+        </div>
+        <div class="p5-divider"></div>
+        <div class="font-group">
+          <div class="font-label">Font Select</div>
+          <div id="fontChoices"></div>
+        </div>
+        <div class="p5-divider"></div>
+        <label id="upload">
+          <span id="uploadLabel">Load Assets Folder</span>
+          <input id="hiddenUpload" type="file" webkitdirectory directory>
+          <div id="uploadSizeMessage">Select the portraits directory to pre-cache all images</div>
+        </label>
       </div>
-      <div id="enterDialogue">
-        <div id="dialogueHeader">Dialogue</div>
-        <textarea id="textField" placeholder="Hey, Inmate! Character portraits contain spoilers!" rows="3" cols="45"></textarea>
+    </aside>
+    <main class="p5-main" id="p5Main">
+      <div class="p5-viewport">
+        <div id="canvasDiv">
+          <canvas id="portraitCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+          <canvas id="boxCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+          <canvas id="tileCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+          <canvas id="nameCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+          <canvas id="textCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+        </div>
       </div>
-      <div class="p5-divider"></div>
-      <div id="fontDiv">
-        <div id="fontHeader">Font Select</div>
-        <div id="fontChoices"></div>
+      <div class="p5-actions">
+        <button class="p5-btn p5-btn-download">Download Image</button>
+        <button class="p5-btn p5-btn-reset">Clear / Reset</button>
       </div>
-      <div class="p5-divider"></div>
-      <label id="upload">
-        <span id="uploadLabel">Load Assets Folder</span>
-        <input id="hiddenUpload" type="file" webkitdirectory directory>
-        <div id="uploadSizeMessage">Select the portraits directory to pre-cache all images</div>
-      </label>
-    </div>
-  </aside>
-  <main class="p5-main" id="p5Main">
-    <div class="p5-viewport">
-      <div id="canvasDiv">
-        <canvas id="portraitCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
-        <canvas id="boxCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
-        <canvas id="tileCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
-        <canvas id="nameCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
-        <canvas id="textCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
-      </div>
-    </div>
-    <div class="p5-actions">
-      <button class="p5-btn p5-btn-download">DOWNLOAD IMAGE</button>
-      <button class="p5-btn p5-btn-reset">CLEAR / RESET</button>
-    </div>
-  </main>
+    </main>
+  </div>
 </div>
 
 <script>
