@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Persona 5 Dialogue Generator</title>
+<meta name="description" content="Persona 5 Dialogue Generator">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/png" href="./images/logos/persona5logo.png">
+<meta name="robots" content="noindex, nofollow">
+<style>
+@font-face {
+  font-family: 'Optima nova LT';
+  src: url('./generators/P5/fonts/OptimaNovaLT-Black.eot');
+  src: url('./generators/P5/fonts/OptimaNovaLT-Black.eot?#iefix') format('embedded-opentype'),
+      url('./generators/P5/fonts/OptimaNovaLT-Black.woff2') format('woff2'),
+      url('./generators/P5/fonts/OptimaNovaLT-Black.woff') format('woff'),
+      url('./generators/P5/fonts/OptimaNovaLT-Black.ttf') format('truetype');
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'KoreanKRSM';
+  src: url('./generators/P5/fonts/KoreanKRSM.eot');
+  src: url('./generators/P5/fonts/KoreanKRSM.eot?#iefix') format('embedded-opentype'),
+      url('./generators/P5/fonts/KoreanKRSM.woff2') format('woff2'),
+      url('./generators/P5/fonts/KoreanKRSM.woff') format('woff'),
+      url('./generators/P5/fonts/KoreanKRSM.ttf') format('truetype');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'SlumpDB';
+  src: url('./generators/P5/fonts/FOT-SlumpStd-DB.ttf');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'aCinema';
+  src: url('./generators/P5/fonts/aCinema.ttf') format('truetype');
+  src: url('./generators/P5/fonts/aCinema.eot?#iefix') format('embedded-opentype'),
+      url('./generators/P5/fonts/aCinema.eot'),
+      url('./generators/P5/fonts/aCinema.woff2') format('woff2'),
+      url('./generators/P5/fonts/aCinema.woff') format('woff');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'DF Li Yuan';
+  src: url('./generators/P5/fonts/DFLiYuan.ttf') format('truetype');
+  src: url('./generators/P5/fonts/DFLiYuan.eot?#iefix') format('embedded-opentype'),
+      url('./generators/P5/fonts/DFLiYuan.eot'),
+      url('./generators/P5/fonts/DFLiYuan.woff') format('woff');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'a\uad7c\ub9bc\ud5e4\ub4dcB';
+  src: url('./generators/P5/fonts/a\uad7c\ub9bc\ud5e4\ub4dcB.ttf') format('truetype');
+  src: url('./generators/P5/fonts/a\uad7c\ub9bc\ud5e4\ub4dcB.eot?#iefix') format('embedded-opentype'),
+      url('./generators/P5/fonts/a\uad7c\ub9bc\ud5e4\ub4dcB.eot'),
+      url('./generators/P5/fonts/a\uad7c\ub9bc\ud5e4\ub4dcB.woff') format('woff');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'DF Ping Ju';
+  src: url('./generators/P5/fonts/DFPingJu.ttf') format('truetype');
+  src: url('./generators/P5/fonts/DFPingJu.eot?#iefix') format('embedded-opentype'),
+      url('./generators/P5/fonts/DFPingJu.eot'),
+      url('./generators/P5/fonts/DFPingJu.woff') format('woff');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+*,*::before,*::after{box-sizing:border-box}
+:root{--p5-bg:#0A0A0A;--p5-panel:#161616;--p5-red:#D80000;--p5-white:#FFFFFF;--p5-gray:#888888;--p5-rule:#2A2A2A}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var(--p5-bg);color:var(--p5-white);min-height:100vh;overflow:hidden}
+.hidden{display:none!important}
+.p5-app{display:flex;min-height:100vh;max-height:100vh}
+.p5-sidebar{width:35%;min-width:300px;max-width:420px;background:var(--p5-panel);border-right:1px solid var(--p5-rule);display:flex;flex-direction:column;max-height:100vh;position:sticky;top:0;overflow-y:auto;z-index:10}
+.p5-main{flex:1;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;padding:32px 40px;gap:24px;position:sticky;top:0;align-self:flex-start;overflow-y:auto;max-height:100vh;min-width:0}
+.is-flashing::after{content:'';position:fixed;inset:0;background:var(--p5-white);z-index:100;animation:p5-flash .18s ease-out forwards;pointer-events:none}
+@keyframes p5-flash{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
+.p5-sidebar-header{display:flex;align-items:center;gap:14px;padding:20px 24px 16px;border-bottom:2px solid var(--p5-red);flex-shrink:0}
+.p5-sidebar-logo{width:40px;height:auto;flex-shrink:0}
+.p5-sidebar-titles{display:flex;flex-direction:column}
+.p5-sidebar-title-optima{font-family:'Optima nova LT';font-size:13px;line-height:1.15;color:var(--p5-white);letter-spacing:2px;text-transform:uppercase}
+.p5-sidebar-title-krsm{font-family:'KoreanKRSM';font-size:11px;line-height:1.2;color:var(--p5-white);letter-spacing:1.5px;text-transform:uppercase}
+.p5-sidebar-title-jp{font-family:'SlumpDB';font-size:10px;line-height:1.3;color:var(--p5-gray);letter-spacing:1px}
+.p5-sidebar-content{padding:10px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.menus{display:flex;flex-direction:column;gap:12px;margin:0}
+.menuDivs{padding-left:10px;position:relative;width:100%;margin:0;display:flex;flex-direction:column}
+.menuDivs::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--p5-red);border-radius:1px}
+.menuLabels{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray);text-transform:uppercase;margin-bottom:5px;text-align:left}
+.menuOptions{-webkit-appearance:none;appearance:none;width:100%;padding:7px 28px 7px 10px;background:#1E1E1E;border:1px solid var(--p5-rule);border-radius:0;color:var(--p5-white);font-family:'KoreanKRSM';font-size:12px;cursor:pointer;transition:border-color .2s,background .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3.5l3 3 3-3' stroke='%23D80000' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:10px}
+.menuOptions:hover{border-color:var(--p5-red)}
+.menuOptions:focus{border-color:var(--p5-red);outline:none;background-color:#252525}
+.menuOptions option{background:#1E1E1E;color:var(--p5-white);padding:6px}
+.p5-divider{height:2px;background:var(--p5-red);margin:2px 0;position:relative;width:100%;clip-path:polygon(0 0,calc(100% - 12px) 0,calc(100% - 3px) 100%,0 100%);flex-shrink:0}
+#enterName,#enterDialogue{padding-left:10px;position:relative;width:100%}
+#enterName::before,#enterDialogue::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--p5-red);border-radius:1px}
+#nameHeader,#dialogueHeader{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray);text-transform:uppercase;margin-bottom:5px;text-align:left}
+#textField,#nameField{width:100%;padding:7px 10px;margin:0 0 12px;background:#1E1E1E;border:1px solid var(--p5-rule);border-radius:0;color:var(--p5-white);font-family:'KoreanKRSM';font-size:12px;line-height:1.4;resize:vertical;transition:border-color .2s,background .2s;box-shadow:none}
+#textField:focus,#nameField:focus{border-color:var(--p5-red);outline:none;background:#252525}
+#nameField{margin-bottom:0;white-space:nowrap;overflow:hidden}
+#nameNote{font-family:'KoreanKRSM';font-size:8px;color:#555;margin-top:3px;margin-bottom:0;display:block}
+#fontDiv{padding-left:10px;position:relative;width:100%;margin-top:0;display:flex;flex-direction:column}
+#fontDiv::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--p5-red);border-radius:1px}
+#fontHeader{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray);text-transform:uppercase;margin-bottom:6px;text-align:left}
+#fontChoices{display:flex;flex-wrap:wrap;gap:4px}
+.fonts{display:inline-block;padding:3px 8px;background:transparent;border:1px solid var(--p5-rule);border-radius:0;color:var(--p5-gray);font-size:9px;line-height:1.4;white-space:nowrap;cursor:pointer;transition:border-color .2s,color .2s,background .2s;margin:0;box-shadow:none;user-select:none}
+.fonts:hover{border-color:var(--p5-red);color:var(--p5-white);background:rgba(216,0,0,.08)}
+.fonts.active-font{border-color:var(--p5-red);background:var(--p5-red);color:var(--p5-white)}
+#upload{width:100%;margin:0;padding:7px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;border:1px dashed var(--p5-rule);color:var(--p5-gray);font-family:'KoreanKRSM';font-size:11px;text-align:center;cursor:pointer;transition:border-color .2s,color .2s;box-shadow:none}
+#upload:hover{border-color:var(--p5-red);color:var(--p5-white);background:rgba(216,0,0,.05)}
+#uploadSizeMessage{font-size:8px;color:#555;margin:0}
+#hiddenUpload{display:none}
+.p5-actions{display:flex;gap:12px;align-items:stretch;width:100%}
+.p5-btn{font-family:'Optima nova LT';font-size:16px;letter-spacing:3px;text-transform:uppercase;padding:12px 32px;cursor:pointer;transition:background .25s,color .25s,border-color .25s;border:2px solid var(--p5-red);background:transparent;color:var(--p5-red)}
+.p5-btn:hover{background:var(--p5-white);color:var(--p5-bg);border-color:var(--p5-white)}
+.p5-btn:active{transform:scale(.97)}
+.p5-btn-download{flex:2}
+.p5-btn-reset{flex:1;font-size:12px;letter-spacing:2px;color:var(--p5-gray);border-color:var(--p5-rule)}
+.p5-btn-reset:hover{background:var(--p5-white);color:var(--p5-bg);border-color:var(--p5-white)}
+.p5-viewport{position:relative;line-height:0;border:2px solid var(--p5-red);flex-shrink:0}
+.p5-viewport::before{content:'';position:absolute;top:-6px;left:-6px;width:18px;height:18px;border-top:2px solid var(--p5-red);border-left:2px solid var(--p5-red);z-index:5;pointer-events:none}
+.p5-viewport::after{content:'';position:absolute;bottom:-6px;right:-6px;width:18px;height:18px;border-bottom:2px solid var(--p5-red);border-right:2px solid var(--p5-red);z-index:5;pointer-events:none}
+#canvasDiv{position:relative;width:1275px;height:500px;background-image:url('./generators/P5/images/backgroundDot.png');background-size:1275px 500px;line-height:0;max-width:100%;overflow:hidden}
+#canvasDiv canvas{position:absolute;left:0;top:0}
+#portraitCanvas{z-index:0}
+#boxCanvas{z-index:1}
+#tileCanvas{z-index:2}
+#nameCanvas{z-index:3}
+#textCanvas{z-index:4;letter-spacing:.5px}
+@media(max-width:1100px){
+  .p5-app{flex-direction:column;max-height:none}
+  body{overflow:auto}
+  .p5-sidebar{width:100%;min-width:0;max-width:none;max-height:none;position:static;border-right:none;border-bottom:1px solid var(--p5-rule)}
+  .p5-main{position:static;max-height:none;padding:24px 20px;overflow:visible}
+  #canvasDiv{max-width:100%;height:auto}
+  .p5-actions{flex-direction:column;width:100%}
+  .p5-btn{width:100%}
+}
+@media(max-width:700px){
+  .p5-sidebar-content{padding:8px 14px 16px}
+  .p5-sidebar-header{padding:12px 14px 10px}
+  .p5-main{padding:16px 12px;gap:16px}
+  .p5-btn{font-size:13px;padding:10px 20px;letter-spacing:2px}
+  .p5-btn-reset{font-size:10px}
+  .fonts{font-size:8px;padding:2px 6px}
+}
+@media(max-width:500px){
+  .p5-sidebar-header{flex-direction:column;align-items:flex-start;gap:6px}
+  .p5-sidebar-title-optima{font-size:11px}
+  .p5-sidebar-title-krsm{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="p5-app">
+  <aside class="p5-sidebar">
+    <div class="p5-sidebar-header">
+      <img alt="Persona 5 logo" class="p5-sidebar-logo" src="./images/logos/persona5logo.png" width="44" height="27">
+      <div class="p5-sidebar-titles">
+        <div class="p5-sidebar-title-optima">DIALOGUE GENERATOR</div>
+        <div class="p5-sidebar-title-krsm">DIALOGUE GENERATOR</div>
+        <div class="p5-sidebar-title-jp" lang="ja">&#x5BFE;&#x8A71;&#x30B8;&#x30A7;&#x30CD;&#x30EC;&#x30FC;&#x30BF;</div>
+      </div>
+    </div>
+    <div class="p5-sidebar-content">
+      <div class="menus">
+        <div class="menuDivs">
+          <div class="menuLabels">Character</div>
+          <select id="charMenu" class="menuOptions">
+            <option value="Akane">Akane Hasegawa</option>
+            <option value="Konoe">Akira Konoe</option>
+            <option value="Alice">Alice Hiiragi</option>
+            <option value="Natsume">Ango Natsume</option>
+            <option value="Ann" selected>Ann Takamaki</option>
+            <option value="Caroline">Caroline</option>
+            <option value="Chihaya">Chihaya Mifune</option>
+            <option value="Hiraguchi">Coach Hiraguchi</option>
+            <option value="Futaba">Futaba Sakura</option>
+            <option value="Akechi">Goro Akechi</option>
+            <option value="Haru">Haru Okumura</option>
+            <option value="Hifumi">Hifumi Togo</option>
+            <option value="Ohya">Ichiko Ohya</option>
+            <option value="Madarame">Ichiryusai Madarame</option>
+            <option value="Igor">Igor</option>
+            <option value="Jose">Jose</option>
+            <option value="Kaneshiro">Junya Kaneshiro</option>
+            <option value="Owada">Jyun Owada</option>
+            <option value="Justine">Justine</option>
+            <option value="Okumura">Kunikazu Okumura</option>
+            <option value="Ichinose">Kuon Ichinose</option>
+            <option value="Lavenza">Lavenza</option>
+            <option value="Makoto">Makoto Niijima</option>
+            <option value="Mariko">Mariko Hyodo</option>
+            <option value="Shido">Masayoshi Shido</option>
+            <option value="Mika">Mika</option>
+            <option value="Kaburagi">Miyako Kaburagi</option>
+            <option value="Morgana">Morgana</option>
+            <option value="Hiruta">Mr. Hiruta</option>
+            <option value="Inui">Mr. Inui</option>
+            <option value="Ushimaru">Mr. Ushimaru</option>
+            <option value="Chouno">Ms. Chouno</option>
+            <option value="Usami">Ms. Usami</option>
+            <option value="Iwai">Munehisa Iwai</option>
+            <option value="Nakanohara">Natsuhiko Nakanohara</option>
+            <option value="None">No Portrait</option>
+            <option value="Principal">Principal Kobayakawa</option>
+            <option value="Joker">Protagonist</option>
+            <option value="Rumi">Rumi</option>
+            <option value="Ryuji">Ryuji Sakamoto</option>
+            <option value="Kawakami">Sadayo Kawakami</option>
+            <option value="Sae">Sae Niijima</option>
+            <option value="Shibusawa">Shibusawa</option>
+            <option value="Shiho">Shiho Suzui</option>
+            <option value="Shinichi">Shinichi Yoshizawa</option>
+            <option value="Shinya">Shinya Oda</option>
+            <option value="Director">SIU Director</option>
+            <option value="Sojiro">Sojiro Sakura</option>
+            <option value="Sophia">Sophia</option>
+            <option value="Sugimura">Sugimura</option>
+            <option value="Kamoshida">Suguru Kamoshida</option>
+            <option value="Sumire">Sumire Yoshizawa</option>
+            <option value="Takemi">Tae Takemi</option>
+            <option value="Maruki">Takuto Maruki</option>
+            <option value="Tanaka">Tanaka</option>
+            <option value="Yoshida">Toranosuke Yoshida</option>
+            <option value="Wakaba">Wakaba Isshiki</option>
+            <option value="Yusuke">Yusuke Kitagawa</option>
+            <option value="Mishima">Yuuki Mishima</option>
+            <option value="Zenkichi">Zenkichi Hasegawa</option>
+          </select>
+        </div>
+        <div class="menuDivs">
+          <div class="menuLabels">Emotion</div>
+          <select id="emoteMenu" class="menuOptions"></select>
+        </div>
+        <div class="menuDivs">
+          <div class="menuLabels">Costume</div>
+          <select id="costumeMenu" class="menuOptions"></select>
+        </div>
+        <div class="menuDivs">
+          <div class="menuLabels">Box</div>
+          <select id="boxMenu" class="menuOptions">
+            <option value="main">Persona 5/Royal</option>
+            <option value="noPortrait">Persona 5 (No Portrait)</option>
+            <option value="strikers">Strikers/Scramble</option>
+            <option value="dancing">Dancing in Starlight</option>
+          </select>
+        </div>
+      </div>
+      <div class="p5-divider"></div>
+      <div id="enterName">
+        <div id="nameHeader">Name</div>
+        <textarea id="nameField" rows="1" cols="45">Ann</textarea>
+        <div id="nameNote">Character auto-fills; edit freely</div>
+      </div>
+      <div id="enterDialogue">
+        <div id="dialogueHeader">Dialogue</div>
+        <textarea id="textField" placeholder="Hey, Inmate! Character portraits contain spoilers!" rows="3" cols="45"></textarea>
+      </div>
+      <div class="p5-divider"></div>
+      <div id="fontDiv">
+        <div id="fontHeader">Font Select</div>
+        <div id="fontChoices"></div>
+      </div>
+      <div class="p5-divider"></div>
+      <label id="upload">
+        <span id="uploadLabel">Load Assets Folder</span>
+        <input id="hiddenUpload" type="file" webkitdirectory directory>
+        <div id="uploadSizeMessage">Select the portraits directory to pre-cache all images</div>
+      </label>
+    </div>
+  </aside>
+  <main class="p5-main" id="p5Main">
+    <div class="p5-viewport">
+      <div id="canvasDiv">
+        <canvas id="portraitCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+        <canvas id="boxCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+        <canvas id="tileCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+        <canvas id="nameCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+        <canvas id="textCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas>
+      </div>
+    </div>
+    <div class="p5-actions">
+      <button class="p5-btn p5-btn-download">DOWNLOAD IMAGE</button>
+      <button class="p5-btn p5-btn-reset">CLEAR / RESET</button>
+    </div>
+  </main>
+</div>
+
+<script>
+(function() {
+'use strict';
+
+// ==================== GLOBAL IMAGE CACHE ====================
+var imageCache = {};
+
+function cachedImg(url, crossOrigin) {
+  if (!imageCache[url]) {
+    var img = new Image();
+    if (crossOrigin) img.crossOrigin = crossOrigin;
+    imageCache[url] = img;
+    img.src = url;
+  }
+  return imageCache[url];
+}
+
+function imgReady(img) {
+  if (img.complete && img.naturalWidth > 0) return Promise.resolve(img);
+  return new Promise(function(resolve, reject) {
+    img.onload = function() { resolve(img); };
+    img.onerror = function() { console.error('[img] failed:', img.src); reject(new Error('img fail: ' + img.src)); };
+  });
+}
+
+// Preload static box images into cache on init
+var STATIC_BOXES = [
+  './generators/P5/images/db-main-small.png',
+  './generators/P5/images/db-main-medium.png',
+  './generators/P5/images/db-main-large.png',
+  './generators/P5/images/db-noPortrait.png',
+  './generators/P5/images/db-dancing.png',
+  './generators/P5/images/db-strikers.png',
+];
+
+// ==================== STATE ====================
+var portraitCache = {};
+var portraitIndex = {};
+var assetsLoaded = false;
+
+var state = {
+  char: 'Ann',
+  emote: 'Happy',
+  costume: 'Gym Clothes',
+  font: 'Optima nova LT',
+  boxType: 'main'
+};
+
+var fontTags = [
+  ['KoreanKRSM', 'KoreanKRSM'],
+  ['Optima nova LT', 'Optima Nova'],
+  ['SlumpDB', 'Slump DB'],
+  ['aCinema', 'aCinema'],
+  ['DF Li Yuan', 'DF Li Yuan'],
+  ['a\uad7c\ub9bc\ud5e4\ub4dcB', '\uad7c\ub9bc\ud5e4\ub4dcB'],
+  ['DF Ping Ju', 'DF Ping Ju'],
+];
+
+// ==================== PORTRAIT POSITIONS ====================
+var simplePositions = {
+  Alice: [20, 0], Caroline: [-35, 0], Chihaya: [0, 0],
+  Chouno: [40, 10], Director: [85, 10], Hifumi: [35, 10],
+  Hiraguchi: [45, 10], Hiruta: [0, 10], Igor: [35, 15],
+  Inui: [55, 10], Iwai: [60, 10], Joker: [65, 30],
+  Jose: [45, 10], Justine: [0, 0], Kaburagi: [30, 0],
+  Kaneshiro: [45, 10], Konoe: [50, 0], Kawakami: [0, 0],
+  Lavenza: [35, 10], Makoto: [35, 10], Mika: [0, 30],
+  Mishima: [35, 5], Nakanohara: [0, 0], Ohya: [35, 10],
+  Owada: [50, 0], Principal: [-10, 20], Rumi: [40, 10],
+  Shibusawa: [0, 0], Shido: [0, 0], Shinichi: [35, 20],
+  Shinya: [0, 0], Sojiro: [75, 10], Sugimura: [0, 0],
+  Sumire: [45, 10], Takemi: [0, 0], Tanaka: [45, 10],
+  Usami: [50, 0], Ushimaru: [0, 0], Wakaba: [35, 10],
+  Yoshida: [50, 3], Yusuke: [0, 0],
+};
+
+function findSpecialPosition(char, emote, costume) {
+  switch (char) {
+    case 'Akechi':
+      if (emote.indexOf('Royal') !== -1) return [-30, 10];
+      if (costume.indexOf('Defeated') !== -1) return [30, 10];
+      if (emote === 'Furious' || emote === 'Smirking' || emote === 'Staring' || emote === 'Upset') return [85, 0];
+      if (costume.indexOf('Cognitive') !== -1) return [85, 0];
+      return [-30, 0];
+    case 'Natsume': return emote === 'Miscellaneous' ? [30, 0] : [0, 0];
+    case 'Ann':
+      if (emote === 'Excited (Royal)' || emote === 'Shocked (Royal)') return [0, 35];
+      if (emote.indexOf('Royal') !== -1) return [50, 35];
+      return [50, 45];
+    case 'Futaba': return costume.indexOf('Mask') !== -1 ? [0, 0] : [-35, 0];
+    case 'Haru':
+      if (costume.indexOf('Noir') !== -1) return [0, 0];
+      if (costume === 'Swimsuit (Okinawa)' || costume === 'Road Trip (Hat)') return [0, 10];
+      return [35, 10];
+    case 'Kamoshida': return costume.indexOf('Shadow') !== -1 ? [35, 10] : [-30, 15];
+    case 'Madarame': return costume.indexOf('Shadow') !== -1 ? [-75, 10] : [55, 10];
+    case 'Mariko': return emote !== 'Miscellaneous' ? [20, 0] : [0, 0];
+    case 'Maruki': return costume.indexOf('Metaverse') !== -1 ? [80, 5] : [30, 35];
+    case 'Morgana':
+      if (costume === 'Human') return [35, 10];
+      if (costume === '(Not a) Cat') return [-75, 65];
+      if (emote.indexOf('Royal') !== -1) return [-30, 10];
+      return [0, 25];
+    case 'Okumura': return costume.indexOf('Shadow') !== -1 ? [0, 10] : [-35, 0];
+    case 'Ryuji': return emote.indexOf('Royal') !== -1 ? [-45, 25] : [-70, 25];
+    case 'Sae': return costume.indexOf('Shadow') !== -1 ? [10, 30] : [35, 10];
+    case 'Shiho': return costume.indexOf('Cognitive') !== -1 ? [0, 0] : [55, 25];
+    case 'Zenkichi':
+      if (costume === 'Wolf' || emote === 'Miscellaneous') return [50, 0];
+      return [0, 0];
+    default: return [0, 0];
+  }
+}
+
+// ==================== NAME BOX LOOKUP ====================
+function findNameBox(name) {
+  var map = {
+    'Akane':'Akane','Akechi':'Akechi','Akira':'Akira','Alice':'Alice','Ann':'Ann',
+    'Beauty Thief':'Beauty Thief','Caroline':'Caroline','Chihaya':'Chihaya',
+    'Ms. Chouno':'Chouno','Cognitive Akechi':'Cognitive Akechi',
+    'Cognitive Shiho Suzui':'Cognitive Shiho','SIU Director':'Director',
+    'Futaba':'Futaba','Haru':'Haru','Hifumi':'Hifumi',
+    'Coach Hiraguchi':'Hiraguchi','Mr. Hiruta':'Hiruta','Ichinose':'Ichinose',
+    'Igor':'Igor','Mr. Inui':'Inui','Iwai':'Iwai','Joker':'Joker','Jose':'Jose',
+    'Justine':'Justine','Kaburagi':'Kaburagi','Kamoshida':'Kamoshida',
+    'Kaneshiro':'Kaneshiro','Kasumi':'Kasumi','Kawakami':'Kawakami',
+    'Konoe':'Konoe','Lavenza':'Lavenza','Madarame':'Madarame','Makoto':'Makoto',
+    'Mariko':'Mariko','Maruki':'Maruki','Mika':'Mika','Mishima':'Mishima',
+    'Morgana':'Morgana','Nakanohara':'Nakanohara','Natsume':'Natsume',
+    'Ohya':'Ohya','Okumura':'Okumura','Owada':'Owada',
+    'Princess Ann':'Princess Ann','Principal':'Principal','Ren':'Ren',
+    'Rumi':'Rumi','Ryuji':'Ryuji','Sae':'Sae','Shadow Akane':'Shadow Akane',
+    'Shadow Alice':'Shadow Alice','Shadow Futaba':'Shadow Futaba',
+    'Shadow Kamoshida':'Shadow Kamoshida','Shadow Kaneshiro':'Shadow Kaneshiro',
+    'Shadow Konoe':'Shadow Konoe','Shadow Madarame':'Shadow Madarame',
+    'Shadow Mariko':'Shadow Mariko','Shadow Mishima':'Shadow Mishima',
+    'Shadow Nakanohara':'Shadow Nakanohara','Shadow Natsume':'Shadow Natsume',
+    'Shadow Okumura':'Shadow Okumura','Shadow Sae':'Shadow Sae',
+    'Shadow Shido':'Shadow Shido',
+    'Shady Commodities Tanaka':'Shady Commodities Tanaka',
+    'Shibusawa':'Shibusawa','Shido':'Shido','Shiho':'Shiho',
+    'Shinichi Yoshizawa':'Shinichi','Shinya':'Shinya','Sojiro':'Sojiro',
+    'Sophia':'Sophia','Sugimura':'Sugimura','Sumire':'Sumire','Takemi':'Takemi',
+    'Tanaka':'Tanaka','Ms. Usami':'Usami','Mr. Ushimaru':'Ushimaru',
+    'Wakaba':'Wakaba','Yoshida':'Yoshida','Yusuke':'Yusuke','Zenkichi':'Zenkichi',
+  };
+  return map[name] || null;
+}
+
+function findNameAfterCharSelect(key) {
+  var map = {
+    'Akane':'Akane','Akechi':'Akechi','Akira':'Akira','Alice':'Alice','Ann':'Ann',
+    'Beauty Thief':'Beauty Thief','Caroline':'Caroline','Chihaya':'Chihaya',
+    'Chouno':'Ms. Chouno','Cognitive Akechi':'Cognitive Akechi',
+    'Cognitive Shiho':'Cognitive Shiho Suzui','Director':'SIU Director',
+    'Futaba':'Futaba','Haru':'Haru','Hifumi':'Hifumi',
+    'Hiraguchi':'Coach Hiraguchi','Hiruta':'Mr. Hiruta','Ichinose':'Ichinose',
+    'Igor':'Igor','Inui':'Mr. Inui','Iwai':'Iwai','Joker':'Joker','Jose':'Jose',
+    'Justine':'Justine','Kaburagi':'Kaburagi','Kamoshida':'Kamoshida',
+    'Kaneshiro':'Kaneshiro','Kasumi':'Kasumi','Kawakami':'Kawakami',
+    'Konoe':'Konoe','Lavenza':'Lavenza','Madarame':'Madarame','Makoto':'Makoto',
+    'Mariko':'Mariko','Maruki':'Maruki','Mika':'Mika','Mishima':'Mishima',
+    'Morgana':'Morgana','Nakanohara':'Nakanohara','Natsume':'Natsume',
+    'Ohya':'Ohya','Okumura':'Okumura','Owada':'Owada',
+    'Princess Ann':'Princess Ann','Principal':'Principal','Ren':'Ren',
+    'Rumi':'Rumi','Ryuji':'Ryuji','Kawakami':'Kawakami','Sae':'Sae',
+    'Shibusawa':'Shibusawa','Shiho':'Shiho','Shinichi':'Shinichi Yoshizawa',
+    'Shinya':'Shinya','Sojiro':'Sojiro','Sophia':'Sophia','Sugimura':'Sugimura',
+    'Kamoshida':'Kamoshida','Sumire':'Sumire','Takemi':'Takemi','Maruki':'Maruki',
+    'Tanaka':'Tanaka','Usami':'Ms. Usami','Ushimaru':'Mr. Ushimaru',
+    'Wakaba':'Wakaba','Yoshida':'Yoshida','Yusuke':'Yusuke',
+    'Mishima':'Mishima','Zenkichi':'Zenkichi',
+    'Joker':'Joker','Ohya':'Ohya','Iwai':'Iwai',
+    'Shadow Akane':'Shadow Akane','Shadow Alice':'Shadow Alice',
+    'Shadow Futaba':'Shadow Futaba','Shadow Kamoshida':'Shadow Kamoshida',
+    'Shadow Kaneshiro':'Shadow Kaneshiro','Shadow Konoe':'Shadow Konoe',
+    'Shadow Madarame':'Shadow Madarame','Shadow Mariko':'Shadow Mariko',
+    'Shadow Mishima':'Shadow Mishima','Shadow Nakanohara':'Shadow Nakanohara',
+    'Shadow Natsume':'Shadow Natsume','Shadow Okumura':'Shadow Okumura',
+    'Shadow Sae':'Shadow Sae','Shadow Shido':'Shadow Shido',
+    'Shady Commodities Tanaka':'Shady Commodities Tanaka',
+  };
+  return map[key] || key;
+}
+
+// ==================== RANDOM NUMBERS & TEXT COORDS ====================
+function findRandomNumbers(name) {
+  var random, secondRandom, thirdRandom;
+  if (!name.trim()) return [null, null, null];
+  do { random = Math.floor(Math.random() * name.length); }
+  while (name[random] === ' ');
+  if (name.length >= 8) {
+    if (random > Math.floor(name.length / 2)) {
+      while (name[random] === ' ' || random > Math.floor(name.length / 2))
+        random = Math.floor(Math.random() * name.length);
+    }
+    do { secondRandom = Math.floor(Math.random() * name.length); }
+    while (name[secondRandom] === ' ' || secondRandom < Math.floor(name.length / 2) || Math.abs(secondRandom - random) <= 2);
+    if (name.length >= 16) {
+      if (random > Math.floor((name.length / 3) - 1)) {
+        while (name[random] === ' ' || random > Math.floor(name.length / 3))
+          random = Math.floor(Math.random() * name.length);
+      }
+      if (secondRandom > 2 * (Math.floor((name.length / 3) - 1))) {
+        while (name[secondRandom] === ' ' || secondRandom < Math.floor(name.length / 3) || secondRandom > 2 * Math.floor(name.length / 3) || Math.abs(secondRandom - random) <= 2)
+          secondRandom = Math.floor(Math.random() * name.length);
+      }
+      do { thirdRandom = Math.floor(Math.random() * name.length); }
+      while (name[thirdRandom] === ' ' || thirdRandom < 2 * Math.floor(name.length / 3) || Math.abs(thirdRandom - secondRandom) <= 2);
+    }
+  }
+  return [random, secondRandom, thirdRandom];
+}
+
+var findTextCoords = {
+  main: [500, 373, 403, 433],
+  dancing: [440, 403, 433, 463],
+  noPortrait: [470, 353, 383, 413],
+  strikers: [450, 383, 413, 443],
+};
+
+// ==================== CANVAS REFS ====================
+var portraitCanvas = document.getElementById('portraitCanvas');
+var boxCanvas = document.getElementById('boxCanvas');
+var tileCanvas = document.getElementById('tileCanvas');
+var nameCanvas = document.getElementById('nameCanvas');
+var textCanvas = document.getElementById('textCanvas');
+
+var pCtx = portraitCanvas.getContext('2d');
+var bCtx = boxCanvas.getContext('2d');
+var tileCtx = tileCanvas.getContext('2d');
+var nCtx = nameCanvas.getContext('2d');
+var tCtx = textCanvas.getContext('2d');
+
+// ==================== FONT HELPER ====================
+function ensureFontLoaded(font, pt) {
+  pt = pt || 18;
+  return new Promise(function(resolve) {
+    if (document.fonts.check(pt + 'pt "' + font + '"') || document.fonts.check(pt + 'pt \'' + font + '\'')) {
+      resolve();
+    } else {
+      document.fonts.load(pt + 'pt "' + font + '"').then(function() { resolve(); }).catch(function() { resolve(); });
+    }
+  });
+}
+
+// ==================== CORE RENDER (async, sequential) ====================
+var renderQueued = false;
+
+function queueRender() {
+  if (renderQueued) return;
+  renderQueued = true;
+  // Defer so rapid changes batch into one draw
+  setTimeout(function() { renderQueued = false; draw(); }, 16);
+}
+
+function draw() {
+  var boxType = state.boxType;
+  var font = state.font;
+  var nameVal = document.getElementById('nameField').value;
+  var textVal = document.getElementById('textField').value;
+
+  // ---- Step 1: resolve image paths ----
+  var boxPath = resolveBoxPath(nameVal, font, boxType);
+  var portraitKey = state.char + '/' + state.emote + '/' + state.costume;
+  var cachedPortrait = portraitCache[portraitKey];
+  var portraitUrl = resolvePortraitUrl();
+
+  // ---- Step 2: ensure every image is in the cache and loaded ----
+  var imagePromises = [];
+
+  if (cachedPortrait) {
+    imagePromises.push(imgReady(cachedPortrait).then(function(img) { return { type: 'portrait', img: img }; }));
+  } else if (portraitUrl) {
+    var pImg = cachedImg(portraitUrl, true);
+    imagePromises.push(imgReady(pImg).then(function(img) { return { type: 'portrait', img: img }; }));
+  }
+  if (boxPath) {
+    var bImg = cachedImg(boxPath, false);
+    imagePromises.push(imgReady(bImg).then(function(img) { return { type: 'box', img: img }; }));
+  }
+
+  if (imagePromises.length === 0) {
+    // Nothing to wait for (e.g. "No Portrait" with empty text)
+    clearAllCanvases(boxType);
+    return;
+  }
+
+  Promise.all(imagePromises).then(function(results) {
+    // ---- Step 3: clear everything ----
+    clearAllCanvases(boxType);
+
+    // ---- Step 4: draw portrait & box ----
+    for (var i = 0; i < results.length; i++) {
+      var r = results[i];
+      if (r.type === 'portrait') {
+        drawPortraitToCtx(r.img);
+      } else if (r.type === 'box') {
+        drawBoxToCtx(r.img, boxType);
+      }
+    }
+
+    // ---- Step 5: draw tiles + name text (waits for font) ----
+    drawNameAndTiles(nameVal, font, boxType);
+
+    // ---- Step 6: draw dialogue text (waits for font) ----
+    drawDialogueText(textVal, font, boxType);
+
+  }).catch(function(err) {
+    console.error('[draw] asset error:', err);
+  });
+}
+
+// ==================== PATH RESOLVERS ====================
+function resolvePortraitUrl() {
+  if (state.char === 'None') return '';
+  var key = state.char + '/' + state.emote + '/' + state.costume;
+  if (portraitCache[key]) return portraitCache[key].src;
+  return 'https://testing-s3-p5.s3.amazonaws.com/portraits/' + state.char + '/' + state.emote + '/' + state.char + '-' + state.emote + '-' + state.costume + '.png';
+}
+
+function resolveBoxPath(name, font, boxType) {
+  if (boxType === 'main') {
+    var charWithBox = findNameBox(name);
+    if (charWithBox && (font === 'KoreanKRSM' || font === 'Optima nova LT')) {
+      return './generators/P5/images/boxes/db-' + charWithBox + '-' + font + '.png';
+    }
+    var w = measureNameWidth(name, font);
+    if (w <= 195) return './generators/P5/images/db-main-small.png';
+    if (w <= 275) return './generators/P5/images/db-main-medium.png';
+    return './generators/P5/images/db-main-large.png';
+  }
+  if (boxType === 'noPortrait') return './generators/P5/images/db-noPortrait.png';
+  if (boxType === 'dancing') return './generators/P5/images/db-dancing.png';
+  if (boxType === 'strikers') return './generators/P5/images/db-strikers.png';
+  return './generators/P5/images/db-main-small.png';
+}
+
+function measureNameWidth(name, font) {
+  nCtx.font = '18pt "' + font + '"';
+  return nCtx.measureText(name).width;
+}
+
+// ==================== CANVAS OPERATIONS ====================
+function clearAllCanvases(boxType) {
+  pCtx.clearRect(0, 0, 1275, 500);
+  bCtx.clearRect(0, 0, 1275, 500);
+  tCtx.clearRect(0, 0, 1275, 500);
+  nCtx.clearRect(0, 0, 1275, 500);
+  tCtx.clearRect(0, 0, 1275, 500);
+
+  // Reset + rotate name/tile canvases
+  nCtx.setTransform(1, 0, 0, 1, 0, 0);
+  tileCtx.setTransform(1, 0, 0, 1, 0, 0);
+  var angle = 0;
+  switch (boxType) {
+    case 'main': angle = -14.65; break;
+    case 'dancing': angle = 0; break;
+    case 'noPortrait': angle = -18.55; break;
+    case 'strikers': angle = -5.5; break;
+  }
+  var rad = angle * Math.PI / 180;
+  nCtx.rotate(rad);
+  tileCtx.rotate(rad);
+  nCtx.clearRect(-500, -500, 2275, 1500);
+  tileCtx.clearRect(-500, -500, 2275, 1500);
+}
+
+function drawPortraitToCtx(img) {
+  if (state.char === 'None') return;
+  var char = state.char, emote = state.emote, costume = state.costume;
+  var x, y;
+  if (simplePositions[char]) {
+    x = simplePositions[char][0];
+    y = simplePositions[char][1];
+  } else {
+    var sp = findSpecialPosition(char, emote, costume);
+    x = sp[0]; y = sp[1];
+  }
+  var w = 500, h = 500;
+  if (costume === "Humanity's Companion") w = 580;
+  if (char === 'Haru' && (costume === 'Swimsuit (Okinawa)' || costume === 'Road Trip (Hat)')) w = 570;
+  pCtx.clearRect(0, 0, 1275, 500);
+  pCtx.drawImage(img, x, y, w, h);
+}
+
+function drawBoxToCtx(img, boxType) {
+  bCtx.clearRect(0, 0, 1275, 500);
+  var w = img.naturalWidth;
+  var h = img.naturalHeight;
+  switch (boxType) {
+    case 'main': bCtx.drawImage(img, 320, 250 - (h - 250), w, h); break;
+    case 'noPortrait': bCtx.drawImage(img, 320, 180, w, h); break;
+    case 'dancing': bCtx.drawImage(img, 320, 300, w, h); break;
+    case 'strikers': bCtx.drawImage(img, 320, 250, w, h); break;
+  }
+}
+
+function drawNameAndTiles(name, font, boxType) {
+  nCtx.clearRect(-500, -500, 2275, 1500);
+  tileCtx.clearRect(-500, -500, 2275, 1500);
+  nCtx.font = '18pt "' + font + '"';
+  nCtx.textAlign = 'left';
+
+  if (boxType === 'main') {
+    var charWithBox = findNameBox(name);
+    if (charWithBox && (font === 'KoreanKRSM' || font === 'Optima nova LT')) return; // pre-rendered box
+  }
+
+  var textX, textY;
+  if (boxType === 'main' || boxType === 'noPortrait') {
+    textX = boxType === 'main' ? 418 : 392;
+    textY = boxType === 'main' ? 438 : 425;
+  } else if (boxType === 'dancing') {
+    nCtx.textAlign = 'center';
+    ensureFontLoaded(font, 18).then(function() {
+      nCtx.font = '18pt "' + font + '"';
+      nCtx.fillStyle = '#FFFFFF';
+      nCtx.fillText(name, 660, 353);
+    });
+    return;
+  } else if (boxType === 'strikers') {
+    nCtx.textAlign = 'center';
+    ensureFontLoaded(font, 16.5).then(function() {
+      nCtx.font = '16.5pt "' + font + '"';
+      nCtx.fillStyle = '#000000';
+      nCtx.fillText(name, 500, 371);
+    });
+    return;
+  } else {
+    return;
+  }
+
+  if (name.length > 1 && name.trim()) {
+    var rn = findRandomNumbers(name);
+    var random = rn[0], secondRandom = rn[1], thirdRandom = rn[2];
+
+    var beforeBox = name.substring(0, random);
+    var behindBox = name.substring(random, random + 1);
+    var afterBox = name.substring(random + 1);
+    var secondBehindBox, secondAfterBox, thirdBehindBox, thirdAfterBox;
+
+    if (name.length >= 8) {
+      afterBox = name.substring(random + 1, secondRandom);
+      secondBehindBox = name.substring(secondRandom, secondRandom + 1);
+      secondAfterBox = name.substring(secondRandom + 1);
+      if (name.length >= 16) {
+        secondAfterBox = name.substring(secondRandom + 1, thirdRandom);
+        thirdBehindBox = name.substring(thirdRandom, thirdRandom + 1);
+        thirdAfterBox = name.substring(thirdRandom + 1);
+      }
+    }
+
+    ensureFontLoaded(font, 18).then(function() {
+      nCtx.font = '18pt "' + font + '"';
+      var totalW = nCtx.measureText(name).width;
+      var boxX = textX - totalW / 2;
+      var secondBoxX, thirdBoxX;
+      var i, tm;
+
+      for (i = 0; i < random; i++) { tm = nCtx.measureText(name[i]); boxX += tm.width; }
+      tm = nCtx.measureText(name[random]);
+      tileCtx.fillRect(boxX, textY - tm.fontBoundingBoxAscent - 4, tm.width, tm.fontBoundingBoxAscent + tm.fontBoundingBoxDescent + 7);
+
+      if (name.length >= 8) {
+        secondBoxX = boxX;
+        for (i = random; i < secondRandom; i++) { tm = nCtx.measureText(name[i]); secondBoxX += tm.width; }
+        tm = nCtx.measureText(name[secondRandom]);
+        tileCtx.fillRect(secondBoxX, textY - tm.fontBoundingBoxAscent - 3, tm.width, tm.fontBoundingBoxAscent + tm.fontBoundingBoxDescent + 7);
+        if (name.length >= 16) {
+          thirdBoxX = secondBoxX;
+          for (i = secondRandom; i < thirdRandom; i++) { tm = nCtx.measureText(name[i]); thirdBoxX += tm.width; }
+          tm = nCtx.measureText(name[thirdRandom]);
+          tileCtx.fillRect(thirdBoxX, textY - tm.fontBoundingBoxAscent - 3, tm.width, tm.fontBoundingBoxAscent + tm.fontBoundingBoxDescent + 6);
+        }
+      }
+
+      nCtx.fillStyle = '#000000';
+      nCtx.fillText(beforeBox, textX - totalW / 2, textY);
+      nCtx.fillStyle = '#FFFFFF';
+      nCtx.fillText(behindBox, boxX, textY);
+      nCtx.fillStyle = '#000000';
+      tm = nCtx.measureText(name[random]);
+      nCtx.fillText(afterBox, boxX + tm.width, textY);
+
+      if (name.length >= 8) {
+        nCtx.fillStyle = '#FFFFFF';
+        nCtx.fillText(secondBehindBox, secondBoxX, textY);
+        nCtx.fillStyle = '#000000';
+        tm = nCtx.measureText(name[secondRandom]);
+        nCtx.fillText(secondAfterBox, secondBoxX + tm.width, textY);
+        if (name.length >= 16) {
+          nCtx.fillStyle = '#FFFFFF';
+          nCtx.fillText(thirdBehindBox, thirdBoxX, textY);
+          nCtx.fillStyle = '#000000';
+          tm = nCtx.measureText(name[thirdRandom]);
+          nCtx.fillText(thirdAfterBox, thirdBoxX + tm.width, textY);
+        }
+      }
+    });
+  } else if (name.length === 1) {
+    ensureFontLoaded(font, 18).then(function() {
+      nCtx.font = '18pt "' + font + '"';
+      nCtx.fillStyle = '#000000';
+      nCtx.fillText(name, textX, textY);
+    });
+  }
+}
+
+function drawDialogueText(text, font, boxType) {
+  tCtx.clearRect(0, 0, 1275, 500);
+  if (!text.trim()) return;
+
+  var pt = boxType === 'strikers' ? 16 : 18;
+  var coords = findTextCoords[boxType] || findTextCoords.main;
+  var maxWidth = { main: 580, dancing: 600, noPortrait: 520, strikers: 540 }[boxType] || 580;
+
+  ensureFontLoaded(font, pt).then(function() {
+    tCtx.font = pt + 'pt "' + font + '"';
+    tCtx.fillStyle = '#FFFFFF';
+
+    // Tokenize: words (\S+) and hard breaks (\n)
+    var tokens = text.match(/\S+|\n/g) || [];
+    var lines = [];
+    var current = '';
+
+    function flush() { if (current) { lines.push(current); current = ''; } }
+
+    for (var t = 0; t < tokens.length; t++) {
+      var token = tokens[t];
+      if (token === '\n') { flush(); continue; }
+
+      // Long unbroken string — break character by character
+      if (tCtx.measureText(token).width > maxWidth) {
+        flush();
+        var buf = '';
+        for (var c = 0; c < token.length; c++) {
+          var test = buf + token[c];
+          if (tCtx.measureText(test).width > maxWidth && buf) {
+            lines.push(buf);
+            buf = token[c];
+          } else {
+            buf = test;
+          }
+        }
+        if (buf) { current = buf; }
+        continue;
+      }
+
+      // Normal word — append to current line or start a new one
+      var withToken = current ? current + ' ' + token : token;
+      if (tCtx.measureText(withToken).width > maxWidth && current) {
+        lines.push(current);
+        current = token;
+      } else {
+        current = withToken;
+      }
+    }
+    flush();
+
+    // Truncate at 3 lines, append ellipsis
+    if (lines.length > 3) {
+      var last = lines[2];
+      while (tCtx.measureText(last + '...').width > maxWidth && last.length > 0)
+        last = last.slice(0, -1);
+      lines = [lines[0], lines[1], last + '...'];
+    }
+
+    if (lines.length === 0) return;
+
+    var x = coords[0];
+    var lh = 30;
+    if (lines.length === 1) {
+      tCtx.fillText(lines[0], x, Math.round((coords[1] + coords[3]) / 2));
+    } else if (lines.length === 2) {
+      tCtx.fillText(lines[0], x, coords[1] + 7);
+      tCtx.fillText(lines[1], x, coords[2] + 7);
+    } else {
+      tCtx.fillText(lines[0], x, coords[1]);
+      tCtx.fillText(lines[1], x, coords[2]);
+      tCtx.fillText(lines[2], x, coords[3]);
+    }
+  });
+}
+
+// ==================== MENU MANAGEMENT ====================
+function fetchJSON(url, body) {
+  return fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  }).then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  });
+}
+
+function rebuildSelect(id, items, selectedVal) {
+  var sel = document.getElementById(id);
+  sel.innerHTML = '';
+  var hasSelected = false;
+  for (var i = 0; i < items.length; i++) {
+    var opt = document.createElement('option');
+    opt.value = items[i];
+    opt.textContent = items[i];
+    if (items[i] === selectedVal) { opt.selected = true; hasSelected = true; }
+    sel.appendChild(opt);
+  }
+  if (!hasSelected && items.length > 0) sel.value = items[0];
+  return sel.value;
+}
+
+function loadEmotions(char, currentEmote) {
+  return fetchJSON('/emotions', { 'char': '../generators/P5/images/portraits/' + char + '/' })
+    .then(function(items) {
+      var chosen = (items.indexOf(currentEmote) !== -1) ? currentEmote : items[0];
+      rebuildSelect('emoteMenu', items, chosen);
+      return chosen;
+    })
+    .catch(function(err) { console.error('[emotions]', err); return currentEmote; });
+}
+
+function loadCostumes(char, emote, currentCostume) {
+  return fetchJSON('/costumes', { 'emotion': '../generators/P5/images/portraits/' + char + '/' + emote + '/' })
+    .then(function(items) {
+      var chosen = (items.indexOf(currentCostume) !== -1) ? currentCostume : items[0];
+      rebuildSelect('costumeMenu', items, chosen);
+      return chosen;
+    })
+    .catch(function(err) { console.error('[costumes]', err); return currentCostume; });
+}
+
+function loadEmotionsCached(char, currentEmote) {
+  var idx = portraitIndex[char];
+  if (!idx || !idx.emotions || idx.emotions.length === 0) return Promise.resolve(currentEmote);
+  var items = idx.emotions;
+  var chosen = items.indexOf(currentEmote) !== -1 ? currentEmote : items[0];
+  rebuildSelect('emoteMenu', items, chosen);
+  return Promise.resolve(chosen);
+}
+
+function loadCostumesCached(char, emote, currentCostume) {
+  var idx = portraitIndex[char];
+  if (!idx || !idx.costumes[emote] || idx.costumes[emote].length === 0) return Promise.resolve(currentCostume);
+  var items = idx.costumes[emote];
+  var chosen = items.indexOf(currentCostume) !== -1 ? currentCostume : items[0];
+  rebuildSelect('costumeMenu', items, chosen);
+  return Promise.resolve(chosen);
+}
+
+function loadAndSync(char, emote, costume) {
+  if (assetsLoaded && portraitIndex[char] && portraitIndex[char].emotions.length > 0) {
+    loadEmotionsCached(char, emote).then(function(resolvedEmote) {
+      return loadCostumesCached(char, resolvedEmote, costume).then(function(resolvedCostume) {
+        state.char = char;
+        state.emote = resolvedEmote;
+        state.costume = resolvedCostume;
+        queueRender();
+      });
+    });
+  } else {
+    loadEmotions(char, emote).then(function(resolvedEmote) {
+      return loadCostumes(char, resolvedEmote, costume).then(function(resolvedCostume) {
+        state.char = char;
+        state.emote = resolvedEmote;
+        state.costume = resolvedCostume;
+        queueRender();
+      });
+    });
+  }
+}
+
+// ==================== EVENT HANDLERS ====================
+function onCharChange() {
+  var newChar = document.getElementById('charMenu').value;
+  if (newChar === 'None') {
+    state.char = 'None';
+    document.getElementById('nameField').value = '';
+    queueRender();
+    return;
+  }
+  document.getElementById('nameField').value = findNameAfterCharSelect(newChar);
+  loadAndSync(newChar, state.emote, state.costume);
+}
+
+function onEmoteChange() {
+  state.emote = document.getElementById('emoteMenu').value;
+  var load = (assetsLoaded && portraitIndex[state.char]) ? loadCostumesCached : loadCostumes;
+  load(state.char, state.emote, state.costume).then(function(resolved) {
+    state.costume = resolved;
+    queueRender();
+  });
+}
+
+function onCostumeChange() {
+  state.costume = document.getElementById('costumeMenu').value;
+  queueRender();
+}
+
+function onBoxChange() {
+  state.boxType = document.getElementById('boxMenu').value;
+  queueRender();
+}
+
+function onNameInput() { queueRender(); }
+function onTextInput() { queueRender(); }
+
+function onFolderUpload(e) {
+  var files = e.target.files;
+  if (!files || files.length === 0) return;
+  portraitCache = {};
+  portraitIndex = {};
+  var loaded = 0;
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    if (!file.type.match(/^image\//)) continue;
+    var parts = (file.webkitRelativePath || file.name).split('/');
+    if (parts.length < 3) continue;
+    var charName = parts[parts.length - 3];
+    var emoteName = parts[parts.length - 2];
+    var fileName = parts[parts.length - 1];
+    if (!fileName.match(/\.png$/i)) continue;
+    var baseName = fileName.replace(/\.png$/i, '');
+    var prefix = charName + '-' + emoteName + '-';
+    var costumeName = baseName.indexOf(prefix) === 0 ? baseName.substring(prefix.length) : baseName;
+    if (!portraitIndex[charName]) portraitIndex[charName] = { emotions: [], costumes: {} };
+    if (portraitIndex[charName].emotions.indexOf(emoteName) === -1)
+      portraitIndex[charName].emotions.push(emoteName);
+    if (!portraitIndex[charName].costumes[emoteName])
+      portraitIndex[charName].costumes[emoteName] = [];
+    if (portraitIndex[charName].costumes[emoteName].indexOf(costumeName) === -1)
+      portraitIndex[charName].costumes[emoteName].push(costumeName);
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    (function(u) { img.onload = function() { URL.revokeObjectURL(u); }; })(url);
+    img.src = url;
+    portraitCache[charName + '/' + emoteName + '/' + costumeName] = img;
+    loaded++;
+  }
+  assetsLoaded = true;
+  document.getElementById('uploadLabel').textContent = loaded + ' portraits pre-cached';
+  if (portraitIndex[state.char] && portraitIndex[state.char].emotions.length > 0) {
+    onCharChange();
+  } else {
+    queueRender();
+  }
+}
+
+function switchFont(value) {
+  state.font = value;
+  var els = document.querySelectorAll('.fonts');
+  for (var i = 0; i < els.length; i++) els[i].classList.remove('active-font');
+  var active = document.querySelector('.fonts[data-font="' + value.replace(/"/g, '\\"') + '"]');
+  if (active) active.classList.add('active-font');
+  queueRender();
+}
+
+// ==================== DOWNLOAD / RESET ====================
+function trimCanvas(source) {
+  var ctx = source.getContext('2d');
+  if (!ctx) return source;
+  var w = source.width, h = source.height;
+  var data = ctx.getImageData(0, 0, w, h).data;
+  var top = h, bottom = 0, left = w, right = 0;
+  for (var y = 0; y < h; y++) {
+    for (var x = 0; x < w; x++) {
+      if (data[(y * w + x) * 4 + 3] > 0) {
+        if (y < top) top = y;
+        if (y > bottom) bottom = y;
+        if (x < left) left = x;
+        if (x > right) right = x;
+      }
+    }
+  }
+  var tw = right - left + 1, th = bottom - top + 1;
+  if (tw <= 0 || th <= 0) return source;
+  var trimmed = document.createElement('canvas');
+  trimmed.width = tw;
+  trimmed.height = th;
+  trimmed.getContext('2d').drawImage(source, left, top, tw, th, 0, 0, tw, th);
+  return trimmed;
+}
+
+function downloadImage() {
+  var composite = document.createElement('canvas');
+  composite.width = 1275; composite.height = 500;
+  var ctx = composite.getContext('2d');
+  var layers = ['portraitCanvas','boxCanvas','tileCanvas','nameCanvas','textCanvas'];
+  for (var i = 0; i < layers.length; i++) {
+    try { ctx.drawImage(document.getElementById(layers[i]), 0, 0, 1275, 500); }
+    catch(e) { console.error('[download]', layers[i], e); }
+  }
+  var nf = document.getElementById('nameField');
+  var tf = document.getElementById('textField');
+  var filename = (nf ? nf.value : 'dialogue') + '-' + (tf ? tf.value : 'scene') + '.png';
+  var trimmed = trimCanvas(composite);
+  var link = document.createElement('a');
+  link.download = filename;
+  link.href = trimmed.toDataURL('image/png');
+  link.click();
+  var main = document.getElementById('p5Main');
+  main.classList.add('is-flashing');
+  setTimeout(function() { main.classList.remove('is-flashing'); }, 180);
+}
+
+function resetCanvas() {
+  document.getElementById('nameField').value = 'Ann';
+  document.getElementById('textField').value = '';
+  document.getElementById('charMenu').value = 'Ann';
+  document.getElementById('boxMenu').value = 'main';
+  state.font = 'Optima nova LT';
+  var els = document.querySelectorAll('.fonts');
+  for (var i = 0; i < els.length; i++) els[i].classList.remove('active-font');
+  var active = document.querySelector('.fonts[data-font="Optima nova LT"]');
+  if (active) active.classList.add('active-font');
+  loadAndSync('Ann', 'Happy', 'Gym Clothes');
+}
+
+// ==================== INIT ====================
+function init() {
+  // Build font selector
+  var fc = document.getElementById('fontChoices');
+  for (var i = 0; i < fontTags.length; i++) {
+    var el = document.createElement('div');
+    el.className = 'fonts';
+    el.setAttribute('data-font', fontTags[i][0]);
+    el.textContent = fontTags[i][1];
+    if (fontTags[i][0] === state.font) el.classList.add('active-font');
+    el.onclick = (function(v) { return function() { switchFont(v); }; })(fontTags[i][0]);
+    fc.appendChild(el);
+  }
+
+  // Preload static box images into the persistent cache
+  for (var i = 0; i < STATIC_BOXES.length; i++) {
+    cachedImg(STATIC_BOXES[i], false);
+  }
+
+  // Wire event listeners
+  document.getElementById('charMenu').addEventListener('change', onCharChange);
+  document.getElementById('emoteMenu').addEventListener('change', onEmoteChange);
+  document.getElementById('costumeMenu').addEventListener('change', onCostumeChange);
+  document.getElementById('boxMenu').addEventListener('change', onBoxChange);
+  var nf = document.getElementById('nameField');
+  nf.addEventListener('input', onNameInput);
+  nf.addEventListener('keyup', onNameInput);
+  var tf = document.getElementById('textField');
+  tf.addEventListener('input', onTextInput);
+  tf.addEventListener('keyup', onTextInput);
+  document.getElementById('upload').addEventListener('click', function() { document.getElementById('hiddenUpload').click(); });
+  document.getElementById('hiddenUpload').addEventListener('change', onFolderUpload);
+  document.querySelector('.p5-btn-download').addEventListener('click', downloadImage);
+  document.querySelector('.p5-btn-reset').addEventListener('click', resetCanvas);
+
+  // Initial draw
+  loadAndSync('Ann', 'Happy', 'Gym Clothes');
+}
+
+document.addEventListener('DOMContentLoaded', init);
+
+})();
+</script>
+</body>
+</html>
