@@ -1,5 +1,6 @@
 {
-  "name": "p5-generator",
+  "name": "persona-5-maker",
+  "homepage": "https://fastdemo.github.io/p5-maker",
   "version": "1.0.0",
   "description": "P5 Dialogue Generator",
   "private": true,
@@ -28,6 +29,7 @@
     "concurrently": "^10.0.3",
     "css-loader": "^5.2.6",
     "fontfaceobserver": "^2.3.0",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^1.6.0",
     "ts-loader": "^9.4.4",
@@ -39,7 +41,9 @@
   "scripts": {
     "start": "node server/server.js",
     "dev": "NODE_OPTIONS=--openssl-legacy-provider concurrently --kill-others \"webpack serve\" \"node server/server.js\"",
-    "build": "webpack"
+    "build": "webpack",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "keywords": [
     "Persona 5",
