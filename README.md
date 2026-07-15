@@ -1,39 +1,39 @@
-# dialogue maker
+# Dialogue Maker
 
-generate custom persona dialogue boxes. pick a character, type your dialogue, upload a sprite, and download the finished image.
+This is a fun little web tool for making custom Persona dialogue boxes. Just pick a character, type out whatever dialogue you want, upload your own sprite, and download the finished image.
 
-## features
+## Features
 
-* **load assets** — pre-cache over 3000 portraits from persona 5, royal, strikers, persona 4, and golden instantly.
-* **character selection** — choose from 59+ characters; the name field auto-fills but can be edited freely.
-* **emotions & costumes** — available looks and outfits populate automatically based on your choice.
-* **multiline dialogue** — automatic word wrapping capped at exactly 3 lines with smart ellipsis truncation.
-* **stable nameplate** — character names stay perfectly locked on a horizontal baseline axis no matter the text length.
-* **font customization** — choose from 7 distinct game-accurate fonts to match the exact mood.
-* **custom uploads** — upload your own character sprites with automated scaling to fit a 500x500 box proportionally.
+* **Load Assets** — Pre-cache over 3,000 portraits from Persona 5, Royal, Strikers, Persona 4, and Golden instantly.
+* **Character Selection** — Choose from 59+ characters; the name field auto-fills but you can edit it to say whatever you want.
+* **Emotions & Costumes** — Available looks and outfits update automatically depending on the character you choose.
+* **Multiline Dialogue** — Automatic word wrapping capped at exactly 3 lines with clean ellipsis truncation.
+* **Stable Nameplate** — Character names stay perfectly locked on a horizontal baseline axis no matter the text length.
+* **Font Customization** — Choose from 7 distinct game-accurate fonts to match the exact mood.
+* **Custom Uploads** — Upload your own character sprites, and they will automatically scale to fit a 500x500 box proportionally.
 
-## building
+## Building
 
 ```bash
 npm install
 npm run dev
 ```
 
-output serves locally at http://localhost:3000.
+Output serves locally at http://localhost:3000.
 
-## stack
+## Stack
 
-html5 canvas, vanilla javascript, css grid / custom properties.
+HTML5 Canvas, Vanilla JavaScript, CSS Grid / Custom Properties.
 
-## product images
+## Product Images
 
 
 
-## credits
+## Credits
 
-* **foone** — for the original "death generator" which inspired this project.
-* **atlus** — all images, portraits, and logos are copyrights of atlus. they are displayed here under fair use.
+* **foone** — For the original "death generator" which inspired this project.
+* **Atlus** — All images, portraits, and logos are copyrights of Atlus. They are displayed here under fair use.
 
-this is an open-source project, and i don't intend for this to make money at all. if you're uncomfortable with letting me use your assets, feel free to reach out and i'll happily take it down!
+This is an open-source project, and I don't intend to make any money from it. If you're uncomfortable with me using your assets, feel free to reach out and I'll happily take them down!
 
-made with love by @fastdemo <3
+Made with love by @fastdemo <3
