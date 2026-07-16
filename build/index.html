@@ -111,7 +111,7 @@ html{font-size:16px;-webkit-font-smoothing:antialiased}
 body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var(--theme-bg);color:var(--theme-text);min-height:100vh;display:flex;align-items:center;justify-content:center}
 .hidden{display:none!important}
 .p5-app{width:100%;max-width:1400px;margin:0 auto;padding:32px 24px}
-.p5-container{display:flex;gap:24px;align-items:flex-start}
+.p5-container{display:flex;gap:24px;align-items:stretch}
 .is-flashing::after{content:'';position:fixed;inset:0;background:var(--theme-flash,#FFFFFF);z-index:100;animation:p5-flash .18s ease-out forwards;pointer-events:none}
 @keyframes p5-flash{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
 .p5-sidebar{width:350px;flex-shrink:0;background:var(--theme-panel);border:1px solid var(--theme-rule);border-radius:var(--theme-radius);padding:20px;display:flex;flex-direction:column;gap:16px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
@@ -153,7 +153,7 @@ body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var
 .game-toggle-btn{flex:1;padding:8px 4px;font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;border:1px solid var(--theme-rule);border-radius:6px;background:var(--theme-input-bg);color:var(--theme-muted);cursor:pointer;transition:border-color .15s,color .15s,background .15s;text-align:center;user-select:none}
 .game-toggle-btn:hover{border-color:var(--theme-accent);color:var(--theme-accent-text);background:var(--theme-hover-bg)}
 .game-toggle-btn.active{border-color:var(--theme-accent);background:var(--theme-accent);color:var(--theme-accent-text)}
-.p5-actions{display:flex;gap:12px}
+.p5-actions{display:flex;gap:12px;margin-top:auto}
 .p5-btn{font-family:'Optima nova LT';font-size:14px;letter-spacing:2px;text-transform:uppercase;padding:12px 24px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;border:2px solid var(--theme-accent);border-radius:var(--theme-radius);background:transparent;color:var(--theme-accent)}
 .p5-btn:hover{background:var(--theme-text);color:var(--theme-bg);border-color:var(--theme-text)}
 .p5-btn:active{transform:scale(.97)}
