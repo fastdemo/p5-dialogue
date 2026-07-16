@@ -27,11 +27,13 @@
     "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.6",
     "concurrently": "^10.0.3",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^5.2.6",
     "fontfaceobserver": "^2.3.0",
     "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.3.1",
     "mini-css-extract-plugin": "^1.6.0",
+    "style-loader": "^4.0.0",
     "ts-loader": "^9.4.4",
     "typescript": "^5.0.2",
     "webpack": "^5.38.1",
@@ -41,9 +43,9 @@
   "scripts": {
     "start": "node server/server.js",
     "dev": "NODE_OPTIONS=--openssl-legacy-provider concurrently --kill-others \"webpack serve\" \"node server/server.js\"",
-    "build": "webpack",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack",
+    "predeploy": "NODE_OPTIONS=--openssl-legacy-provider npm run build",
+    "deploy": "NODE_OPTIONS=--openssl-legacy-provider gh-pages -d build"
   },
   "keywords": [
     "Persona 5",

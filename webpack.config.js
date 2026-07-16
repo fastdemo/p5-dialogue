@@ -1,65 +1,44 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: "./assets/index.tsx",
-  target: "web",
-  mode: "production",
+  entry: './App.tsx',
+  mode: 'production',
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "bundle.js",
-    publicPath: '/'
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
+    publicPath: './',
   },
   resolve: {
-    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
-  },
-  devServer: { 
-    historyApiFallback: true,
-    inline: true,
-    contentBase: [
-      path.resolve(__dirname, "build"),
-      path.resolve(__dirname, "."),
-    ],
-    port: 8080, 
-    proxy: {
-      '/emotions': {
-        target: 'http://localhost:3000',
-        secure: false,
-      },
-      '/costumes': {
-        target: 'http://localhost:3000',
-        secure: false,
-      },
-    },
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-    }
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: "ts-loader",
+        exclude: /node_modules/,
+        use: 'ts-loader',
       },
       {
-        enforce: "pre",
-        test: /\.js$|jsx/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-          },
-        },
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|eot|ttf|woff|woff2|otf)$/i,
+        type: 'asset/resource',
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Persona 5 Generator',
-      template: path.resolve(__dirname, "index.html"),
+      template: './index.html',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'generators', to: 'generators', noErrorOnMissing: true },
+        { from: 'images', to: 'images', noErrorOnMissing: true },
+      ],
     }),
   ],
 };

@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: 'KoreanHSE';
-  src: url('../generators/P4/fonts/KoreanHSE-M') format('opentype');
+  src: url('../generators/P4/fonts/KoreanHSE-M.otf') format('opentype');
   src: url('../generators/P4/fonts/KoreanHSE-M.svg#KoreanHSE-M') format('svg'),
        url('../generators/P4/fonts/KoreanHSE-M.ttf') format('truetype'),
        url('../generators/P4/fonts/KoreanHSE-M.woff') format('woff'),
