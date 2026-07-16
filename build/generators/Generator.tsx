@@ -7,7 +7,7 @@ import portraitDataP4 from './P4/utils/emotionsData';
 type Game = 'P5' | 'P4';
 
 interface FontEntry {
-  value: string; label: string; cls: string; subtitle?: string;
+  value: string; label: string; subtitle?: string;
 }
 interface BoxOption {
   value: string; label: string;
@@ -27,13 +27,13 @@ const GAMES: Record<Game, GameConfig> = {
     defaultName: 'Ann', defaultFont: 'Optima nova LT',
     s3Base: 'https://testing-s3-p5.s3.amazonaws.com/portraits',
     fonts: [
-      { value: 'KoreanKRSM', label: 'KoreanKRSM', cls: 'KRSMDivs' },
-      { value: 'Optima nova LT', label: 'Optima Nova', cls: 'optimaDivs' },
-      { value: 'SlumpDB', label: 'Slump DB', cls: 'slumpDivs' },
-      { value: 'aCinema', label: 'aCinema', cls: 'cinemaDivs' },
-      { value: 'DF Li Yuan', label: 'DF Li Yuan', cls: 'liDivs' },
-      { value: 'a근림헤드B', label: '근림헤드B', cls: 'koreanStrikersDivs' },
-      { value: 'DF Ping Ju', label: 'DF Ping Ju', cls: 'pingDivs' },
+      { value: 'KoreanKRSM', label: 'KoreanKRSM' },
+      { value: 'Optima nova LT', label: 'Optima Nova' },
+      { value: 'SlumpDB', label: 'Slump DB' },
+      { value: 'aCinema', label: 'aCinema' },
+      { value: 'DF Li Yuan', label: 'DF Li Yuan' },
+      { value: 'a\uad7c\ub9bc\ud5e4\ub4dcB', label: '\uadfc\ub9bc\ud5e4\ub4dcB' },
+      { value: 'DF Ping Ju', label: 'DF Ping Ju' },
     ],
     boxOptions: [
       { value: 'main', label: 'Persona 5/Royal' },
@@ -50,8 +50,8 @@ const GAMES: Record<Game, GameConfig> = {
     defaultName: 'Chie', defaultFont: 'SkipStd-B',
     s3Base: 'https://p4generator.s3.amazonaws.com/portraits',
     fonts: [
-      { value: 'SkipStd-B', label: 'Skip', cls: 'skipDivs', subtitle: '(Latin Script/日本語)' },
-      { value: 'KoreanHSE', label: 'a한글세상M', cls: 'koreanGoldenDivs', subtitle: '(한국어 - 페르소나 4 골든)' },
+      { value: 'SkipStd-B', label: 'Skip', subtitle: '(Latin Script/\u65e5\u672c\u8a9e)' },
+      { value: 'KoreanHSE', label: 'a\ud55c\uae00\uc138\uc0c1M', subtitle: '(\ud55c\uad6d\uc5b4 - \ud398\ub974\uc18c\ub098 4 \uace8\ub4e0)' },
     ],
     boxOptions: [
       { value: 'vanilla', label: 'Persona 4' },
@@ -72,8 +72,6 @@ const Generator = () => {
   const [portrait, setPortrait] = useState('');
   const [custom, setCustom] = useState('');
   const [boxType, setBoxType] = useState(GAMES.P5.defaultBox);
-  const [boxBack, setBoxBack] = useState('');
-  const [boxFront, setBoxFront] = useState('');
   const [flashKey, setFlashKey] = useState(0);
 
   const cfg = GAMES[activeGame];
@@ -92,12 +90,6 @@ const Generator = () => {
     setCustom('');
     setBoxType(g.defaultBox);
     setPortrait(`${g.s3Base}/${g.defaultChar}/${g.defaultEmote}/${g.defaultChar}-${g.defaultEmote}-${g.defaultCostume}.png`);
-    if (game === 'P5') {
-      setBoxBack(''); setBoxFront('');
-    } else {
-      setBoxBack(`./generators/P4/images/boxes/db-${g.defaultBox}-back.png`);
-      setBoxFront(`./generators/P4/images/boxes/db-${g.defaultBox}-front.png`);
-    }
     const nf = document.getElementById('nameField') as HTMLTextAreaElement;
     if (nf) nf.value = g.defaultName;
     const tf = document.getElementById('textField') as HTMLTextAreaElement;
@@ -107,13 +99,6 @@ const Generator = () => {
   useEffect(() => {
     setPortrait(`${cfg.s3Base}/${char}/${emote}/${char}-${emote}-${costume}.png`);
   }, [char, emote, costume]);
-
-  useEffect(() => {
-    if (activeGame === 'P4') {
-      setBoxBack(`./generators/P4/images/boxes/db-${boxType}-back.png`);
-      setBoxFront(`./generators/P4/images/boxes/db-${boxType}-front.png`);
-    }
-  }, [boxType, activeGame]);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-game', activeGame);
@@ -153,16 +138,10 @@ const Generator = () => {
     return trimmed;
   };
 
-  const p5Download = () => {
-    const composite = document.createElement('canvas');
-    composite.width = 1275; composite.height = 500;
-    const ctx = composite.getContext('2d') as CanvasRenderingContext2D;
-    ctx.drawImage(document.getElementById('portraitCanvas') as HTMLCanvasElement, 0, 0);
-    ctx.drawImage(document.getElementById('boxCanvas') as HTMLCanvasElement, 0, 0);
-    ctx.drawImage(document.getElementById('tileCanvas') as HTMLCanvasElement, 0, 0);
-    ctx.drawImage(document.getElementById('nameCanvas') as HTMLCanvasElement, 0, 0);
-    ctx.drawImage(document.getElementById('textCanvas') as HTMLCanvasElement, 0, 0);
-    const trimmed = trimCanvas(composite);
+  const download = () => {
+    const canvas = document.getElementById('dialogueCanvas') as HTMLCanvasElement;
+    if (!canvas) return;
+    const trimmed = trimCanvas(canvas);
     const link = document.createElement('a');
     const nv = (document.getElementById('nameField') as HTMLTextAreaElement)?.value || name;
     const tv = (document.getElementById('textField') as HTMLTextAreaElement)?.value || text;
@@ -171,25 +150,9 @@ const Generator = () => {
     link.click();
   };
 
-  const p4Download = () => {
-    const composite = document.createElement('canvas');
-    composite.width = 1275; composite.height = 800;
-    const ctx = composite.getContext('2d') as CanvasRenderingContext2D;
-    ctx.drawImage(document.getElementById('boxBackCanvas') as HTMLCanvasElement, 0, 0);
-    ctx.drawImage(document.getElementById('portraitCanvas') as HTMLCanvasElement, 0, 0);
-    ctx.drawImage(document.getElementById('boxFrontCanvas') as HTMLCanvasElement, 0, 0);
-    ctx.drawImage(document.getElementById('textCanvas') as HTMLCanvasElement, 0, 0);
-    const link = document.createElement('a');
-    link.download = `${char}-${text}.png`;
-    link.href = composite.toDataURL('image/png');
-    link.click();
-  };
-
   const downloadWithFlash = () => {
     setFlashKey(k => k + 1);
-    setTimeout(() => {
-      if (activeGame === 'P5') p5Download(); else p4Download();
-    }, 180);
+    setTimeout(download, 180);
   };
 
   const resetCanvas = () => {
@@ -198,8 +161,6 @@ const Generator = () => {
     setName(g.defaultName); setText(''); setFont(g.defaultFont); setCustom('');
     setBoxType(g.defaultBox);
     setPortrait(`${g.s3Base}/${g.defaultChar}/${g.defaultEmote}/${g.defaultChar}-${g.defaultEmote}-${g.defaultCostume}.png`);
-    if (activeGame === 'P5') { setBoxBack(''); setBoxFront(''); }
-    else { setBoxBack(`./generators/P4/images/boxes/db-${g.defaultBox}-back.png`); setBoxFront(`./generators/P4/images/boxes/db-${g.defaultBox}-front.png`); }
     const nf = document.getElementById('nameField') as HTMLTextAreaElement;
     if (nf) nf.value = g.defaultName;
     const tf = document.getElementById('textField') as HTMLTextAreaElement;
@@ -286,27 +247,22 @@ const Generator = () => {
                 <textarea id="textField" placeholder="Hey, Inmate! Character portraits contain spoilers!" rows={3} cols={45} defaultValue={text} onChange={(e) => setText(e.target.value)} />
               </div>
               <div className="p5-divider" />
-              <div className="font-group">
-                <div className="font-label">Box Style</div>
-                <div className="choice-group">
+              <div className="menu-group">
+                <div className="menu-label">Box Style</div>
+                <select className="menuOptions knife" value={boxType} onChange={(e) => setBoxType(e.target.value)}>
                   {cfg.boxOptions.map(b => (
-                    <div key={b.value} className={`choice-btn knife${boxType === b.value ? ' active' : ''}`} onClick={() => setBoxType(b.value)}>
-                      {b.label}
-                    </div>
+                    <option key={b.value} value={b.value}>{b.label}</option>
                   ))}
-                </div>
+                </select>
               </div>
               <div className="p5-divider" />
-              <div className="font-group">
-                <div className="font-label">Font Select</div>
-                <div className="choice-group">
+              <div className="menu-group">
+                <div className="menu-label">Font Select</div>
+                <select className="menuOptions knife" value={font} onChange={(e) => setFont(e.target.value)}>
                   {cfg.fonts.map(f => (
-                    <div key={f.value} className={`choice-btn ${f.cls} knife${font === f.value ? ' active' : ''}`} onClick={() => setFont(f.value)}>
-                      {f.label}
-                      {f.subtitle && <div className="choice-subtitle">{f.subtitle}</div>}
-                    </div>
+                    <option key={f.value} value={f.value}>{f.label}{f.subtitle ? ` (${f.subtitle})` : ''}</option>
                   ))}
-                </div>
+                </select>
               </div>
               <div className="p5-divider" />
               <label id="upload" className="knife">
@@ -324,7 +280,6 @@ const Generator = () => {
                 name={name} text={text} font={font}
                 portrait={portrait} custom={custom}
                 boxType={boxType} setCustom={setCustom}
-                boxBack={boxBack} boxFront={boxFront}
               />
             </div>
             <div className="p5-actions">
