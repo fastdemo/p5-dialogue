@@ -54,6 +54,7 @@ const Persona4 = () => {
     <>
       <Helmet>
         <meta name="description" content="Persona 4 Dialogue Generator" />
+        <link rel="stylesheet" href="./p4styles.css" />
         <link rel="shortcut icon" type="image/png" href="./images/logos/persona4logo.png" />
       </Helmet>
       <Header />

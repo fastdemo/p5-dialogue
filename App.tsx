@@ -2,8 +2,6 @@ import { Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Persona5 from './generators/P5/Persona5';
 import Persona4 from './generators/P4/Persona4';
-import './assets/p5styles.css';
-import './assets/p4styles.css';
 
 const App = () => {
   return (

@@ -38,6 +38,7 @@ module.exports = {
       patterns: [
         { from: 'generators', to: 'generators', noErrorOnMissing: true },
         { from: 'images', to: 'images', noErrorOnMissing: true },
+        { from: 'assets/p4styles.css', to: 'p4styles.css', noErrorOnMissing: true },
       ],
     }),
   ],
