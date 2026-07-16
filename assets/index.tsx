@@ -1,15 +1,13 @@
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import ScrollToTop from '../utils/ScrollToTop';
+import { HelmetProvider } from 'react-helmet-async';
 import App from '../App';
 
 render(
   <StrictMode>
-    <BrowserRouter >
-      <ScrollToTop />
+    <HelmetProvider>
       <App />
-    </BrowserRouter>
+    </HelmetProvider>
   </StrictMode>,
-    document.getElementById('root')
+  document.getElementById('root')
 );

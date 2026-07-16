@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './App.tsx',
+  entry: './assets/index.tsx',
   mode: 'production',
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -38,7 +38,7 @@ module.exports = {
       patterns: [
         { from: 'generators', to: 'generators', noErrorOnMissing: true },
         { from: 'images', to: 'images', noErrorOnMissing: true },
-        { from: 'assets/p4styles.css', to: 'p4styles.css', noErrorOnMissing: true },
+
       ],
     }),
   ],

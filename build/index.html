@@ -54,67 +54,125 @@
       url('./generators/P5/fonts/DFPingJu.woff') format('woff');
   font-weight: normal; font-style: normal; font-display: swap;
 }
+@font-face {
+  font-family: 'SkipStd-B';
+  src: url('./generators/P4/fonts/SkipStd-B-Shorten.otf') format('opentype');
+  src: url('./generators/P4/fonts/SkipStd-B-Shorten.svg#SkipStd-B-Shorten') format('svg'),
+       url('./generators/P4/fonts/SkipStd-B-Shorten.ttf') format('truetype'),
+       url('./generators/P4/fonts/SkipStd-B-Shorten.woff') format('woff'),
+       url('./generators/P4/fonts/SkipStd-B-Shorten.woff2') format('woff2');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'KoreanHSE';
+  src: url('./generators/P4/fonts/KoreanHSE-M.otf') format('opentype');
+  src: url('./generators/P4/fonts/KoreanHSE-M.svg#KoreanHSE-M') format('svg'),
+       url('./generators/P4/fonts/KoreanHSE-M.ttf') format('truetype'),
+       url('./generators/P4/fonts/KoreanHSE-M.woff') format('woff'),
+       url('./generators/P4/fonts/KoreanHSE-M.woff2') format('woff2');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+:root {
+  --theme-bg: #0A0A0A;
+  --theme-panel: rgba(20,20,20,0.75);
+  --theme-accent: #ff0000;
+  --theme-text: #FFFFFF;
+  --theme-input-text: #FFFFFF;
+  --theme-accent-text: #FFFFFF;
+  --theme-muted: #888888;
+  --theme-rule: #333333;
+  --theme-radius: 12px;
+  --theme-hover-bg: rgba(255,0,0,0.08);
+  --theme-focus-bg: rgba(255,0,0,0.04);
+  --theme-muted2: #555555;
+  --theme-option-bg: #1E1E1E;
+  --theme-input-bg: rgba(0,0,0,0.35);
+}
+:root[data-game="P4"] {
+  --theme-bg: #FEE727;
+  --theme-panel: rgba(255,255,255,0.92);
+  --theme-accent: #333333;
+  --theme-text: #1A1A1A;
+  --theme-input-text: #1A1A1A;
+  --theme-accent-text: #FFFFFF;
+  --theme-muted: #666666;
+  --theme-rule: #CCCCCC;
+  --theme-radius: 12px;
+  --theme-hover-bg: rgba(0,0,0,0.08);
+  --theme-focus-bg: rgba(0,0,0,0.04);
+  --theme-muted2: #666666;
+  --theme-option-bg: #FFFFFF;
+  --theme-input-bg: rgba(0,0,0,0.12);
+}
 *,*::before,*::after{box-sizing:border-box}
-:root{--p5-bg:#0A0A0A;--p5-panel:rgba(20,20,20,0.75);--p5-red:#ff0000;--p5-white:#FFFFFF;--p5-gray:#888888;--p5-rule:#333333;--p5-radius:12px}
 html{font-size:16px;-webkit-font-smoothing:antialiased}
-body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var(--p5-bg);color:var(--p5-white);min-height:100vh;display:flex;align-items:center;justify-content:center}
+body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var(--theme-bg);color:var(--theme-text);min-height:100vh;display:flex;align-items:center;justify-content:center}
 .hidden{display:none!important}
 .p5-app{width:100%;max-width:1400px;margin:0 auto;padding:32px 24px}
 .p5-container{display:flex;gap:24px;align-items:flex-start}
-.is-flashing::after{content:'';position:fixed;inset:0;background:var(--p5-white);z-index:100;animation:p5-flash .18s ease-out forwards;pointer-events:none}
+.is-flashing::after{content:'';position:fixed;inset:0;background:var(--theme-flash,#FFFFFF);z-index:100;animation:p5-flash .18s ease-out forwards;pointer-events:none}
 @keyframes p5-flash{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
-.p5-sidebar{width:340px;flex-shrink:0;background:var(--p5-panel);border:1px solid var(--p5-rule);border-radius:var(--p5-radius);padding:20px;display:flex;flex-direction:column;gap:16px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.p5-sidebar-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:2px solid var(--p5-red)}
+.p5-sidebar{width:350px;flex-shrink:0;background:var(--theme-panel);border:1px solid var(--theme-rule);border-radius:var(--theme-radius);padding:20px;display:flex;flex-direction:column;gap:16px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.p5-sidebar-header{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:2px solid var(--theme-accent)}
 .p5-sidebar-logo{width:38px;height:auto;flex-shrink:0}
 .p5-sidebar-titles{display:flex;flex-direction:column;gap:1px}
-.p5-sidebar-title-optima{font-family:'KoreanKRSM';font-size:12px;line-height:1.2;color:var(--p5-white);text-decoration:none;transition:color .15s}
-.p5-sidebar-title-optima:hover{color:var(--p5-red)}
+.p5-sidebar-title-optima{font-family:'KoreanKRSM';font-size:12px;line-height:1.2;color:var(--theme-text);text-decoration:none;transition:color .15s}
+.p5-sidebar-title-optima:hover{color:var(--theme-accent)}
 .p5-sidebar-sub-row{display:flex;align-items:center;gap:6px}
-.p5-sidebar-title-jp{font-family:'SlumpDB';font-size:9px;color:var(--p5-gray);letter-spacing:1px;line-height:1.3}
+.p5-sidebar-title-jp{font-family:'SlumpDB';font-size:9px;color:var(--theme-muted);letter-spacing:1px;line-height:1.3}
 .p5-sidebar-content{display:flex;flex-direction:column;gap:14px}
 .menus{display:flex;flex-direction:column;gap:10px}
 .menu-group{display:flex;flex-direction:column;gap:4px}
-.menu-label{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray)}
-.menuOptions{-webkit-appearance:none;appearance:none;width:100%;padding:8px 28px 8px 10px;background:rgba(0,0,0,0.35);border:1px solid var(--p5-rule);border-radius:6px;color:var(--p5-white);font-family:'KoreanKRSM';font-size:12px;cursor:pointer;transition:border-color .15s,background .15s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3.5l3 3 3-3' stroke='%23ff0000' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:10px}
-.menuOptions:hover{border-color:var(--p5-red)}
-.menuOptions:focus{border-color:var(--p5-red);outline:none;background:rgba(255,0,0,0.04)}
-.menuOptions option{background:#1E1E1E;color:var(--p5-white)}
-.p5-divider{height:2px;background:var(--p5-red);margin:2px 0;width:100%;clip-path:polygon(0 0,calc(100% - 12px) 0,calc(100% - 3px) 100%,0 100%);flex-shrink:0}
+.menu-label{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--theme-muted)}
+.menuOptions{-webkit-appearance:none;appearance:none;width:100%;padding:8px 28px 8px 10px;background:var(--theme-input-bg);border:1px solid var(--theme-rule);border-radius:6px;color:var(--theme-input-text);font-family:'KoreanKRSM';font-size:12px;cursor:pointer;transition:border-color .15s,background .15s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3.5l3 3 3-3' stroke='%23ff0000' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:10px}
+:root[data-game="P4"] .menuOptions{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 3.5l3 3 3-3' stroke='%23333' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.menuOptions:hover{border-color:var(--theme-accent)}
+.menuOptions:focus{border-color:var(--theme-accent);outline:none;background:var(--theme-focus-bg)}
+.menuOptions option{background:var(--theme-option-bg);color:var(--theme-text)}
+.p5-divider{height:2px;background:var(--theme-accent);margin:2px 0;width:100%;clip-path:polygon(0 0,calc(100% - 12px) 0,calc(100% - 3px) 100%,0 100%);flex-shrink:0}
 .text-group{display:flex;flex-direction:column;gap:4px}
-.text-label{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray)}
-#textField,#nameField{width:100%;padding:8px 10px;background:rgba(0,0,0,0.35);border:1px solid var(--p5-rule);border-radius:6px;color:var(--p5-white);font-family:'KoreanKRSM';font-size:12px;line-height:1.4;resize:none;overflow-y:auto;transition:border-color .15s,background .15s}
-#textField:focus,#nameField:focus{border-color:var(--p5-red);outline:none;background:rgba(255,0,0,0.04)}
+.text-label{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--theme-muted)}
+#textField,#nameField{width:100%;padding:8px 10px;background:var(--theme-input-bg);border:1px solid var(--theme-rule);border-radius:6px;color:var(--theme-input-text);font-family:'KoreanKRSM';font-size:12px;line-height:1.4;resize:none;overflow-y:auto;transition:border-color .15s,background .15s}
+#textField:focus,#nameField:focus{border-color:var(--theme-accent);outline:none;background:var(--theme-focus-bg)}
 #nameField{height:34px;white-space:nowrap;overflow:hidden}
 #textField{height:72px}
-#nameNote{font-family:'KoreanKRSM';font-size:8px;color:#555;margin:0}
+#nameNote{font-family:'KoreanKRSM';font-size:8px;color:var(--theme-muted2);margin:0}
 .font-group{display:flex;flex-direction:column;gap:6px}
-.font-label{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--p5-gray)}
-#fontChoices{display:flex;flex-wrap:wrap;gap:4px}
-.fonts{display:inline-block;padding:4px 10px;background:rgba(0,0,0,0.3);border:1px solid var(--p5-rule);border-radius:6px;color:var(--p5-gray);font-size:10px;line-height:1.4;white-space:nowrap;cursor:pointer;transition:border-color .15s,color .15s,background .15s;user-select:none}
-.fonts:hover{border-color:var(--p5-red);color:var(--p5-white);background:rgba(255,0,0,0.08)}
-.fonts.active-font{border-color:var(--p5-red);background:var(--p5-red);color:var(--p5-white)}
-#upload{width:100%;padding:10px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:rgba(0,0,0,0.3);border:1px dashed var(--p5-rule);border-radius:8px;color:var(--p5-gray);font-family:'KoreanKRSM';font-size:11px;text-align:center;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
-#upload:hover{border-color:var(--p5-red);color:var(--p5-white);background:rgba(255,0,0,0.04)}
-#uploadSizeMessage{font-size:8px;color:#555;margin:0}
+.font-label{font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;color:var(--theme-muted)}
+.choice-group{display:flex;flex-wrap:wrap;gap:4px}
+.choice-btn{display:inline-block;padding:4px 10px;background:var(--theme-input-bg);border:1px solid var(--theme-rule);border-radius:6px;color:var(--theme-muted);font-size:10px;line-height:1.4;white-space:nowrap;cursor:pointer;transition:border-color .15s,color .15s,background .15s;user-select:none}
+.choice-btn:hover{border-color:var(--theme-accent);color:var(--theme-accent-text);background:var(--theme-hover-bg)}
+.choice-btn.active{border-color:var(--theme-accent);background:var(--theme-accent);color:var(--theme-accent-text)}
+.choice-subtitle{font-size:8px;color:var(--theme-muted2);margin-top:2px}
+#upload{width:100%;padding:10px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--theme-input-bg);border:1px dashed var(--theme-rule);border-radius:8px;color:var(--theme-muted);font-family:'KoreanKRSM';font-size:11px;text-align:center;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+#upload:hover{border-color:var(--theme-accent);color:var(--theme-text);background:var(--theme-hover-bg)}
+#uploadSizeMessage{font-size:8px;color:var(--theme-muted2);margin:0}
 #hiddenUpload{display:none}
 .p5-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:16px}
-.p5-viewport{position:relative;line-height:0;border:2px solid var(--p5-red);border-radius:8px;overflow:hidden}
-.p5-viewport::before{content:'';position:absolute;top:-6px;left:-6px;width:18px;height:18px;border-top:2px solid var(--p5-red);border-left:2px solid var(--p5-red);z-index:5;pointer-events:none}
-.p5-viewport::after{content:'';position:absolute;bottom:-6px;right:-6px;width:18px;height:18px;border-bottom:2px solid var(--p5-red);border-right:2px solid var(--p5-red);z-index:5;pointer-events:none}
-#canvasDiv{position:relative;width:1275px;max-width:100%;aspect-ratio:1275/500;background-image:url('./generators/P5/images/backgroundDot.png');background-size:cover;line-height:0;overflow:hidden}
+.p5-viewport{position:relative;line-height:0;border:2px solid var(--theme-accent);border-radius:var(--theme-radius);overflow:hidden}
+.p5-viewport::before{content:'';position:absolute;top:-6px;left:-6px;width:18px;height:18px;border-top:2px solid var(--theme-accent);border-left:2px solid var(--theme-accent);z-index:5;pointer-events:none}
+.p5-viewport::after{content:'';position:absolute;bottom:-6px;right:-6px;width:18px;height:18px;border-bottom:2px solid var(--theme-accent);border-right:2px solid var(--theme-accent);z-index:5;pointer-events:none}
+#canvasDiv{position:relative;width:1275px;max-width:100%;aspect-ratio:1275/500;background-size:cover;line-height:0;overflow:hidden}
+:root[data-game="P5"] #canvasDiv{background-image:url('./generators/P5/images/backgroundDot.png')}
+:root[data-game="P4"] #canvasDiv{aspect-ratio:1275/800;background-image:url('./generators/P4/images/p4-background.png')}
+:root:not([data-game]) #canvasDiv{background-image:url('./generators/P5/images/backgroundDot.png')}
 #canvasDiv canvas{position:absolute;left:0;top:0;width:100%;height:100%}
 #portraitCanvas{z-index:0}
 #boxCanvas{z-index:1}
 #tileCanvas{z-index:2}
 #nameCanvas{z-index:3}
 #textCanvas{z-index:4;letter-spacing:.5px}
+.game-toggle{display:flex;gap:4px}
+.game-toggle-btn{flex:1;padding:8px 4px;font-family:'KoreanKRSM';font-size:9px;letter-spacing:1.2px;border:1px solid var(--theme-rule);border-radius:6px;background:var(--theme-input-bg);color:var(--theme-muted);cursor:pointer;transition:border-color .15s,color .15s,background .15s;text-align:center;user-select:none}
+.game-toggle-btn:hover{border-color:var(--theme-accent);color:var(--theme-accent-text);background:var(--theme-hover-bg)}
+.game-toggle-btn.active{border-color:var(--theme-accent);background:var(--theme-accent);color:var(--theme-accent-text)}
 .p5-actions{display:flex;gap:12px}
-.p5-btn{font-family:'Optima nova LT';font-size:14px;letter-spacing:2px;text-transform:uppercase;padding:12px 24px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;border:2px solid var(--p5-red);border-radius:8px;background:transparent;color:var(--p5-red)}
-.p5-btn:hover{background:var(--p5-white);color:var(--p5-bg);border-color:var(--p5-white)}
+.p5-btn{font-family:'Optima nova LT';font-size:14px;letter-spacing:2px;text-transform:uppercase;padding:12px 24px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;border:2px solid var(--theme-accent);border-radius:var(--theme-radius);background:transparent;color:var(--theme-accent)}
+.p5-btn:hover{background:var(--theme-text);color:var(--theme-bg);border-color:var(--theme-text)}
 .p5-btn:active{transform:scale(.97)}
 .p5-btn-download{flex:2}
-.p5-btn-reset{flex:1;font-size:11px;letter-spacing:1.5px;color:var(--p5-gray);border-color:var(--p5-rule)}
-.p5-btn-reset:hover{background:var(--p5-white);color:var(--p5-bg);border-color:var(--p5-white)}
+.p5-btn-reset{flex:1;font-size:11px;letter-spacing:1.5px;color:var(--theme-muted);border-color:var(--theme-rule)}
+.p5-btn-reset:hover{background:var(--theme-text);color:var(--theme-bg);border-color:var(--theme-text)}
 @media(max-width:1100px){
   .p5-container{flex-direction:column}
   body{overflow:auto}
@@ -128,7 +186,7 @@ body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var
   .p5-sidebar{padding:14px}
   .p5-btn{font-size:12px;padding:10px 16px}
   .p5-btn-reset{font-size:10px}
-  .fonts{font-size:9px;padding:3px 8px}
+  .choice-btn{font-size:9px;padding:3px 8px}
 }
 @media(max-width:500px){
   .p5-sidebar-header{flex-direction:column;align-items:flex-start;gap:6px}
@@ -136,835 +194,4 @@ body{margin:0;padding:0;font-family:'KoreanKRSM',sans-serif;background-color:var
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-}</style><script defer="defer" src="./bundle.js"></script></head><body><div class="p5-app"><div class="p5-container"><aside class="p5-sidebar"><div class="p5-sidebar-header"><img alt="Persona 5 logo" class="p5-sidebar-logo" src="./images/logos/persona5logo.png" width="38" height="23"><div class="p5-sidebar-titles"><a class="p5-sidebar-title-optima" href="https://github.com/fastdemo/p5-dialogue" target="_blank" rel="noopener">Dialogue Maker</a><div class="p5-sidebar-sub-row"><span class="p5-sidebar-title-jp">&#x5BFE;&#x8A71;&#x30B8;&#x30A7;&#x30CD;&#x30EC;&#x30FC;&#x30BF;</span></div></div></div><div class="p5-sidebar-content"><div class="menus"><div class="menu-group"><div class="menu-label">Character</div><select id="charMenu" class="menuOptions"><option value="Akane">Akane Hasegawa</option><option value="Konoe">Akira Konoe</option><option value="Alice">Alice Hiiragi</option><option value="Natsume">Ango Natsume</option><option value="Ann" selected="selected">Ann Takamaki</option><option value="Caroline">Caroline</option><option value="Chihaya">Chihaya Mifune</option><option value="Hiraguchi">Coach Hiraguchi</option><option value="Futaba">Futaba Sakura</option><option value="Akechi">Goro Akechi</option><option value="Haru">Haru Okumura</option><option value="Hifumi">Hifumi Togo</option><option value="Ohya">Ichiko Ohya</option><option value="Madarame">Ichiryusai Madarame</option><option value="Igor">Igor</option><option value="Jose">Jose</option><option value="Kaneshiro">Junya Kaneshiro</option><option value="Owada">Jyun Owada</option><option value="Justine">Justine</option><option value="Okumura">Kunikazu Okumura</option><option value="Ichinose">Kuon Ichinose</option><option value="Lavenza">Lavenza</option><option value="Makoto">Makoto Niijima</option><option value="Mariko">Mariko Hyodo</option><option value="Shido">Masayoshi Shido</option><option value="Mika">Mika</option><option value="Kaburagi">Miyako Kaburagi</option><option value="Morgana">Morgana</option><option value="Hiruta">Mr. Hiruta</option><option value="Inui">Mr. Inui</option><option value="Ushimaru">Mr. Ushimaru</option><option value="Chouno">Ms. Chouno</option><option value="Usami">Ms. Usami</option><option value="Iwai">Munehisa Iwai</option><option value="Nakanohara">Natsuhiko Nakanohara</option><option value="None">No Portrait</option><option value="Principal">Principal Kobayakawa</option><option value="Joker">Protagonist</option><option value="Rumi">Rumi</option><option value="Ryuji">Ryuji Sakamoto</option><option value="Kawakami">Sadayo Kawakami</option><option value="Sae">Sae Niijima</option><option value="Shibusawa">Shibusawa</option><option value="Shiho">Shiho Suzui</option><option value="Shinichi">Shinichi Yoshizawa</option><option value="Shinya">Shinya Oda</option><option value="Director">SIU Director</option><option value="Sojiro">Sojiro Sakura</option><option value="Sophia">Sophia</option><option value="Sugimura">Sugimura</option><option value="Kamoshida">Suguru Kamoshida</option><option value="Sumire">Sumire Yoshizawa</option><option value="Takemi">Tae Takemi</option><option value="Maruki">Takuto Maruki</option><option value="Tanaka">Tanaka</option><option value="Yoshida">Toranosuke Yoshida</option><option value="Wakaba">Wakaba Isshiki</option><option value="Yusuke">Yusuke Kitagawa</option><option value="Mishima">Yuuki Mishima</option><option value="Zenkichi">Zenkichi Hasegawa</option></select></div><div class="menu-group"><div class="menu-label">Emotion</div><select id="emoteMenu" class="menuOptions"></select></div><div class="menu-group"><div class="menu-label">Costume</div><select id="costumeMenu" class="menuOptions"></select></div><div class="menu-group"><div class="menu-label">Box</div><select id="boxMenu" class="menuOptions"><option value="main">Persona 5/Royal</option><option value="noPortrait">Persona 5 (No Portrait)</option><option value="strikers">Strikers/Scramble</option><option value="dancing">Dancing in Starlight</option></select></div></div><div class="p5-divider"></div><div class="text-group"><div class="text-label">Name</div><textarea id="nameField" rows="1" cols="45">Ann</textarea><div id="nameNote">Character auto-fills; edit freely</div></div><div class="text-group"><div class="text-label">Dialogue</div><textarea id="textField" placeholder="Hey, Inmate! Character portraits contain spoilers!" rows="3" cols="45"></textarea></div><div class="p5-divider"></div><div class="font-group"><div class="font-label">Font Select</div><div id="fontChoices"></div></div><div class="p5-divider"></div><label id="upload"><span id="uploadLabel">Upload Character Sprite</span> <input id="hiddenUpload" type="file" accept="image/*"><div id="uploadSizeMessage">.png or .jpg &mdash; 500x500px recommended</div></label></div></aside><main class="p5-main" id="p5Main"><div class="p5-viewport"><div id="canvasDiv"><canvas id="portraitCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas><canvas id="boxCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas><canvas id="tileCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas><canvas id="nameCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas><canvas id="textCanvas" width="1275" height="500">Sorry! This generator requires a browser that supports HTML5!</canvas></div></div><div class="p5-actions"><button class="p5-btn p5-btn-download">Download Image</button> <button class="p5-btn p5-btn-reset">Clear / Reset</button></div></main></div></div><script>(function() {
-'use strict';
-
-// ==================== GLOBAL IMAGE CACHE ====================
-var imageCache = {};
-
-function cachedImg(url, crossOrigin) {
-  if (!imageCache[url]) {
-    var img = new Image();
-    if (crossOrigin) img.crossOrigin = crossOrigin;
-    imageCache[url] = img;
-    img.src = url;
-  }
-  return imageCache[url];
-}
-
-function imgReady(img) {
-  if (img.complete && img.naturalWidth > 0) return Promise.resolve(img);
-  return new Promise(function(resolve, reject) {
-    img.onload = function() { resolve(img); };
-    img.onerror = function() { console.error('[img] failed:', img.src); reject(new Error('img fail: ' + img.src)); };
-  });
-}
-
-// Preload static box images into cache on init
-var STATIC_BOXES = [
-  './generators/P5/images/db-main-small.png',
-  './generators/P5/images/db-main-medium.png',
-  './generators/P5/images/db-main-large.png',
-  './generators/P5/images/db-noPortrait.png',
-  './generators/P5/images/db-dancing.png',
-  './generators/P5/images/db-strikers.png',
-];
-
-// ==================== STATE ====================
-var state = {
-  char: 'Ann',
-  emote: 'Happy',
-  costume: 'Gym Clothes',
-  font: 'Optima nova LT',
-  boxType: 'main',
-  customPortraitData: ''
-};
-
-var fontTags = [
-  ['KoreanKRSM', 'KoreanKRSM'],
-  ['Optima nova LT', 'Optima Nova'],
-  ['SlumpDB', 'Slump DB'],
-  ['aCinema', 'aCinema'],
-  ['DF Li Yuan', 'DF Li Yuan'],
-  ['a\uad7c\ub9bc\ud5e4\ub4dcB', '\uad7c\ub9bc\ud5e4\ub4dcB'],
-  ['DF Ping Ju', 'DF Ping Ju'],
-];
-
-// ==================== PORTRAIT POSITIONS ====================
-var simplePositions = {
-  Alice: [20, 0], Caroline: [-35, 0], Chihaya: [0, 0],
-  Chouno: [40, 10], Director: [85, 10], Hifumi: [35, 10],
-  Hiraguchi: [45, 10], Hiruta: [0, 10], Igor: [35, 15],
-  Inui: [55, 10], Iwai: [60, 10], Joker: [65, 30],
-  Jose: [45, 10], Justine: [0, 0], Kaburagi: [30, 0],
-  Kaneshiro: [45, 10], Konoe: [50, 0], Kawakami: [0, 0],
-  Lavenza: [35, 10], Makoto: [35, 10], Mika: [0, 30],
-  Mishima: [35, 5], Nakanohara: [0, 0], Ohya: [35, 10],
-  Owada: [50, 0], Principal: [-10, 20], Rumi: [40, 10],
-  Shibusawa: [0, 0], Shido: [0, 0], Shinichi: [35, 20],
-  Shinya: [0, 0], Sojiro: [75, 10], Sugimura: [0, 0],
-  Sumire: [45, 10], Takemi: [0, 0], Tanaka: [45, 10],
-  Usami: [50, 0], Ushimaru: [0, 0], Wakaba: [35, 10],
-  Yoshida: [50, 3], Yusuke: [0, 0],
-};
-
-function findSpecialPosition(char, emote, costume) {
-  switch (char) {
-    case 'Akechi':
-      if (emote.indexOf('Royal') !== -1) return [-30, 10];
-      if (costume.indexOf('Defeated') !== -1) return [30, 10];
-      if (emote === 'Furious' || emote === 'Smirking' || emote === 'Staring' || emote === 'Upset') return [85, 0];
-      if (costume.indexOf('Cognitive') !== -1) return [85, 0];
-      return [-30, 0];
-    case 'Natsume': return emote === 'Miscellaneous' ? [30, 0] : [0, 0];
-    case 'Ann':
-      if (emote === 'Excited (Royal)' || emote === 'Shocked (Royal)') return [0, 35];
-      if (emote.indexOf('Royal') !== -1) return [50, 35];
-      return [50, 45];
-    case 'Futaba': return costume.indexOf('Mask') !== -1 ? [0, 0] : [-35, 0];
-    case 'Haru':
-      if (costume.indexOf('Noir') !== -1) return [0, 0];
-      if (costume === 'Swimsuit (Okinawa)' || costume === 'Road Trip (Hat)') return [0, 10];
-      return [35, 10];
-    case 'Kamoshida': return costume.indexOf('Shadow') !== -1 ? [35, 10] : [-30, 15];
-    case 'Madarame': return costume.indexOf('Shadow') !== -1 ? [-75, 10] : [55, 10];
-    case 'Mariko': return emote !== 'Miscellaneous' ? [20, 0] : [0, 0];
-    case 'Maruki': return costume.indexOf('Metaverse') !== -1 ? [80, 5] : [30, 35];
-    case 'Morgana':
-      if (costume === 'Human') return [35, 10];
-      if (costume === '(Not a) Cat') return [-75, 65];
-      if (emote.indexOf('Royal') !== -1) return [-30, 10];
-      return [0, 25];
-    case 'Okumura': return costume.indexOf('Shadow') !== -1 ? [0, 10] : [-35, 0];
-    case 'Ryuji': return emote.indexOf('Royal') !== -1 ? [-45, 25] : [-70, 25];
-    case 'Sae': return costume.indexOf('Shadow') !== -1 ? [10, 30] : [35, 10];
-    case 'Shiho': return costume.indexOf('Cognitive') !== -1 ? [0, 0] : [55, 25];
-    case 'Zenkichi':
-      if (costume === 'Wolf' || emote === 'Miscellaneous') return [50, 0];
-      return [0, 0];
-    default: return [0, 0];
-  }
-}
-
-// ==================== NAME BOX LOOKUP ====================
-function findNameBox(name) {
-  var map = {
-    'Akane':'Akane','Akechi':'Akechi','Akira':'Akira','Alice':'Alice','Ann':'Ann',
-    'Beauty Thief':'Beauty Thief','Caroline':'Caroline','Chihaya':'Chihaya',
-    'Ms. Chouno':'Chouno','Cognitive Akechi':'Cognitive Akechi',
-    'Cognitive Shiho Suzui':'Cognitive Shiho','SIU Director':'Director',
-    'Futaba':'Futaba','Haru':'Haru','Hifumi':'Hifumi',
-    'Coach Hiraguchi':'Hiraguchi','Mr. Hiruta':'Hiruta','Ichinose':'Ichinose',
-    'Igor':'Igor','Mr. Inui':'Inui','Iwai':'Iwai','Joker':'Joker','Jose':'Jose',
-    'Justine':'Justine','Kaburagi':'Kaburagi','Kamoshida':'Kamoshida',
-    'Kaneshiro':'Kaneshiro','Kasumi':'Kasumi','Kawakami':'Kawakami',
-    'Konoe':'Konoe','Lavenza':'Lavenza','Madarame':'Madarame','Makoto':'Makoto',
-    'Mariko':'Mariko','Maruki':'Maruki','Mika':'Mika','Mishima':'Mishima',
-    'Morgana':'Morgana','Nakanohara':'Nakanohara','Natsume':'Natsume',
-    'Ohya':'Ohya','Okumura':'Okumura','Owada':'Owada',
-    'Princess Ann':'Princess Ann','Principal':'Principal','Ren':'Ren',
-    'Rumi':'Rumi','Ryuji':'Ryuji','Sae':'Sae','Shadow Akane':'Shadow Akane',
-    'Shadow Alice':'Shadow Alice','Shadow Futaba':'Shadow Futaba',
-    'Shadow Kamoshida':'Shadow Kamoshida','Shadow Kaneshiro':'Shadow Kaneshiro',
-    'Shadow Konoe':'Shadow Konoe','Shadow Madarame':'Shadow Madarame',
-    'Shadow Mariko':'Shadow Mariko','Shadow Mishima':'Shadow Mishima',
-    'Shadow Nakanohara':'Shadow Nakanohara','Shadow Natsume':'Shadow Natsume',
-    'Shadow Okumura':'Shadow Okumura','Shadow Sae':'Shadow Sae',
-    'Shadow Shido':'Shadow Shido',
-    'Shady Commodities Tanaka':'Shady Commodities Tanaka',
-    'Shibusawa':'Shibusawa','Shido':'Shido','Shiho':'Shiho',
-    'Shinichi Yoshizawa':'Shinichi','Shinya':'Shinya','Sojiro':'Sojiro',
-    'Sophia':'Sophia','Sugimura':'Sugimura','Sumire':'Sumire','Takemi':'Takemi',
-    'Tanaka':'Tanaka','Ms. Usami':'Usami','Mr. Ushimaru':'Ushimaru',
-    'Wakaba':'Wakaba','Yoshida':'Yoshida','Yusuke':'Yusuke','Zenkichi':'Zenkichi',
-  };
-  return map[name] || null;
-}
-
-function findNameAfterCharSelect(key) {
-  var map = {
-    'Akane':'Akane','Akechi':'Akechi','Akira':'Akira','Alice':'Alice','Ann':'Ann',
-    'Beauty Thief':'Beauty Thief','Caroline':'Caroline','Chihaya':'Chihaya',
-    'Chouno':'Ms. Chouno','Cognitive Akechi':'Cognitive Akechi',
-    'Cognitive Shiho':'Cognitive Shiho Suzui','Director':'SIU Director',
-    'Futaba':'Futaba','Haru':'Haru','Hifumi':'Hifumi',
-    'Hiraguchi':'Coach Hiraguchi','Hiruta':'Mr. Hiruta','Ichinose':'Ichinose',
-    'Igor':'Igor','Inui':'Mr. Inui','Iwai':'Iwai','Joker':'Joker','Jose':'Jose',
-    'Justine':'Justine','Kaburagi':'Kaburagi','Kamoshida':'Kamoshida',
-    'Kaneshiro':'Kaneshiro','Kasumi':'Kasumi','Kawakami':'Kawakami',
-    'Konoe':'Konoe','Lavenza':'Lavenza','Madarame':'Madarame','Makoto':'Makoto',
-    'Mariko':'Mariko','Maruki':'Maruki','Mika':'Mika','Mishima':'Mishima',
-    'Morgana':'Morgana','Nakanohara':'Nakanohara','Natsume':'Natsume',
-    'Ohya':'Ohya','Okumura':'Okumura','Owada':'Owada',
-    'Princess Ann':'Princess Ann','Principal':'Principal','Ren':'Ren',
-    'Rumi':'Rumi','Ryuji':'Ryuji','Kawakami':'Kawakami','Sae':'Sae',
-    'Shibusawa':'Shibusawa','Shiho':'Shiho','Shinichi':'Shinichi Yoshizawa',
-    'Shinya':'Shinya','Sojiro':'Sojiro','Sophia':'Sophia','Sugimura':'Sugimura',
-    'Kamoshida':'Kamoshida','Sumire':'Sumire','Takemi':'Takemi','Maruki':'Maruki',
-    'Tanaka':'Tanaka','Usami':'Ms. Usami','Ushimaru':'Mr. Ushimaru',
-    'Wakaba':'Wakaba','Yoshida':'Yoshida','Yusuke':'Yusuke',
-    'Mishima':'Mishima','Zenkichi':'Zenkichi',
-    'Joker':'Joker','Ohya':'Ohya','Iwai':'Iwai',
-    'Shadow Akane':'Shadow Akane','Shadow Alice':'Shadow Alice',
-    'Shadow Futaba':'Shadow Futaba','Shadow Kamoshida':'Shadow Kamoshida',
-    'Shadow Kaneshiro':'Shadow Kaneshiro','Shadow Konoe':'Shadow Konoe',
-    'Shadow Madarame':'Shadow Madarame','Shadow Mariko':'Shadow Mariko',
-    'Shadow Mishima':'Shadow Mishima','Shadow Nakanohara':'Shadow Nakanohara',
-    'Shadow Natsume':'Shadow Natsume','Shadow Okumura':'Shadow Okumura',
-    'Shadow Sae':'Shadow Sae','Shadow Shido':'Shadow Shido',
-    'Shady Commodities Tanaka':'Shady Commodities Tanaka',
-  };
-  return map[key] || key;
-}
-
-// ==================== RANDOM NUMBERS & TEXT COORDS ====================
-function findRandomNumbers(name) {
-  var random, secondRandom, thirdRandom;
-  if (!name.trim()) return [null, null, null];
-  do { random = Math.floor(Math.random() * name.length); }
-  while (name[random] === ' ');
-  if (name.length >= 8) {
-    if (random > Math.floor(name.length / 2)) {
-      while (name[random] === ' ' || random > Math.floor(name.length / 2))
-        random = Math.floor(Math.random() * name.length);
-    }
-    do { secondRandom = Math.floor(Math.random() * name.length); }
-    while (name[secondRandom] === ' ' || secondRandom < Math.floor(name.length / 2) || Math.abs(secondRandom - random) <= 2);
-    if (name.length >= 16) {
-      if (random > Math.floor((name.length / 3) - 1)) {
-        while (name[random] === ' ' || random > Math.floor(name.length / 3))
-          random = Math.floor(Math.random() * name.length);
-      }
-      if (secondRandom > 2 * (Math.floor((name.length / 3) - 1))) {
-        while (name[secondRandom] === ' ' || secondRandom < Math.floor(name.length / 3) || secondRandom > 2 * Math.floor(name.length / 3) || Math.abs(secondRandom - random) <= 2)
-          secondRandom = Math.floor(Math.random() * name.length);
-      }
-      do { thirdRandom = Math.floor(Math.random() * name.length); }
-      while (name[thirdRandom] === ' ' || thirdRandom < 2 * Math.floor(name.length / 3) || Math.abs(thirdRandom - secondRandom) <= 2);
-    }
-  }
-  return [random, secondRandom, thirdRandom];
-}
-
-var findTextCoords = {
-  main: [500, 373, 403, 433],
-  dancing: [440, 403, 433, 463],
-  noPortrait: [470, 353, 383, 413],
-  strikers: [450, 383, 413, 443],
-};
-
-// ==================== CANVAS REFS ====================
-var portraitCanvas = document.getElementById('portraitCanvas');
-var boxCanvas = document.getElementById('boxCanvas');
-var tileCanvas = document.getElementById('tileCanvas');
-var nameCanvas = document.getElementById('nameCanvas');
-var textCanvas = document.getElementById('textCanvas');
-
-var pCtx = portraitCanvas.getContext('2d');
-var bCtx = boxCanvas.getContext('2d');
-var tileCtx = tileCanvas.getContext('2d');
-var nCtx = nameCanvas.getContext('2d');
-var tCtx = textCanvas.getContext('2d');
-
-// ==================== FONT HELPER ====================
-function ensureFontLoaded(font, pt) {
-  pt = pt || 18;
-  return new Promise(function(resolve) {
-    if (document.fonts.check(pt + 'pt "' + font + '"') || document.fonts.check(pt + 'pt \'' + font + '\'')) {
-      resolve();
-    } else {
-      document.fonts.load(pt + 'pt "' + font + '"').then(function() { resolve(); }).catch(function() { resolve(); });
-    }
-  });
-}
-
-// ==================== CORE RENDER (async, sequential) ====================
-var renderQueued = false;
-
-function queueRender() {
-  if (renderQueued) return;
-  renderQueued = true;
-  // Defer so rapid changes batch into one draw
-  setTimeout(function() { renderQueued = false; draw(); }, 16);
-}
-
-function draw() {
-  var boxType = state.boxType;
-  var font = state.font;
-  var nameVal = document.getElementById('nameField').value;
-  var textVal = document.getElementById('textField').value;
-
-  // ---- Step 1: resolve image paths ----
-  var boxPath = resolveBoxPath(nameVal, font, boxType);
-  var portraitUrl = resolvePortraitUrl();
-
-  // ---- Step 2: ensure every image is in the cache and loaded ----
-  var imagePromises = [];
-
-  if (state.customPortraitData) {
-    var cImg = cachedImg(state.customPortraitData, false);
-    imagePromises.push(imgReady(cImg).then(function(img) { return { type: 'custom', img: img }; }));
-  } else if (portraitUrl) {
-    var pImg = cachedImg(portraitUrl, true);
-    imagePromises.push(imgReady(pImg).then(function(img) { return { type: 'portrait', img: img }; }));
-  }
-  if (boxPath) {
-    var bImg = cachedImg(boxPath, false);
-    imagePromises.push(imgReady(bImg).then(function(img) { return { type: 'box', img: img }; }));
-  }
-
-  if (imagePromises.length === 0) {
-    // Nothing to wait for (e.g. "No Portrait" with empty text)
-    clearAllCanvases(boxType);
-    return;
-  }
-
-  Promise.all(imagePromises).then(function(results) {
-    // ---- Step 3: clear everything ----
-    clearAllCanvases(boxType);
-
-    // ---- Step 4: draw portrait, custom sprite & box ----
-    for (var i = 0; i < results.length; i++) {
-      var r = results[i];
-      if (r.type === 'custom') {
-        pCtx.clearRect(0, 0, 1275, 800);
-        var iw = r.img.naturalWidth, ih = r.img.naturalHeight;
-        var scale = Math.min(500 / iw, 500 / ih, 1);
-        var dw = Math.round(iw * scale), dh = Math.round(ih * scale);
-        var dx = Math.round((500 - dw) / 2), dy = Math.round((500 - dh) / 2);
-        pCtx.drawImage(r.img, dx, dy, dw, dh);
-      } else if (r.type === 'portrait') {
-        drawPortraitToCtx(r.img);
-      } else if (r.type === 'box') {
-        drawBoxToCtx(r.img, boxType);
-      }
-    }
-
-    // ---- Step 5: draw tiles + name text (waits for font) ----
-    drawNameAndTiles(nameVal, font, boxType);
-
-    // ---- Step 6: draw dialogue text (waits for font) ----
-    drawDialogueText(textVal, font, boxType);
-
-  }).catch(function(err) {
-    console.error('[draw] asset error:', err);
-  });
-}
-
-// ==================== PATH RESOLVERS ====================
-function resolvePortraitUrl() {
-  if (state.customPortraitData) return state.customPortraitData;
-  if (state.char === 'None') return '';
-  return 'https://testing-s3-p5.s3.amazonaws.com/portraits/' + state.char + '/' + state.emote + '/' + state.char + '-' + state.emote + '-' + state.costume + '.png';
-}
-
-function resolveBoxPath(name, font, boxType) {
-  if (boxType === 'main') {
-    var charWithBox = findNameBox(name);
-    if (charWithBox && (font === 'KoreanKRSM' || font === 'Optima nova LT')) {
-      return './generators/P5/images/boxes/db-' + charWithBox + '-' + font + '.png';
-    }
-    var w = measureNameWidth(name, font);
-    if (w <= 195) return './generators/P5/images/db-main-small.png';
-    if (w <= 275) return './generators/P5/images/db-main-medium.png';
-    return './generators/P5/images/db-main-large.png';
-  }
-  if (boxType === 'noPortrait') return './generators/P5/images/db-noPortrait.png';
-  if (boxType === 'dancing') return './generators/P5/images/db-dancing.png';
-  if (boxType === 'strikers') return './generators/P5/images/db-strikers.png';
-  return './generators/P5/images/db-main-small.png';
-}
-
-function measureNameWidth(name, font) {
-  nCtx.font = '18pt "' + font + '"';
-  return nCtx.measureText(name).width;
-}
-
-// ==================== CANVAS OPERATIONS ====================
-function clearAllCanvases(boxType) {
-  pCtx.clearRect(0, 0, 1275, 500);
-  bCtx.clearRect(0, 0, 1275, 500);
-  tCtx.clearRect(0, 0, 1275, 500);
-  nCtx.clearRect(0, 0, 1275, 500);
-  tCtx.clearRect(0, 0, 1275, 500);
-
-  // Reset + rotate name/tile canvases
-  nCtx.setTransform(1, 0, 0, 1, 0, 0);
-  tileCtx.setTransform(1, 0, 0, 1, 0, 0);
-  var angle = 0;
-  switch (boxType) {
-    case 'main': angle = -14.65; break;
-    case 'dancing': angle = 0; break;
-    case 'noPortrait': angle = -18.55; break;
-    case 'strikers': angle = -5.5; break;
-  }
-  var rad = angle * Math.PI / 180;
-  nCtx.rotate(rad);
-  tileCtx.rotate(rad);
-  nCtx.clearRect(-500, -500, 2275, 1500);
-  tileCtx.clearRect(-500, -500, 2275, 1500);
-}
-
-function drawPortraitToCtx(img) {
-  if (state.char === 'None') return;
-  var char = state.char, emote = state.emote, costume = state.costume;
-  var x, y;
-  if (simplePositions[char]) {
-    x = simplePositions[char][0];
-    y = simplePositions[char][1];
-  } else {
-    var sp = findSpecialPosition(char, emote, costume);
-    x = sp[0]; y = sp[1];
-  }
-  var w = 500, h = 500;
-  if (costume === "Humanity's Companion") w = 580;
-  if (char === 'Haru' && (costume === 'Swimsuit (Okinawa)' || costume === 'Road Trip (Hat)')) w = 570;
-  pCtx.clearRect(0, 0, 1275, 500);
-  pCtx.drawImage(img, x, y, w, h);
-}
-
-function drawBoxToCtx(img, boxType) {
-  bCtx.clearRect(0, 0, 1275, 500);
-  var w = img.naturalWidth;
-  var h = img.naturalHeight;
-  switch (boxType) {
-    case 'main': bCtx.drawImage(img, 320, 250 - (h - 250), w, h); break;
-    case 'noPortrait': bCtx.drawImage(img, 320, 180, w, h); break;
-    case 'dancing': bCtx.drawImage(img, 320, 300, w, h); break;
-    case 'strikers': bCtx.drawImage(img, 320, 250, w, h); break;
-  }
-}
-
-function drawNameAndTiles(name, font, boxType) {
-  nCtx.clearRect(-500, -500, 2275, 1500);
-  tileCtx.clearRect(-500, -500, 2275, 1500);
-  nCtx.font = '18pt "' + font + '"';
-  nCtx.textAlign = 'center';
-  nCtx.textBaseline = 'alphabetic';
-
-  if (boxType === 'main') {
-    var charWithBox = findNameBox(name);
-    if (charWithBox && (font === 'KoreanKRSM' || font === 'Optima nova LT')) return;
-  }
-
-  var displayName = (function(n, f) {
-    nCtx.font = '18pt "' + f + '"';
-    if (nCtx.measureText(n).width <= 260) return n;
-    var t = n;
-    while (t.length > 0 && nCtx.measureText(t + '...').width > 260) t = t.slice(0, -1);
-    return t + '...';
-  })(name, font);
-
-  var centerX, baseY;
-  if (boxType === 'main' || boxType === 'noPortrait') {
-    centerX = boxType === 'main' ? 418 : 392;
-    baseY = boxType === 'main' ? 438 : 425;
-  } else if (boxType === 'dancing') {
-    ensureFontLoaded(font, 18).then(function() {
-      nCtx.font = '18pt "' + font + '"';
-      nCtx.textAlign = 'center';
-      nCtx.fillStyle = '#FFFFFF';
-      nCtx.fillText(displayName, 660, 353);
-    });
-    return;
-  } else if (boxType === 'strikers') {
-    ensureFontLoaded(font, 16.5).then(function() {
-      nCtx.font = '16.5pt "' + font + '"';
-      nCtx.textAlign = 'center';
-      nCtx.fillStyle = '#000000';
-      nCtx.fillText(displayName, 500, 371);
-    });
-    return;
-  } else {
-    return;
-  }
-
-  if (displayName.length > 1 && displayName.trim()) {
-    var rn = findRandomNumbers(displayName);
-    var random = rn[0], secondRandom = rn[1], thirdRandom = rn[2];
-
-    var beforeBox = displayName.substring(0, random);
-    var behindBox = displayName.substring(random, random + 1);
-    var afterBox = displayName.substring(random + 1);
-    var secondBehindBox, secondAfterBox, thirdBehindBox, thirdAfterBox;
-
-    if (displayName.length >= 8) {
-      afterBox = displayName.substring(random + 1, secondRandom);
-      secondBehindBox = displayName.substring(secondRandom, secondRandom + 1);
-      secondAfterBox = displayName.substring(secondRandom + 1);
-      if (displayName.length >= 16) {
-        secondAfterBox = displayName.substring(secondRandom + 1, thirdRandom);
-        thirdBehindBox = displayName.substring(thirdRandom, thirdRandom + 1);
-        thirdAfterBox = displayName.substring(thirdRandom + 1);
-      }
-    }
-
-    ensureFontLoaded(font, 18).then(function() {
-      nCtx.font = '18pt "' + font + '"';
-      nCtx.textAlign = 'center';
-
-      var totalW = nCtx.measureText(displayName).width;
-      var startX = centerX - totalW / 2;
-      var boxX = startX, secondBoxX, thirdBoxX;
-      var i, tm;
-
-      for (i = 0; i < random; i++) { tm = nCtx.measureText(displayName[i]); boxX += tm.width; }
-      tm = nCtx.measureText(displayName[random]);
-      tileCtx.fillRect(boxX, baseY - tm.fontBoundingBoxAscent - 4, tm.width, tm.fontBoundingBoxAscent + tm.fontBoundingBoxDescent + 7);
-
-      if (displayName.length >= 8) {
-        secondBoxX = boxX;
-        for (i = random; i < secondRandom; i++) { tm = nCtx.measureText(displayName[i]); secondBoxX += tm.width; }
-        tm = nCtx.measureText(displayName[secondRandom]);
-        tileCtx.fillRect(secondBoxX, baseY - tm.fontBoundingBoxAscent - 3, tm.width, tm.fontBoundingBoxAscent + tm.fontBoundingBoxDescent + 7);
-        if (displayName.length >= 16) {
-          thirdBoxX = secondBoxX;
-          for (i = secondRandom; i < thirdRandom; i++) { tm = nCtx.measureText(displayName[i]); thirdBoxX += tm.width; }
-          tm = nCtx.measureText(displayName[thirdRandom]);
-          tileCtx.fillRect(thirdBoxX, baseY - tm.fontBoundingBoxAscent - 3, tm.width, tm.fontBoundingBoxAscent + tm.fontBoundingBoxDescent + 6);
-        }
-      }
-
-      nCtx.fillStyle = '#000000';
-      nCtx.fillText(beforeBox, startX + nCtx.measureText(beforeBox).width / 2, baseY);
-      nCtx.fillStyle = '#FFFFFF';
-      var ht = nCtx.measureText(behindBox).width;
-      nCtx.fillText(behindBox, boxX + ht / 2, baseY);
-      nCtx.fillStyle = '#000000';
-      nCtx.fillText(afterBox, boxX + ht + nCtx.measureText(afterBox).width / 2, baseY);
-
-      if (displayName.length >= 8) {
-        nCtx.fillStyle = '#FFFFFF';
-        var sht = nCtx.measureText(secondBehindBox).width;
-        nCtx.fillText(secondBehindBox, secondBoxX + sht / 2, baseY);
-        nCtx.fillStyle = '#000000';
-        nCtx.fillText(secondAfterBox, secondBoxX + sht + nCtx.measureText(secondAfterBox).width / 2, baseY);
-        if (displayName.length >= 16) {
-          nCtx.fillStyle = '#FFFFFF';
-          var tht = nCtx.measureText(thirdBehindBox).width;
-          nCtx.fillText(thirdBehindBox, thirdBoxX + tht / 2, baseY);
-          nCtx.fillStyle = '#000000';
-          nCtx.fillText(thirdAfterBox, thirdBoxX + tht + nCtx.measureText(thirdAfterBox).width / 2, baseY);
-        }
-      }
-    });
-  } else if (displayName.length === 1) {
-    ensureFontLoaded(font, 18).then(function() {
-      nCtx.font = '18pt "' + font + '"';
-      nCtx.textAlign = 'center';
-      nCtx.fillStyle = '#000000';
-      nCtx.fillText(displayName, centerX, baseY);
-    });
-  }
-}
-
-function drawDialogueText(text, font, boxType) {
-  tCtx.clearRect(0, 0, 1275, 500);
-  if (!text.trim()) return;
-
-  var pt = boxType === 'strikers' ? 16 : 18;
-  var coords = findTextCoords[boxType] || findTextCoords.main;
-  var maxWidth = { main: 580, dancing: 600, noPortrait: 520, strikers: 540 }[boxType] || 580;
-
-  ensureFontLoaded(font, pt).then(function() {
-    tCtx.font = pt + 'pt "' + font + '"';
-    tCtx.textAlign = 'left';
-    tCtx.fillStyle = '#FFFFFF';
-
-    // Tokenize: words (\S+) and hard breaks (\n)
-    var tokens = text.match(/\S+|\n/g) || [];
-    var lines = [];
-    var current = '';
-    var overflow = false;
-
-    function flush() { if (current) { lines.push(current); current = ''; } }
-
-    function addLine() {
-      if (current) {
-        lines.push(current);
-        current = '';
-        if (lines.length >= 3) overflow = true;
-      }
-    }
-
-    for (var t = 0; t < tokens.length; t++) {
-      if (overflow) break;
-      var token = tokens[t];
-      if (token === '\n') { addLine(); continue; }
-
-      // Long unbroken string — break character by character
-      if (tCtx.measureText(token).width > maxWidth) {
-        addLine();
-        if (overflow) break;
-        var buf = '';
-        for (var c = 0; c < token.length; c++) {
-          if (overflow) { if (buf) current = ''; break; }
-          var test = buf + token[c];
-          if (tCtx.measureText(test).width > maxWidth && buf) {
-            lines.push(buf);
-            if (lines.length >= 3) { overflow = true; current = ''; break; }
-            buf = token[c];
-          } else {
-            buf = test;
-          }
-        }
-        if (!overflow && buf) current = buf;
-        continue;
-      }
-
-      // Normal word — append to current line or start a new one
-      var withToken = current ? current + ' ' + token : token;
-      if (tCtx.measureText(withToken).width > maxWidth && current) {
-        addLine();
-        if (overflow) break;
-        current = token;
-      } else {
-        current = withToken;
-      }
-    }
-
-    if (!overflow) flush();
-
-    // Enforce max 3 lines with ellipsis on overflow
-    if (overflow || lines.length > 3) {
-      var last = lines[2];
-      while (tCtx.measureText(last + '...').width > maxWidth && last.length > 0)
-        last = last.slice(0, -1);
-      lines[2] = last + '...';
-      lines.length = 3;
-    }
-
-    if (lines.length === 0) return;
-
-    var x = coords[0];
-    if (lines.length === 1) {
-      tCtx.fillText(lines[0], x, Math.round((coords[1] + coords[3]) / 2));
-    } else if (lines.length === 2) {
-      tCtx.fillText(lines[0], x, Math.round((coords[1] + coords[2]) / 2));
-      tCtx.fillText(lines[1], x, Math.round((coords[2] + coords[3]) / 2));
-    } else {
-      tCtx.fillText(lines[0], x, coords[1]);
-      tCtx.fillText(lines[1], x, coords[2]);
-      tCtx.fillText(lines[2], x, coords[3]);
-    }
-  });
-}
-
-var PORTRAIT_DATA = {"Akane":{"Angry":["Casual"],"Blushing (Unused)":["Casual"],"Crying":["Casual"],"Happy":["Casual"],"Hurt":["Casual"],"Miscellaneous":["Shadow Akane (Angry)","Shadow Akane (Happy, No Hat)","Shadow Akane (Hurt)","Shadow Akane (Neutral)","Shadow Akane (Smug)","Shadow Akane (Smug, Normal Eyes)"],"Neutral":["Casual"],"Sad":["Casual"],"Shocked":["Casual"]},"Akechi":{"Angry":["Casual","Crow","Crow (No Mask)","Detective Prince","Summer Uniform"],"Angry (Royal)":["Black Mask","Casual","Crow","Detective Prince","Gym Clothes","Indoor Coat","Shirtless","Summer Uniform","Winter Coat"],"Disgusted (Royal)":["Black Mask","Casual","Crow","Detective Prince","Gym Clothes","Indoor Coat","Summer Uniform","Winter Coat"],"Furious":["Black Mask (Defeated)","Crow","Detective Prince"],"Happy":["Casual","Crow","Detective Prince","Summer Uniform"],"Happy (Royal)":["Black Mask","Casual","Crow","Detective Prince","Gym Clothes","Indoor Coat","Shirtless","Summer Uniform","Winter Coat"],"Hurt":["Casual","Crow","Detective Prince","Summer Uniform"],"Hurt (Royal)":["Black Mask","Casual","Crow","Detective Prince","Indoor Coat","Shirtless","Summer Uniform","Winter Coat"],"Intense (Royal)":["Black Mask","Gym Clothes","Indoor Coat","Winter Coat"],"Miscellaneous":["Cognitive Akechi (Furious)","Cognitive Akechi (Smirking)","Cognitive Akechi (Staring)","Crow (Hidden)","Disguised (Detective Prince)","Disguised (Summer Uniform)","Disguised (Winter Casual)"],"Neutral":["Casual","Crow","Crow (No Mask)","Detective Prince","Summer Uniform"],"Neutral (Royal)":["Black Mask","Casual","Crow","Detective Prince","Gym Clothes","Indoor Coat","Shirtless","Summer Uniform","Winter Coat"],"Sad":["Casual","Crow","Detective Prince","Summer Uniform"],"Sad (Royal)":["Black Mask","Casual","Crow","Detective Prince","Gym Clothes","Indoor Coat","Shirtless","Summer Uniform","Winter Coat"],"Shocked":["Casual","Crow","Detective Prince","Summer Uniform"],"Shocked (Royal)":["Black Mask","Casual","Crow","Detective Prince","Gym Clothes","Indoor Coat","Summer Uniform","Winter Coat"],"Smirking":["Black Mask (Defeated)","Crow","Detective Prince"],"Smug (Royal)":["Black Mask","Casual","Crow","Detective Prince","Gym Clothes","Indoor Coat","Summer Uniform","Winter Coat"],"Staring":["Black Mask (Defeated)","Crow","Detective Prince"],"Surprised (Royal)":["Black Mask","Gym Clothes","Indoor Coat","Winter Coat"],"Upset":["Black Mask (Defeated)","Crow","Detective Prince"],"Wistful (Royal)":["Black Mask","Gym Clothes","Indoor Coat","Winter Coat"]},"Alice":{"Angry":["Wonderland Attire"],"Happy":["Wonderland Attire"],"Miscellaneous":["Shadow Alice (Angry)","Shadow Alice (Crying, Defeated)","Shadow Alice (Happy)","Shadow Alice (Hurt)","Shadow Alice (Neutral)","Shadow Alice (Sad, Defeated)"],"Neutral":["Wonderland Attire"],"Sad":["Wonderland Attire"],"Shocked":["Wonderland Attire"],"Smug":["Wonderland Attire"]},"Ann":{"Angry":["\"Nude\"","Destinyland","Gym Clothes","Modeling","Panther","Panther (No Mask)","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Undershirt","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Angry (Royal)":["Gym Clothes","Indoor Coat","Modeling","Panther","Summer Casual","Summer Uniform","Swimsuit","Undershirt","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform","Yukata"],"Angry (Royal, v2)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Blushing":["Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata (Strikers)"],"Blushing (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Crying":["Road Trip","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata (Strikers)"],"Crying (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Embarrassed":["Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata (Strikers)"],"Embarrassed (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Embarrassed (Royal, v2)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Excited (Royal)":["Destinyland","Gym Clothes","Indoor Coat","Modeling","New Years","Panther","Summer Casual","Summer Uniform","Swimsuit","Undershirt","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Happy":["\"Nude\"","Destinyland","Gym Clothes","Modeling","Panther","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Undershirt","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Happy (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Hurt":["\"Nude\"","Destinyland","Gym Clothes","Modeling","Panther","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Undershirt","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Hurt (Royal)":["Gym Clothes","Indoor Coat","Modeling","Panther","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Hurt (Royal, v2)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Miscellaneous":["Panther (Hidden)","Princess Ann","Princess Ann (Royal)"],"Neutral":["\"Nude\"","Destinyland","Gym Clothes","Modeling","Panther","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Undershirt","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Neutral (Royal)":["Destinyland","Gym Clothes","Indoor Coat","Modeling","New Years","Panther","Summer Casual","Summer Uniform","Swimsuit","Undershirt","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform","Yukata"],"Sad":["\"Nude\"","Destinyland","Gym Clothes","Modeling","Panther","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Undershirt","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Sad (Royal)":["\"Nude\"","Destinyland","Gym Clothes","Indoor Coat","Modeling","Panther","Summer Casual","Summer Uniform","Swimsuit","Undershirt","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform","Yukata"],"Shocked (Royal)":["\"Nude\"","Destinyland","Gym Clothes","Indoor Coat","Panther","Summer Casual","Summer Uniform","Swimsuit","Undershirt","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Surprised":["\"Nude\"","Destinyland","Gym Clothes","Modeling","Panther","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Undershirt","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Surprised (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"],"Tears of Joy":["Road Trip","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata (Strikers)"],"Tears of Joy (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat (Earmuffs)","Winter Coat (No Earmuffs)","Winter Uniform"]},"Caroline":{"Angry":["Warden","Warden (No Patch)"],"Blushing":["Warden","Warden (No Patch)"],"Embarrassed":["Warden","Warden (No Patch)"],"Happy":["Warden","Warden (No Patch)"],"Hurt":["Warden","Warden (No Patch)"],"Neutral":["Warden","Warden (No Patch)"],"Sad":["Warden","Warden (No Patch)"],"Shocked":["Warden","Warden (No Patch)"]},"Chihaya":{"Angry":["Casual","Winter Coat"],"Blushing":["Casual","Winter Coat"],"Embarrassed":["Casual","Winter Coat"],"Happy":["Casual","Winter Coat"],"Neutral":["Casual","Winter Coat"],"Sad":["Casual","Winter Coat"],"Shocked":["Casual","Winter Coat"]},"Chouno":{"Neutral":["Work Attire"]},"Director":{"Angry":["Work Attire"],"Happy":["Work Attire"],"Mental Shutdown":["Work Attire"],"Neutral":["Work Attire"],"Sad":["Work Attire"],"Shocked":["Work Attire"],"Smirking":["Work Attire"]},"Futaba":{"Angry":["Destinyland","Navigator","Oracle","Pajamas","Road Trip","Road Trip (Hat)","Summer Casual","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Yukata"],"Angry (Royal)":["Destinyland","Navigator","New Years","Oracle","Pajamas","Summer Casual","Swimsuit","Winter Casual","Winter Coat"],"Blushing":["Road Trip","Road Trip (Hat)","Summer Casual","Swimsuit (Okinawa)","Towel","Winter Casual","Yukata"],"Blushing (Royal)":["New Years","Summer Casual","Winter Casual","Winter Coat"],"Crying":["Road Trip","Road Trip (Hat)","Summer Casual","Swimsuit (Okinawa)","Towel","Winter Casual","Yukata"],"Crying (Royal)":["Summer Casual","Winter Casual","Winter Coat"],"Embarrassed":["Road Trip","Road Trip (Hat)","Summer Casual","Swimsuit (Okinawa)","Towel","Winter Casual","Yukata"],"Embarrassed (Royal)":["Summer Casual","Winter Casual","Winter Coat"],"Happy":["Destinyland","Navigator","Oracle","Pajamas","Road Trip","Road Trip (Hat)","Summer Casual","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Yukata"],"Happy (Royal)":["Destinyland","Gym Clothes","Navigator","New Years","Oracle","Pajamas","Summer Casual","Swimsuit","Winter Casual","Winter Coat"],"Hurt":["Destinyland","Navigator","Oracle","Pajamas","Road Trip","Road Trip (Hat)","Summer Casual","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Yukata"],"Hurt (Royal)":["Destinyland","Navigator","Oracle","Pajamas","Summer Casual","Winter Casual","Winter Coat"],"Miscellaneous":["Mask (Summer Casual)","Mask (Summer Casual, Royal)","Mask (Winter Coat)","Oracle (Hidden, Angry)","Oracle (Hidden, Neutral)","Oracle (Hidden, Shocked)","Pajamas (Sleeping)","Pajamas (Sleeping, Royal)"],"Neutral":["Destinyland","Navigator","Oracle","Pajamas","Road Trip","Road Trip (Hat)","Shadow Futaba","Summer Casual","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Yukata"],"Neutral (Royal)":["Destinyland","Gym Clothes","Navigator","New Years","Oracle","Pajamas","Shadow Futaba","Summer Casual","Swimsuit","Winter Casual","Winter Coat"],"Sad":["Destinyland","Navigator","Oracle","Pajamas","Pajamas (No Glasses)","Road Trip","Road Trip (Hat)","Summer Casual","Swimsuit","Swimsuit (Okinawa)","Swimsuit (Shido's Palace)","Towel","Winter Casual","Yukata"],"Sad (Royal)":["Destinyland","Gym Clothes","Navigator","New Years","Oracle","Pajamas","Pajamas (No Glasses)","Summer Casual","Swimsuit","Swimsuit (Shido's Palace)","Winter Casual","Winter Coat"],"Shocked":["Destinyland","Navigator","Oracle","Pajamas","Pajamas (No Glasses)","Road Trip","Road Trip (Hat)","Summer Casual","Swimsuit","Swimsuit (Okinawa)","Swimsuit (Shido's Palace)","Towel","Winter Casual","Yukata"],"Shocked (Royal)":["Destinyland","Navigator","Oracle","Pajamas","Pajamas (No Glasses)","Summer Casual","Swimsuit","Swimsuit (Shido's Palace)","Winter Casual","Winter Coat"]},"Haru":{"Angry":["Gym Clothes","Noir","Noir (No Mask)","Road Trip","Road Trip (Hat)","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata"],"Angry (Royal)":["Gym Clothes","Indoor Coat (Earmuffs)","Indoor Coat (No Earmuffs)","Noir","Noir (No Mask)","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Blushing":["Road Trip","Road Trip (Hat)","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata"],"Blushing (Royal)":["Indoor Coat (Earmuffs)","Indoor Coat (No Earmuffs)","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Crying":["Road Trip","Road Trip (Hat)","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata"],"Crying (Royal)":["Summer Casual","Summer Uniform","Winter Casual","Winter Uniform"],"Embarrassed":["Gym Clothes"],"Embarrassed (Royal)":["Gym Clothes"],"Flustered":["Gym Clothes","Road Trip","Road Trip (Hat)","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata"],"Flustered (Royal)":["Gym Clothes","Indoor Coat (Earmuffs)","Indoor Coat (No Earmuffs)","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Happy":["Gym Clothes","Noir","Road Trip","Road Trip (Hat)","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata"],"Happy (Royal)":["Gym Clothes","Indoor Coat (Earmuffs)","Indoor Coat (No Earmuffs)","New Years","Noir","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Hurt":["Gym Clothes","Noir","Road Trip","Road Trip (Hat)","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata"],"Hurt (Royal)":["Gym Clothes","Indoor Coat (Earmuffs)","Indoor Coat (No Earmuffs)","Noir","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Miscellaneous":["Noir (Hidden)"],"Neutral":["Gym Clothes","Noir","Road Trip","Road Trip (Hat)","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata"],"Neutral (Royal)":["Gym Clothes","Indoor Coat","Indoor Coat (No Earmuffs)","New Years","Noir","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform"],"Sad":["Gym Clothes","Noir","Road Trip","Road Trip (Hat)","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata"],"Sad (Royal)":["Gym Clothes","Indoor Coat (Earmuffs)","Indoor Coat (No Earmuffs)","Noir","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Shocked":["Gym Clothes","Noir","Road Trip","Road Trip (Hat)","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata"],"Shocked (Royal)":["Gym Clothes","Indoor Coat (Earmuffs)","Indoor Coat (No Earmuffs)","Noir","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"]},"Hifumi":{"Angry":["Casual","Indoor Coat","Summer Uniform","Swimsuit","Winter Coat","Winter Uniform"],"Blushing":["Casual","Indoor Coat","Summer Uniform","Swimsuit","Winter Coat","Winter Uniform"],"Embarrassed":["Casual","Indoor Coat","Summer Uniform","Swimsuit","Winter Coat","Winter Uniform"],"Happy":["Casual","Indoor Coat","Summer Uniform","Swimsuit","Winter Coat","Winter Uniform"],"Hurt":["Casual","Indoor Coat","Summer Uniform","Swimsuit","Winter Coat","Winter Uniform"],"Neutral":["Casual","Indoor Coat","Summer Uniform","Swimsuit","Winter Coat","Winter Uniform"],"Sad":["Casual","Indoor Coat","Summer Uniform","Swimsuit","Winter Coat","Winter Uniform"],"Shocked":["Casual","Indoor Coat","Summer Uniform","Swimsuit","Winter Coat","Winter Uniform"]},"Hiraguchi":{"Angry":["Workout Clothes"],"Happy":["Winter Coat","Workout Clothes"],"Neutral":["Winter Coat","Workout Clothes"]},"Hiruta":{"Neutral":["Work Attire"]},"Ichinose":{"Angry":["Work Attire"],"Blushing":["Work Attire"],"Crying":["Work Attire"],"Happy":["Work Attire"],"Hurt":["Work Attire"],"Neutral":["Work Attire"],"Sad":["Work Attire"],"Shocked":["Work Attire"]},"Igor":{"Neutral":["Formal Wear"],"Smiling":["Formal Wear"]},"Inui":{"Neutral":["Work Attire"]},"Iwai":{"Angry":["Work Attire"],"Happy":["Work Attire"],"Neutral":["Work Attire"],"Sad":["Work Attire"],"Shocked":["Work Attire"]},"Joker":{"Angry (Persona O.A.)":["Winter Casual"],"Happy (Persona O.A.)":["Winter Casual"],"Hurt (Persona O.A.)":["Winter Casual"],"Neutral (Persona O.A.)":["Winter Casual"],"Sad (Persona O.A.)":["Winter Casual"],"Shocked (Persona O.A.)":["Winter Casual"]},"Jose":{"Angry":["Coat"],"Happy":["Coat"],"Hurt":["Coat"],"Neutral":["Coat"],"Sad":["Coat"],"Shocked":["Coat"]},"Justine":{"Angry":["Warden","Warden (No Patch)"],"Embarrassed":["Warden","Warden (No Patch)"],"Happy":["Warden","Warden (No Patch)"],"Hurt":["Warden","Warden (No Patch)"],"Neutral":["Warden","Warden (No Patch)"],"Sad":["Warden","Warden (No Patch)"],"Shocked":["Warden","Warden (No Patch)"]},"Kaburagi":{"Angry":["Work Attire"],"Happy":["Work Attire"],"Hurt":["Work Attire"],"Neutral":["Work Attire"],"Shocked":["Work Attire"]},"Kamoshida":{"Angry":["Shadow Kamoshida","Work Attire"],"Grinning":["Shadow Kamoshida"],"Happy":["Work Attire"],"Leering":["Shadow Kamoshida"],"Nervous":["Shadow Kamoshida"],"Neutral":["Shadow Kamoshida","Work Attire"],"Sad":["Work Attire"],"Scared":["Shadow Kamoshida"],"Shocked":["Work Attire"],"Smirking":["Shadow Kamoshida"]},"Kaneshiro":{"Angry":["Casual","Shadow Kaneshiro"],"Happy":["Casual","Shadow Kaneshiro"],"Neutral":["Casual","Shadow Kaneshiro"],"Sad":["Casual"],"Scared":["Shadow Kaneshiro"],"Shocked":["Casual"]},"Kawakami":{"Angry":["Becky","Graphic Tee","Jacket","Swimsuit","Winter Coat","Work Attire"],"Ashamed":["Becky","Jacket","Winter Coat","Work Attire"],"Blushing":["Becky","Swimsuit"],"Embarrassed":["Jacket","Winter Coat","Work Attire"],"Flustered":["Graphic Tee"],"Happy":["Becky","Graphic Tee","Jacket","Swimsuit","Winter Coat","Work Attire"],"Moe":["Becky"],"Neutral":["Becky","Graphic Tee","Jacket","Swimsuit","Winter Coat","Work Attire"],"Sad":["Becky","Graphic Tee","Jacket","Swimsuit","Winter Coat","Work Attire"],"Shocked":["Becky","Graphic Tee","Jacket","Swimsuit","Winter Coat","Work Attire"]},"Konoe":{"Angry":["Work Attire"],"Happy":["Work Attire"],"Miscellaneous":["Shadow Konoe (Angry, Zephyrman)","Shadow Konoe (Closed Mask, Zephyrman)","Shadow Konoe (Furious, Work Attire)","Shadow Konoe (Hurt, Zephyrman)","Shadow Konoe (Sad, Zephyrman, No Helmet)","Shadow Konoe (Smug, Work Attire)","Shadow Konoe (Smug, Zephyrman)"],"Neutral":["Work Attire"],"Sad":["Work Attire"],"Shocked":["Work Attire"],"Smug":["Work Attire"]},"Lavenza":{"Angry":["Velvet Room Uniform"],"Dozing Off":["Velvet Room Uniform"],"Happy":["Velvet Room Uniform"],"Neutral":["Velvet Room Uniform"],"Sad":["Velvet Room Uniform"],"Shocked":["Velvet Room Uniform"],"Sleeping":["Velvet Room Uniform"],"Sleeping (Angry)":["Velvet Room Uniform"]},"Madarame":{"Angry":["Shadow Madarame","Work Attire"],"Crying":["Work Attire"],"Furious":["Shadow Madarame","Work Attire"],"Happy":["Shadow Madarame","Work Attire"],"Hurt":["Work Attire"],"Neutral":["Shadow Madarame","Work Attire"],"Sad":["Work Attire"],"Scared":["Shadow Madarame"],"Shocked":["Work Attire"],"Sobbing":["Work Attire"]},"Makoto":{"Angry":["Gym Clothes","Queen","Queen (No Mask)","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Angry (Royal)":["Indoor Coat","Queen","Queen (No Mask)","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform","Yukata"],"Blushing":["Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata (Strikers)"],"Blushing (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Embarrassed":["Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata (Strikers)"],"Embarrassed (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform"],"Happy":["Gym Clothes","Queen","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Happy (Royal)":["Gym Clothes","Indoor Coat","New Years","Queen","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform"],"Hurt":["Gym Clothes","Queen","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Hurt (Royal)":["Indoor Coat","Queen","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Miscellaneous":["Queen (Hidden)"],"Neutral":["Gym Clothes","Queen","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Neutral (Royal)":["Gym Clothes","Indoor Coat","New Years","Queen","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform","Yukata"],"Sad":["Gym Clothes","Queen","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Sad (Royal)":["Indoor Coat","New Years","Queen","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform"],"Shocked":["Gym Clothes","Queen","Road Trip","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Towel","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Shocked (Royal)":["Indoor Coat","Queen","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform","Yukata"]},"Mariko":{"Angry":["Work Attire"],"Happy":["Work Attire"],"Miscellaneous":["Shadow Mariko (Angry)","Shadow Mariko (Happy)","Shadow Mariko (Hurt)","Shadow Mariko (Neutral)","Shadow Mariko (Sad, Defeated)","Shadow Mariko (Smug)"],"Neutral":["Work Attire"],"Sad":["Work Attire"],"Shocked":["Work Attire"]},"Maruki":{"Angry":["Indoor Coat","Metaverse Attire","Metaverse Attire (Damaged)","Metaverse Attire (No Mask)","Metaverse Attire (No Mask, Damaged)","Palace Ruler","Palace Ruler (Damaged)","Winter Coat","Work Attire","Young"],"Happy":["Indoor Coat","Metaverse Attire","Metaverse Attire (Damaged)","Metaverse Attire (No Mask)","Metaverse Attire (No Mask, Damaged)","Palace Ruler","Palace Ruler (Damaged)","Winter Coat","Work Attire","Work Attire (Fogged Glasses)","Work Attire (No Jacket)","Young"],"Hurt":["Metaverse Attire","Metaverse Attire (Damaged)","Metaverse Attire (No Mask, Damaged)","Palace Ruler","Palace Ruler (Damaged)","Winter Coat","Work Attire","Young"],"Neutral":["Indoor Coat","Metaverse Attire","Metaverse Attire (Damaged)","Metaverse Attire (No Mask)","Metaverse Attire (No Mask, Damaged)","Palace Ruler","Palace Ruler (Damaged)","Winter Coat","Work Attire","Work Attire (Fogged Glasses)","Work Attire (No Jacket)","Work Attire (No Lanyard)","Young"],"Sad":["Indoor Coat","Metaverse Attire","Metaverse Attire (Damaged)","Metaverse Attire (No Mask)","Metaverse Attire (No Mask, Damaged)","Palace Ruler","Palace Ruler (Damaged)","Winter Coat","Work Attire","Work Attire (Fogged Glasses)","Work Attire (No Jacket)","Young"],"Scheming":["Winter Coat","Young"],"Shocked":["Indoor Coat","Metaverse Attire","Metaverse Attire (Damaged)","Metaverse Attire (No Mask, Damaged)","Palace Ruler","Winter Coat","Work Attire","Work Attire (No Jacket)","Young"]},"Mika":{"Angry":["Skytree Photoshoot"],"Glaring":["Shibuya Photoshoot","Skytree Photoshoot"],"Happy":["Shibuya Photoshoot","Skytree Photoshoot"],"Hurt":["Skytree Photoshoot"],"Intense":["Shibuya Photoshoot"],"Neutral":["Shibuya Photoshoot","Skytree Photoshoot"],"Sad":["Shibuya Photoshoot"],"Smirking":["Shibuya Photoshoot"]},"Mishima":{"Angry":["Casual","Gym Clothes","Indoor Coat","Shadow Mishima","Shirtless","Summer Uniform","Winter Coat","Winter Uniform","Winter Uniform (Bruised)"],"Happy":["Casual","Gym Clothes","Indoor Coat","Shadow Mishima","Shirtless","Summer Uniform","Winter Coat","Winter Uniform","Winter Uniform (Bruised)"],"Hurt":["Casual","Gym Clothes","Indoor Coat","Shadow Mishima","Shirtless","Summer Uniform","Winter Coat","Winter Uniform","Winter Uniform (Bruised)"],"Neutral":["Casual","Gym Clothes","Indoor Coat","Shadow Mishima","Shirtless","Summer Uniform","Winter Coat","Winter Uniform","Winter Uniform (Bruised)"],"Sad":["Casual","Gym Clothes","Indoor Coat","Shadow Mishima","Shirtless","Summer Uniform","Winter Coat","Winter Uniform","Winter Uniform (Bruised)"],"Shocked":["Casual","Gym Clothes","Indoor Coat","Shadow Mishima","Shirtless","Summer Uniform","Winter Coat","Winter Uniform","Winter Uniform (Bruised)"]},"Morgana":{"Angry":["Mona"],"Angry (Royal)":["Mona"],"Happy":["Mona"],"Happy (Royal)":["Human","Mona"],"Hurt":["Mona"],"Hurt (Royal)":["Mona"],"Miscellaneous":["(Not a) Cat","Mona (Hidden)"],"Neutral":["Mona"],"Neutral (Royal)":["Human","Mona"],"Sad":["Mona"],"Sad (Royal)":["Human","Mona"],"Shocked":["Mona"],"Shocked (Royal)":["Human","Mona"],"Smirking":["Mona"],"Smirking (Royal)":["Mona"],"Starry-Eyed":["Mona"],"Starry-Eyed (Royal)":["Mona"],"Surprised":["Mona"],"Surprised (Royal)":["Mona"],"Upset":["Mona"],"Upset (Royal)":["Mona"]},"Nakanohara":{"Angry":["Shadow Nakanohara"],"Sad":["Shadow Nakanohara","Work Attire"]},"Natsume":{"Angry":["Casual"],"Happy":["Casual"],"Miscellaneous":["Shadow Natsume (Angry)","Shadow Natsume (Defeated, Shirtless)","Shadow Natsume (Happy)","Shadow Natsume (Hurt, Shirtless)","Shadow Natsume (Neutral)","Shadow Natsume (Sad)"],"Sad":["Casual"],"Shocked":["Casual"],"Smug":["Casual"]},"Ohya":{"Angry":["Casual","Winter Coat"],"Blushing":["Casual","Winter Coat"],"Embarrassed":["Casual","Winter Coat"],"Happy":["Casual","Winter Coat"],"Hurt":["Casual","Winter Coat"],"Neutral":["Casual","Winter Coat"],"Sad":["Casual","Winter Coat"],"Shocked":["Casual","Winter Coat"]},"Okumura":{"Angry":["Shadow Okumura","Work Attire"],"Happy":["Shadow Okumura","Work Attire"],"Neutral":["Shadow Okumura","Work Attire","Work Attire (Blue Ascot)"],"Sad":["Shadow Okumura","Work Attire","Work Attire (Blue Ascot)"],"Scared":["Shadow Okumura"],"Shocked":["Work Attire"]},"Owada":{"Angry":["Suit"],"Happy":["Suit"],"Neutral":["Suit"],"Sad":["Suit"],"Shocked":["Suit"]},"Principal":{"Angry":["Work Attire"],"Happy":["Work Attire"],"Neutral":["Work Attire"],"Sad":["Work Attire"],"Shocked":["Work Attire"]},"Rumi":{"Happy":["Hospital Gown"],"Neutral":["Hospital Gown"],"Panicking":["Hospital Gown"],"Resting":["Hospital Gown"],"Unresponsive":["Hospital Gown"]},"Ryuji":{"Angry":["Destinyland","Gym Clothes","Road Trip","Shirtless","Skull","Skull (No Mask)","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Workout Clothes","Yukata"],"Angry (Royal)":["Destinyland","Gym Clothes","Indoor Coat","Shirtless","Skull","Skull (No Mask)","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Angry (Royal, v2)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Blushing":["Gym Clothes","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Workout Clothes"],"Concerned":["Destinyland","Gym Clothes","Road Trip","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Workout Clothes","Yukata"],"Concerned (Royal)":["Gym Clothes","Indoor Coat","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform","Workout Clothes"],"Happy":["Destinyland","Gym Clothes","Road Trip","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Workout Clothes","Yukata"],"Happy (Royal)":["Destinyland","Gym Clothes","Indoor Coat","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform","Workout Clothes"],"Happy (Royal, v2)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Intense":["Destinyland","Gym Clothes","Road Trip","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Workout Clothes","Yukata"],"Intense (Royal)":["Destinyland","Gym Clothes","Indoor Coat","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform","Workout Clothes"],"Miscellaneous":["Skull (Hidden)"],"Neutral":["Destinyland","Gym Clothes","Road Trip","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Workout Clothes","Yukata"],"Neutral (Royal)":["Gym Clothes","Indoor Coat","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform","Workout Clothes"],"Resigned":["Destinyland","Gym Clothes","Road Trip","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Workout Clothes","Yukata"],"Resigned (Royal)":["Gym Clothes","Indoor Coat","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform","Workout Clothes"],"Resigned (Royal, v2)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Sad":["Destinyland","Gym Clothes","Road Trip","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Workout Clothes","Yukata"],"Sad (Royal)":["Destinyland","Gym Clothes","Indoor Coat","Shirtless","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform","Workout Clothes"],"Shocked (Royal)":["Gym Clothes","Indoor Coat","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform","Workout Clothes"],"Surprised":["Destinyland","Gym Clothes","Road Trip","Shirtless","Skull","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Workout Clothes","Yukata"],"Surprised (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"]},"Sae":{"Angry":["Shadow Sae","Winter Coat","Work Attire"],"Happy":["Shadow Sae","Winter Coat","Work Attire"],"Hurt":["Winter Coat","Work Attire"],"Neutral":["Shadow Sae","Winter Coat","Work Attire"],"Sad":["Shadow Sae","Winter Coat","Work Attire"],"Shocked":["Shadow Sae","Winter Coat","Work Attire"]},"Shibusawa":{"Angry":["Casual","Young"],"Happy":["Casual","Young"],"Neutral":["Casual","Young"],"Sad":["Casual","Young"],"Shocked":["Casual"]},"Shido":{"Angry":["Campaign Attire","Shadow Shido (Human Form)","Shadow Shido (Human Form, Damaged)","Shadow Shido (Leader Form)","Shadow Shido (Samael Form)"],"Flustered":["Campaign Attire","Campaign Attire (No Glasses, Injured)"],"Furious":["Campaign Attire"],"Happy":["Campaign Attire","Shadow Shido (Human Form)","Shadow Shido (Human Form, Damaged)","Shadow Shido (Leader Form)"],"Happy (v2)":["Campaign Attire"],"Hurt":["Campaign Attire","Campaign Attire (No Glasses)","Shadow Shido (Human Form)","Shadow Shido (Human Form, Damaged)","Shadow Shido (Leader Form)"],"Nervous":["Campaign Attire","Shadow Shido (Human Form)","Shadow Shido (Human Form, Damaged)","Shadow Shido (Leader Form)"],"Neutral":["Campaign Attire","Shadow Shido (Human Form)","Shadow Shido (Human Form, Damaged)","Shadow Shido (Leader Form)"],"Neutral (v2)":["Campaign Attire"],"Sad":["Campaign Attire","Campaign Attire (No Glasses)"],"Shocked":["Campaign Attire"]},"Shiho":{"Happy":["Winter Coat","Winter Uniform"],"Hurt":["Winter Uniform","Winter Uniform (Bruised)"],"Miscellaneous":["Cognitive Shiho"],"Neutral":["Winter Coat","Winter Uniform","Winter Uniform (Bruised)"],"Resigned":["Winter Uniform","Winter Uniform (Bruised)"],"Sad":["Winter Coat","Winter Uniform","Winter Uniform (Bruised)"],"Shocked":["Winter Uniform"]},"Shinichi":{"Angry":["Winter Coat (Silver Glasses)"],"Happy":["Winter Coat (Red Glasses)","Winter Coat (Silver Glasses)"],"Neutral":["Winter Coat (Red Glasses)","Winter Coat (Silver Glasses)"],"Sad":["Winter Coat (Silver Glasses)"]},"Shinya":{"Angry":["Get Smoked"],"Happy":["Get Smoked"],"Neutral":["Get Smoked"],"Sad":["Get Smoked"],"Shocked":["Get Smoked"]},"Sojiro":{"Angry":["Casual (Hat)","Casual (No Hat)","Leblanc","Winter Coat (Hat)","Winter Coat (No Hat)"],"Happy":["Casual (Hat)","Casual (No Hat)","Leblanc","Winter Coat (Hat)","Winter Coat (No Hat)"],"Hurt":["Casual (Hat)","Casual (No Hat)","Leblanc","Winter Coat (Hat)","Winter Coat (No Hat)"],"Neutral":["Casual (Hat)","Casual (No Hat)","Leblanc","Winter Coat (Hat)","Winter Coat (No Hat)"],"Sad":["Casual (Hat)","Casual (No Hat)","Leblanc","Winter Coat (Hat)","Winter Coat (No Hat)"],"Shocked":["Casual (Hat)","Casual (No Hat)","Leblanc","Winter Coat (Hat)","Winter Coat (No Hat)"]},"Sophia":{"Angry":["Humanity's Companion","Sophie","Sophie (No Mask)"],"Annoyed":["Sophie"],"Blushing":["Humanity's Companion","Sophie"],"Disappointed":["Humanity's Companion","Sophie (No Mask)"],"Happy":["Humanity's Companion","Sophie","Sophie (No Mask)"],"Hurt":["Humanity's Companion","Sophie (No Mask)"],"Miscellaneous":["Sophie (Controlled, Angry, No Mask)","Sophie (Controlled, Blue Eyes, No Mask)","Sophie (Controlled, Neutral, No Mask)"],"Neutral":["Humanity's Companion","Sophie","Sophie (No Mask)"],"Sad":["Humanity's Companion","Sophie","Sophie (No Mask)"],"Shocked":["Humanity's Companion","Sophie (No Mask)"],"Small-Eyed":["Sophie"],"Starry-Eyed":["Sophie"],"X-Eyed":["Sophie"]},"Sugimura":{"Angry":["Blazer"],"Happy":["Blazer"],"Happy (v2)":["Blazer"],"Neutral":["Blazer"],"Neutral (v2)":["Blazer"],"Smirking":["Blazer"]},"Sumire":{"Angry":["Gymnast","Indoor Coat","Indoor Coat (\"Kasumi\")","Summer Casual (\"Kasumi\")","Summer Uniform (\"Kasumi\")","Violet","Violet (No Mask)","Winter Casual (\"Kasumi\")","Winter Coat","Winter Coat (\"Kasumi\")","Winter Coat (No Glasses)","Winter Uniform","Winter Uniform (\"Kasumi\")","Workout Clothes","Workout Clothes (Blue Bow)"],"Angry (Desperate)":["Violet","Winter Coat"],"Blushing":["Fashionable","Gymnast","Indoor Coat","Indoor Coat (\"Kasumi\")","Summer Casual (\"Kasumi\")","Summer Uniform (\"Kasumi\")","Winter Casual (\"Kasumi\")","Winter Coat","Winter Coat (\"Kasumi\")","Winter Uniform","Winter Uniform (\"Kasumi\")","Workout Clothes","Workout Clothes (Blue Bow)"],"Crying":["Jacket"],"Crying (v2)":["Jacket"],"Embarrassed":["Fashionable","Gymnast","Indoor Coat","Indoor Coat (\"Kasumi\")","Summer Casual (\"Kasumi\")","Summer Uniform (\"Kasumi\")","Winter Casual (\"Kasumi\")","Winter Coat","Winter Coat (\"Kasumi\")","Winter Uniform","Winter Uniform (\"Kasumi\")","Workout Clothes","Workout Clothes (Blue Bow)"],"Happy":["Fashionable","Gym Clothes","Gymnast","Indoor Coat","Indoor Coat (\"Kasumi\")","Jacket","Jacket (\"Kasumi\")","New Years","Summer Casual (\"Kasumi\")","Summer Uniform (\"Kasumi\")","Unfashionable","Violet","Violet (No Mask)","Winter Casual (\"Kasumi\")","Winter Coat","Winter Coat (\"Kasumi\")","Winter Coat (No Glasses)","Winter Uniform","Winter Uniform (\"Kasumi\")","Workout Clothes","Workout Clothes (Blue Bow)"],"Hurt":["Indoor Coat","Indoor Coat (\"Kasumi\")","Jacket","New Years","Summer Casual (\"Kasumi\")","Summer Uniform (\"Kasumi\")","Violet","Winter Casual (\"Kasumi\")","Winter Coat","Winter Coat (\"Kasumi\")","Winter Coat (No Glasses)","Winter Uniform","Winter Uniform (\"Kasumi\")"],"Hurt (Desperate)":["Violet","Winter Coat"],"Miscellaneous":["Cognitive Sumire (Happy)","Cognitive Sumire (Hurt)","Cognitive Sumire (Neutral)","Cognitive Sumire (Sad)","Kasumi (Happy)","Kasumi (Neutral)"],"Mortified":["Fashionable","Winter Uniform","Workout Clothes","Workout Clothes (Blue Bow)"],"Neutral":["Fashionable","Gym Clothes","Gymnast","Indoor Coat","Indoor Coat (\"Kasumi\")","Jacket","Jacket (\"Kasumi\")","New Years","Summer Casual (\"Kasumi\")","Summer Uniform (\"Kasumi\")","Unfashionable","Violet","Violet (No Mask)","Winter Casual (\"Kasumi\")","Winter Coat","Winter Coat (\"Kasumi\")","Winter Coat (No Glasses)","Winter Uniform","Winter Uniform (\"Kasumi\")","Workout Clothes","Workout Clothes (Blue Bow)"],"Sad":["Gym Clothes","Gymnast","Indoor Coat","Indoor Coat (\"Kasumi\")","Jacket","New Years","Summer Casual","Summer Uniform","Unfashionable","Violet","Winter Casual","Winter Coat","Winter Coat (\"Kasumi\")","Winter Coat (No Glasses)","Winter Uniform","Winter Uniform (\"Kasumi\")","Workout Clothes","Workout Clothes (Blue Bow)"],"Sad (Desperate)":["Violet","Winter Coat"],"Shocked":["Gym Clothes","Gymnast","Indoor Coat","Indoor Coat (\"Kasumi\")","Jacket","Jacket (\"Kasumi\")","New Years","Summer Casual (\"Kasumi\")","Summer Uniform (\"Kasumi\")","Unfashionable","Violet","Winter Casual (\"Kasumi\")","Winter Coat","Winter Coat (\"Kasumi\")","Winter Coat (No Glasses)","Winter Uniform","Winter Uniform (\"Kasumi\")","Workout Clothes","Workout Clothes (Blue Bow)"]},"Takemi":{"Angry":["Casual","Winter Coat","Work Attire"],"Blushing":["Casual","Winter Coat","Work Attire"],"Embarrassed":["Casual","Winter Coat","Work Attire"],"Happy":["Casual","Winter Coat","Work Attire"],"Neutral":["Casual","Winter Coat","Work Attire"],"Sad":["Casual","Winter Coat","Work Attire"],"Shocked":["Casual","Winter Coat","Work Attire"]},"Tanaka":{"Neutral":["Work Attire"]},"Usami":{"Neutral":["Work Attire"]},"Ushimaru":{"Neutral":["Work Attire"]},"Wakaba":{"Angry":["Winter Coat","Work Attire"],"Happy":["Winter Coat","Work Attire"],"Neutral":["Winter Coat","Work Attire"],"Sad":["Winter Coat","Work Attire"]},"Yoshida":{"Angry":["Campaign Attire","Campaign Attire (No Sash)"],"Happy":["Campaign Attire","Campaign Attire (No Sash)"],"Neutral":["Campaign Attire","Campaign Attire (No Sash)"],"Sad":["Campaign Attire","Campaign Attire (No Sash)"],"Shocked":["Campaign Attire","Campaign Attire (No Sash)"]},"Yusuke":{"Angry":["Fox","Fox (No Mask)","Road Trip","Shirtless","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Winter Casual","Winter Uniform","Yukata (Strikers)"],"Angry (Royal)":["Fox","Indoor Coat","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform","Yukata"],"Happy":["Fox","Road Trip","Shirtless","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Happy (Royal)":["Fox","Gym Clothes","Indoor Coat","Scarf","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform"],"Hurt":["Fox","Road Trip","Shirtless","Summer Casual","Summer Uniform","Swimsuit","Swimsuit (Okinawa)","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Hurt (Royal)":["Indoor Coat","Summer Casual","Summer Uniform","Winter Casual","Winter Coat","Winter Uniform"],"Irritated (Unused)":["Shirtless","Summer Casual","Summer Uniform","Winter Casual","Winter Uniform","Yukata"],"Miscellaneous":["Fox (Hidden)"],"Neutral":["Fox","Road Trip","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Winter Casual","Winter Uniform","Yukata (Strikers)"],"Neutral (Royal)":["Fox","Gym Clothes","Indoor Coat","Scarf","Shirtless","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform","Yukata"],"Sad":["Fox","Road Trip","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Sad (Royal)":["Fox","Gym Clothes","Indoor Coat","Scarf","Shirtless","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform"],"Shocked":["Fox","Road Trip","Shirtless","Summer Casual","Summer Uniform","Swimsuit (Okinawa)","Winter Casual","Winter Uniform","Yukata","Yukata (Strikers)"],"Shocked (Royal)":["Fox","Indoor Coat","Scarf","Summer Casual","Summer Uniform","Swimsuit","Winter Casual","Winter Coat","Winter Uniform"]},"Zenkichi":{"Angry":["Wolf","Work Attire"],"Annoyed":["Work Attire"],"Happy":["Wolf","Work Attire"],"Hurt":["Work Attire"],"Intense":["Work Attire"],"Miscellaneous":["Wolf (Eyes Closed, No Mask)","Wolf (Neutral, No Mask)"],"Neutral":["Wolf","Work Attire"],"Sad":["Wolf","Work Attire"],"Shocked":["Work Attire"]}};
-
-// ==================== MENU MANAGEMENT ====================
-function fetchJSON(url, body) {
-  return fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
-  }).then(function(r) {
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    return r.json();
-  });
-}
-
-function rebuildSelect(id, items, selectedVal) {
-  var sel = document.getElementById(id);
-  sel.innerHTML = '';
-  var hasSelected = false;
-  for (var i = 0; i < items.length; i++) {
-    var opt = document.createElement('option');
-    opt.value = items[i];
-    opt.textContent = items[i];
-    if (items[i] === selectedVal) { opt.selected = true; hasSelected = true; }
-    sel.appendChild(opt);
-  }
-  if (!hasSelected && items.length > 0) sel.value = items[0];
-  return sel.value;
-}
-
-
-// Use embedded portrait data instead of server fetch
-function loadEmotions(char, currentEmote) {
-  var items = PORTRAIT_DATA[char] ? Object.keys(PORTRAIT_DATA[char]) : [];
-  var chosen = (items.indexOf(currentEmote) !== -1) ? currentEmote : items[0];
-  rebuildSelect('emoteMenu', items, chosen);
-  return Promise.resolve(chosen);
-}
-
-function loadCostumes(char, emote, currentCostume) {
-  var items = (PORTRAIT_DATA[char] && PORTRAIT_DATA[char][emote]) ? PORTRAIT_DATA[char][emote] : [];
-  var chosen = (items.indexOf(currentCostume) !== -1) ? currentCostume : items[0];
-  rebuildSelect('costumeMenu', items, chosen);
-  return Promise.resolve(chosen);
-}
-
-
-function loadAndSync(char, emote, costume) {
-  loadEmotions(char, emote).then(function(resolvedEmote) {
-    return loadCostumes(char, resolvedEmote, costume).then(function(resolvedCostume) {
-      state.char = char;
-      state.emote = resolvedEmote;
-      state.costume = resolvedCostume;
-      queueRender();
-    });
-  });
-}
-
-// ==================== EVENT HANDLERS ====================
-function onCharChange() {
-  var newChar = document.getElementById('charMenu').value;
-  if (newChar === 'None') {
-    state.char = 'None';
-    state.customPortraitData = '';
-    document.getElementById('nameField').value = '';
-    queueRender();
-    return;
-  }
-  document.getElementById('nameField').value = findNameAfterCharSelect(newChar);
-  state.customPortraitData = '';
-  loadAndSync(newChar, state.emote, state.costume);
-}
-
-function onEmoteChange() {
-  state.emote = document.getElementById('emoteMenu').value;
-  loadCostumes(state.char, state.emote, state.costume).then(function(resolved) {
-    state.costume = resolved;
-    queueRender();
-  });
-}
-
-function onCostumeChange() {
-  state.costume = document.getElementById('costumeMenu').value;
-  state.customPortraitData = '';
-  queueRender();
-}
-
-function onBoxChange() {
-  state.boxType = document.getElementById('boxMenu').value;
-  queueRender();
-}
-
-function onNameInput() { queueRender(); }
-function onTextInput() { queueRender(); }
-
-function onCustomPortrait(e) {
-  var file = e.target.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    state.customPortraitData = ev.target.result;
-    queueRender();
-  };
-  reader.readAsDataURL(file);
-}
-
-function switchFont(value) {
-  state.font = value;
-  var els = document.querySelectorAll('.fonts');
-  for (var i = 0; i < els.length; i++) els[i].classList.remove('active-font');
-  var active = document.querySelector('.fonts[data-font="' + value.replace(/"/g, '\\"') + '"]');
-  if (active) active.classList.add('active-font');
-  queueRender();
-}
-
-// ==================== DOWNLOAD / RESET ====================
-function trimCanvas(source) {
-  var ctx = source.getContext('2d');
-  if (!ctx) return source;
-  var w = source.width, h = source.height;
-  var data = ctx.getImageData(0, 0, w, h).data;
-  var top = h, bottom = 0, left = w, right = 0;
-  for (var y = 0; y < h; y++) {
-    for (var x = 0; x < w; x++) {
-      if (data[(y * w + x) * 4 + 3] > 0) {
-        if (y < top) top = y;
-        if (y > bottom) bottom = y;
-        if (x < left) left = x;
-        if (x > right) right = x;
-      }
-    }
-  }
-  var tw = right - left + 1, th = bottom - top + 1;
-  if (tw <= 0 || th <= 0) return source;
-  var trimmed = document.createElement('canvas');
-  trimmed.width = tw;
-  trimmed.height = th;
-  trimmed.getContext('2d').drawImage(source, left, top, tw, th, 0, 0, tw, th);
-  return trimmed;
-}
-
-function downloadImage() {
-  var composite = document.createElement('canvas');
-  composite.width = 1275; composite.height = 500;
-  var ctx = composite.getContext('2d');
-  var layers = ['portraitCanvas','boxCanvas','tileCanvas','nameCanvas','textCanvas'];
-  for (var i = 0; i < layers.length; i++) {
-    try { ctx.drawImage(document.getElementById(layers[i]), 0, 0, 1275, 500); }
-    catch(e) { console.error('[download]', layers[i], e); }
-  }
-  var nf = document.getElementById('nameField');
-  var tf = document.getElementById('textField');
-  var filename = (nf ? nf.value : 'dialogue') + '-' + (tf ? tf.value : 'scene') + '.png';
-  var trimmed = trimCanvas(composite);
-  var link = document.createElement('a');
-  link.download = filename;
-  link.href = trimmed.toDataURL('image/png');
-  link.click();
-  var main = document.getElementById('p5Main');
-  main.classList.add('is-flashing');
-  setTimeout(function() { main.classList.remove('is-flashing'); }, 180);
-}
-
-function resetCanvas() {
-  document.getElementById('nameField').value = 'Ann';
-  document.getElementById('textField').value = '';
-  document.getElementById('charMenu').value = 'Ann';
-  document.getElementById('boxMenu').value = 'main';
-  state.customPortraitData = '';
-  state.font = 'Optima nova LT';
-  var els = document.querySelectorAll('.fonts');
-  for (var i = 0; i < els.length; i++) els[i].classList.remove('active-font');
-  var active = document.querySelector('.fonts[data-font="Optima nova LT"]');
-  if (active) active.classList.add('active-font');
-  loadAndSync('Ann', 'Happy', 'Gym Clothes');
-}
-
-// ==================== INIT ====================
-function init() {
-  // Build font selector
-  var fc = document.getElementById('fontChoices');
-  for (var i = 0; i < fontTags.length; i++) {
-    var el = document.createElement('div');
-    el.className = 'fonts';
-    el.setAttribute('data-font', fontTags[i][0]);
-    el.textContent = fontTags[i][1];
-    if (fontTags[i][0] === state.font) el.classList.add('active-font');
-    el.onclick = (function(v) { return function() { switchFont(v); }; })(fontTags[i][0]);
-    fc.appendChild(el);
-  }
-
-  // Preload static box images into the persistent cache
-  for (var i = 0; i < STATIC_BOXES.length; i++) {
-    cachedImg(STATIC_BOXES[i], false);
-  }
-
-  // Wire event listeners
-  document.getElementById('charMenu').addEventListener('change', onCharChange);
-  document.getElementById('emoteMenu').addEventListener('change', onEmoteChange);
-  document.getElementById('costumeMenu').addEventListener('change', onCostumeChange);
-  document.getElementById('boxMenu').addEventListener('change', onBoxChange);
-  var nf = document.getElementById('nameField');
-  nf.addEventListener('input', onNameInput);
-  nf.addEventListener('keyup', onNameInput);
-  var tf = document.getElementById('textField');
-  tf.addEventListener('input', onTextInput);
-  tf.addEventListener('keyup', onTextInput);
-  document.getElementById('upload').addEventListener('click', function() { document.getElementById('hiddenUpload').click(); });
-  document.getElementById('hiddenUpload').addEventListener('change', onCustomPortrait);
-  document.querySelector('.p5-btn-download').addEventListener('click', downloadImage);
-  document.querySelector('.p5-btn-reset').addEventListener('click', resetCanvas);
-
-  // Initial draw
-  loadAndSync('Ann', 'Happy', 'Gym Clothes');
-}
-
-document.addEventListener('DOMContentLoaded', init);
-
-})();</script></body></html>
+}</style><script defer="defer" src="./bundle.js"></script></head><body><div id="root"></div></body></html>
