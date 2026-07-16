@@ -1,5 +1,6 @@
 import { useEffect, SyntheticEvent } from 'react';
 import { findNameAfterCharSelect } from '../utils/findName';
+import portraitData from '../utils/emotionsData';
 
 const CharacterMenu = ({ char, emote, setName, setChar, setEmote, setEmoteMenus }) => {
 
@@ -18,23 +19,11 @@ const CharacterMenu = ({ char, emote, setName, setChar, setEmote, setEmoteMenus 
   };
 
   useEffect(() => {
-    fetch('/emotions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 'char': `../generators/P5/images/portraits/${char}/` })
-    })
-    .then(data => data.json())
-    .then(parsed => {
-      setEmoteMenus(parsed);
-      // If the newly selected character doesn't have the previously selected emotion...
-      if (!parsed.includes(emote)) {
-        // ...change the current emotion to the top-most emotion on the newly fetched menu
-        setEmote(parsed[0]);
-      }
-    })
-    .catch(err => console.log(err));
+    const emotions = Object.keys(portraitData[char] || {});
+    setEmoteMenus(emotions);
+    if (!emotions.includes(emote)) {
+      setEmote(emotions[0]);
+    }
   }, [char]);
 
   return (
