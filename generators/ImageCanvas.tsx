@@ -57,6 +57,15 @@ const wrapText = (ctx: CanvasRenderingContext2D, text: string, x: number, y: num
   });
 };
 
+const withLayer = (ctx: CanvasRenderingContext2D, draw: () => void) => {
+  ctx.save();
+  try {
+    draw();
+  } finally {
+    ctx.restore();
+  }
+};
+
 const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portrait, custom, boxType, setCustom }: any) => {
   const isP5 = activeGame === 'P5';
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -122,55 +131,55 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
       ctx.clearRect(0, 0, DW, DH);
 
       /* === Layer 1: Wallpaper Background === */
-      ctx.save();
-      const bg = bgRef.current;
-      if (bg && bg.complete && bg.naturalWidth > 0) {
-        const scale = Math.max(1275 / bg.naturalWidth, 500 / bg.naturalHeight);
-        const w = bg.naturalWidth * scale;
-        const h = bg.naturalHeight * scale;
-        const x = (1275 - w) / 2;
-        const y = (500 - h) / 2;
-        ctx.drawImage(bg, x, y, w, h);
-      }
-      ctx.restore();
+      withLayer(ctx, () => {
+        const bg = bgRef.current;
+        if (bg && bg.complete && bg.naturalWidth > 0) {
+          const scale = Math.max(DW / bg.naturalWidth, DH / bg.naturalHeight);
+          const w = bg.naturalWidth * scale;
+          const h = bg.naturalHeight * scale;
+          const x = (DW - w) / 2;
+          const y = (DH - h) / 2;
+          ctx.drawImage(bg, x, y, w, h);
+        }
+      });
 
       if (isP5) {
         /* === P5 === */
 
         /* Layer 2: Portrait */
-        ctx.save();
-        if (char !== 'None') {
-          const useCustom = custom && customPortraitRef.current?.complete && customPortraitRef.current?.naturalWidth > 0;
-          const img = useCustom ? customPortraitRef.current : portraitRef.current;
-          if (img && img.complete && img.naturalWidth > 0) {
-            if (custom && setCustom) setCustom('');
-            const pos = simplePositions[char as keyof typeof simplePositions] || findSpecialPosition(char, emote, costume);
-            let x = pos[0], y = pos[1], w = 500, h = 500;
-            if (costume === "Humanity's Companion") w = 580;
-            if (char === 'Haru' && (costume === 'Swimsuit (Okinawa)' || costume === 'Road Trip (Hat)')) w = 570;
-            ctx.drawImage(img, x, y, w, h);
+        withLayer(ctx, () => {
+          if (char !== 'None') {
+            const useCustom = Boolean(custom) && Boolean(customPortraitRef.current?.complete) && (customPortraitRef.current?.naturalWidth ?? 0) > 0;
+            const img = useCustom ? customPortraitRef.current : portraitRef.current;
+            if (img && img.complete && img.naturalWidth > 0) {
+              if (custom && setCustom) setCustom('');
+              const pos = simplePositions[char as keyof typeof simplePositions] || findSpecialPosition(char, emote, costume);
+              let x = pos[0], y = pos[1], w = 500, h = 500;
+              if (costume === "Humanity's Companion") w = 580;
+              if (char === 'Haru' && (costume === 'Swimsuit (Okinawa)' || costume === 'Road Trip (Hat)')) w = 570;
+              ctx.drawImage(img, x, y, w, h);
+            }
           }
-        }
-        ctx.restore();
+        });
 
         /* Layer 3: Name box image */
-        ctx.save();
-        const nb = nameBubbleRef.current;
-        if (nb && nb.complete && nb.naturalWidth > 0) {
-          const w = nb.width as number, h = nb.height as number;
-          switch (boxType) {
-            case 'main': ctx.drawImage(nb, 320, 250 - (h - 250), w, h); break;
-            case 'noPortrait': ctx.drawImage(nb, 320, 180, w, h); break;
-            case 'dancing': ctx.drawImage(nb, 320, 300, w, h); break;
-            case 'strikers': ctx.drawImage(nb, 320, 250, w, h); break;
+        withLayer(ctx, () => {
+          const nb = nameBubbleRef.current;
+          if (nb && nb.complete && nb.naturalWidth > 0) {
+            const w = nb.width as number, h = nb.height as number;
+            switch (boxType) {
+              case 'main': ctx.drawImage(nb, 320, 250 - (h - 250), w, h); break;
+              case 'noPortrait': ctx.drawImage(nb, 320, 180, w, h); break;
+              case 'dancing': ctx.drawImage(nb, 320, 300, w, h); break;
+              case 'strikers': ctx.drawImage(nb, 320, 250, w, h); break;
+            }
           }
-        }
-        ctx.restore();
+        });
 
         /* Layer 4: Name text (strict rotation containment) */
         try {
           const f = fontReady;
-          ctx.save();
+          withLayer(ctx, () => {
           ctx.font = `18pt ${f}`;
           switch (boxType) {
             case 'main':
@@ -186,31 +195,30 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
             case 'dancing': { ctx.textAlign = 'center'; ctx.fillStyle = '#FFFFFF'; ctx.fillText(name, 660, 353); break; }
             case 'strikers': { ctx.textAlign = 'center'; ctx.fillStyle = '#000000'; ctx.font = `16.5pt ${f}`; ctx.fillText(name, 500, 371); break; }
           }
-          ctx.restore();
+          });
 
           /* Layer 5: Dialogue text — rendered INSIDE the right-side black bubble.
              Rotation matrix from the nameplate above is fully restored, so coords are clean. */
-          ctx.save();
-          ctx.setTransform(1, 0, 0, 1, 0, 0);
-          ctx.fillStyle = '#FFFFFF';
-          ctx.font = `18pt ${f}`;
-          ctx.textAlign = 'left';
-          ctx.textBaseline = 'alphabetic';
-          wrapText(ctx, text.replace(/\n/g, ' '), 520, 390, 580, 28, 3);
-          ctx.restore();
+          withLayer(ctx, () => {
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = `18pt ${f}`;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'alphabetic';
+            wrapText(ctx, text.replace(/\n/g, ' '), 520, 390, 580, 28, 3);
+          });
         } catch (e) { console.error('P5 text draw error:', e); }
       } else {
         /* === P4 === */
 
         /* Layer 2: Character Sprite — Chie FIRST, anchored bottom-right (x ≈ 820) */
-        ctx.save();
-        if (char !== 'None') {
-          const img = portraitRef.current;
-          if (img && img.complete && img.naturalWidth > 0) {
-            if (custom && setCustom) setCustom('');
-            const iH = img.height as number, iW = img.width as number;
-            if (!iH || !iW) { /* skip, don't return */ }
-            else {
+        withLayer(ctx, () => {
+          if (char !== 'None') {
+            const img = portraitRef.current;
+            if (img && img.complete && img.naturalWidth > 0) {
+              if (custom && setCustom) setCustom('');
+              const iH = img.height as number, iW = img.width as number;
+              if (!iH || !iW) return;
               const sw = findWidth(char, emote, costume);
               const ta = iH * sw;
               const nw = Math.sqrt((iW / iH) * ta);
@@ -227,57 +235,56 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
               ctx.drawImage(img, pX, pY, nw, nh);
             }
           }
-        }
-        ctx.restore();
+        });
 
         /* Layer 3: Box back + front — OVER the sprite's lower torso (40, 330, 1195, 145) */
-        ctx.save();
-        const targetBoxWidth = 1195, targetBoxHeight = 145, boxX = 40, boxY = 330;
-        const db = dialogueBubbleRef.current;
-        if (db && db.complete && db.naturalWidth > 0) {
-          ctx.drawImage(db, boxX, boxY, targetBoxWidth, targetBoxHeight);
-        }
-        const nb = nameBubbleRef.current;
-        if (nb && nb.complete && nb.naturalWidth > 0) {
-          ctx.drawImage(nb, boxX, boxY, targetBoxWidth, targetBoxHeight);
-        }
-        ctx.restore();
+        withLayer(ctx, () => {
+          const targetBoxWidth = 1195, targetBoxHeight = 145, boxX = 40, boxY = 330;
+          const db = dialogueBubbleRef.current;
+          if (db && db.complete && db.naturalWidth > 0) {
+            ctx.drawImage(db, boxX, boxY, targetBoxWidth, targetBoxHeight);
+          }
+          const nb = nameBubbleRef.current;
+          if (nb && nb.complete && nb.naturalWidth > 0) {
+            ctx.drawImage(nb, boxX, boxY, targetBoxWidth, targetBoxHeight);
+          }
+        });
 
         try {
           const f = fontReady;
 
           /* Layer 4: Dynamic angled yellow nameplate banner polygon */
-          ctx.save();
-          ctx.fillStyle = '#DCA000';
-          ctx.beginPath();
-          ctx.moveTo(40, 305);
-          ctx.lineTo(430, 305);
-          ctx.lineTo(410, 365);
-          ctx.lineTo(40, 365);
-          ctx.closePath();
-          ctx.fill();
-          ctx.strokeStyle = '#FFE94A';
-          ctx.lineWidth = 3;
-          ctx.stroke();
-          ctx.restore();
+          withLayer(ctx, () => {
+            ctx.fillStyle = '#DCA000';
+            ctx.beginPath();
+            ctx.moveTo(40, 305);
+            ctx.lineTo(430, 305);
+            ctx.lineTo(410, 365);
+            ctx.lineTo(40, 365);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = '#FFE94A';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          });
 
           /* Layer 5: Name text on banner */
-          ctx.save();
-          ctx.font = `bold 24px 'New Rodin', 'Skip', ${f}`;
-          ctx.fillStyle = '#2C160E';
-          ctx.textAlign = 'left';
-          ctx.textBaseline = 'alphabetic';
-          ctx.fillText(name, 75, 322);
-          ctx.restore();
+          withLayer(ctx, () => {
+            ctx.font = `bold 24px 'New Rodin', 'Skip', ${f}`;
+            ctx.fillStyle = '#2C160E';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'alphabetic';
+            ctx.fillText(name, 75, 322);
+          });
 
           /* Layer 6: Wrapped dialogue text inside dark brown box, never touching the sprite */
-          ctx.save();
-          ctx.font = `bold 26px ${f}`;
-          ctx.fillStyle = '#FFFFFF';
-          ctx.textAlign = 'left';
-          ctx.textBaseline = 'alphabetic';
-          wrapText(ctx, text.replace(/\n/g, ' '), 85, 390, 720, 34, 3);
-          ctx.restore();
+          withLayer(ctx, () => {
+            ctx.font = `bold 26px ${f}`;
+            ctx.fillStyle = '#FFFFFF';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'alphabetic';
+            wrapText(ctx, text.replace(/\n/g, ' '), 85, 390, 720, 34, 3);
+          });
         } catch (e) { console.error('P4 text draw error:', e); }
       }
     } catch (e) {
@@ -292,13 +299,14 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
   const onLoad = () => redraw();
 
   return (
-    <div id="canvasDiv">
-      <canvas ref={canvasRef} id="dialogueCanvas" />
-      <img alt="" ref={bgRef} className="hidden" src={bgSrc} crossOrigin="anonymous" onLoad={onLoad} />
-      <img alt="" ref={portraitRef} className="hidden" src={portrait} crossOrigin="anonymous" onLoad={onLoad} />
-      <img alt="" ref={nameBubbleRef} className="hidden" src={isP5 ? nameBoxSrc : p4BoxFront} crossOrigin="anonymous" onLoad={onLoad} />
-      <img alt="" ref={dialogueBubbleRef} className="hidden" src={p4BoxBack} crossOrigin="anonymous" onLoad={onLoad} />
-      <img alt="" ref={customPortraitRef} className="hidden" src={custom} crossOrigin="anonymous" onLoad={onLoad} />
+    <div id="canvasDiv" style={{ minHeight: DH, minWidth: DW }}>
+      <canvas ref={canvasRef} id="dialogueCanvas" width={DW} height={DH} />
+      {bgSrc ? <img alt="" ref={bgRef} className="hidden" src={bgSrc} crossOrigin="anonymous" onLoad={onLoad} /> : null}
+      {portrait ? <img alt="" ref={portraitRef} className="hidden" src={portrait} crossOrigin="anonymous" onLoad={onLoad} /> : null}
+      {isP5 && nameBoxSrc ? <img alt="" ref={nameBubbleRef} className="hidden" src={nameBoxSrc} crossOrigin="anonymous" onLoad={onLoad} /> : null}
+      {!isP5 && p4BoxFront ? <img alt="" ref={nameBubbleRef} className="hidden" src={p4BoxFront} crossOrigin="anonymous" onLoad={onLoad} /> : null}
+      {!isP5 && p4BoxBack ? <img alt="" ref={dialogueBubbleRef} className="hidden" src={p4BoxBack} crossOrigin="anonymous" onLoad={onLoad} /> : null}
+      {custom ? <img alt="" ref={customPortraitRef} className="hidden" src={custom} crossOrigin="anonymous" onLoad={onLoad} /> : null}
     </div>
   );
 };
