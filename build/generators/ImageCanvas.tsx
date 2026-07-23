@@ -66,6 +66,35 @@ const withLayer = (ctx: CanvasRenderingContext2D, draw: () => void) => {
   }
 };
 
+const assetUrl = (path: string) => `${process.env.PUBLIC_URL || ''}${path.startsWith('/') ? path : `/${path}`}`;
+
+const drawFallbackBackground = (ctx: CanvasRenderingContext2D, isP5: boolean) => {
+  ctx.fillStyle = isP5 ? '#111111' : '#FEE727';
+  ctx.fillRect(0, 0, DW, DH);
+};
+
+const drawFallbackPortrait = (ctx: CanvasRenderingContext2D, isP5: boolean, char: string) => {
+  if (char === 'None') return;
+  ctx.fillStyle = isP5 ? '#2A2A2A' : '#DCA000';
+  if (isP5) {
+    ctx.fillRect(250, 40, 420, 420);
+  } else {
+    const width = char === 'Chie' ? 360 : 280;
+    const height = char === 'Chie' ? 420 : 360;
+    ctx.fillRect(char === 'Chie' ? 820 : 120, char === 'Chie' ? 80 : 70, width, height);
+  }
+};
+
+const drawFallbackBoxes = (ctx: CanvasRenderingContext2D, isP5: boolean, boxType: string) => {
+  if (isP5) {
+    ctx.fillStyle = '#B40000';
+    ctx.fillRect(320, boxType === 'noPortrait' ? 180 : boxType === 'dancing' ? 300 : 250, 350, 100);
+  } else {
+    ctx.fillStyle = '#4A220E';
+    ctx.fillRect(40, 330, 1195, 145);
+  }
+};
+
 const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portrait, custom, boxType, setCustom }: any) => {
   const isP5 = activeGame === 'P5';
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -77,10 +106,11 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
   const fallbackFont = 'sans-serif';
   const [nameBoxSrc, setNameBoxSrc] = useState('');
   const [fontReady, setFontReady] = useState(fallbackFont);
+  const [assetTick, setAssetTick] = useState(0);
 
-  const bgSrc = isP5 ? './generators/P5/images/backgroundDot.png' : './generators/P4/images/p4-background.png';
-  const p4BoxFront = !isP5 ? `./generators/P4/images/boxes/db-${boxType}-front.png` : '';
-  const p4BoxBack = !isP5 ? `./generators/P4/images/boxes/db-${boxType}-back.png` : '';
+  const bgSrc = isP5 ? assetUrl('generators/P5/images/backgroundDot.png') : assetUrl('generators/P4/images/p4-background.png');
+  const p4BoxFront = !isP5 ? assetUrl(`generators/P4/images/boxes/db-${boxType}-front.png`) : '';
+  const p4BoxBack = !isP5 ? assetUrl(`generators/P4/images/boxes/db-${boxType}-back.png`) : '';
 
   /* Compute P5 name box URL */
   useEffect(() => {
@@ -93,16 +123,16 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
     switch (boxType) {
       case 'main': {
         const cbox = findNameBox(name);
-        if (cbox && (font === 'KoreanKRSM' || font === 'Optima nova LT')) { src = `./generators/P5/images/boxes/db-${cbox}-${font}.png`; break; }
-        if (nm.width <= 195) src = './generators/P5/images/db-main-small.png';
-        else if (nm.width <= 275) src = './generators/P5/images/db-main-medium.png';
-        else src = './generators/P5/images/db-main-large.png';
+        if (cbox && (font === 'KoreanKRSM' || font === 'Optima nova LT')) { src = assetUrl(`generators/P5/images/boxes/db-${cbox}-${font}.png`); break; }
+        if (nm.width <= 195) src = assetUrl('generators/P5/images/db-main-small.png');
+        else if (nm.width <= 275) src = assetUrl('generators/P5/images/db-main-medium.png');
+        else src = assetUrl('generators/P5/images/db-main-large.png');
         break;
       }
-      case 'noPortrait': src = './generators/P5/images/db-noPortrait.png'; break;
-      case 'dancing': src = './generators/P5/images/db-dancing.png'; break;
-      case 'strikers': src = './generators/P5/images/db-strikers.png'; break;
-      default: src = './generators/P5/images/db-main-small.png'; break;
+      case 'noPortrait': src = assetUrl('generators/P5/images/db-noPortrait.png'); break;
+      case 'dancing': src = assetUrl('generators/P5/images/db-dancing.png'); break;
+      case 'strikers': src = assetUrl('generators/P5/images/db-strikers.png'); break;
+      default: src = assetUrl('generators/P5/images/db-main-small.png'); break;
     }
     if (src !== nameBoxSrc) setNameBoxSrc(src);
   }, [name, font, boxType]);
@@ -140,6 +170,8 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
           const x = (DW - w) / 2;
           const y = (DH - h) / 2;
           ctx.drawImage(bg, x, y, w, h);
+        } else {
+          drawFallbackBackground(ctx, isP5);
         }
       });
 
@@ -158,6 +190,8 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
               if (costume === "Humanity's Companion") w = 580;
               if (char === 'Haru' && (costume === 'Swimsuit (Okinawa)' || costume === 'Road Trip (Hat)')) w = 570;
               ctx.drawImage(img, x, y, w, h);
+            } else {
+              drawFallbackPortrait(ctx, true, char);
             }
           }
         });
@@ -173,6 +207,8 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
               case 'dancing': ctx.drawImage(nb, 320, 300, w, h); break;
               case 'strikers': ctx.drawImage(nb, 320, 250, w, h); break;
             }
+          } else {
+            drawFallbackBoxes(ctx, true, boxType);
           }
         });
 
@@ -233,6 +269,8 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
                 pY = pos[1];
               }
               ctx.drawImage(img, pX, pY, nw, nh);
+            } else {
+              drawFallbackPortrait(ctx, false, char);
             }
           }
         });
@@ -243,10 +281,16 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
           const db = dialogueBubbleRef.current;
           if (db && db.complete && db.naturalWidth > 0) {
             ctx.drawImage(db, boxX, boxY, targetBoxWidth, targetBoxHeight);
+          } else {
+            ctx.fillStyle = '#4A220E';
+            ctx.fillRect(boxX, boxY, targetBoxWidth, targetBoxHeight);
           }
           const nb = nameBubbleRef.current;
           if (nb && nb.complete && nb.naturalWidth > 0) {
             ctx.drawImage(nb, boxX, boxY, targetBoxWidth, targetBoxHeight);
+          } else {
+            ctx.fillStyle = '#DCA000';
+            ctx.fillRect(boxX, 305, 390, 60);
           }
         });
 
@@ -294,9 +338,12 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
 
   useEffect(() => {
     redraw();
-  }, [activeGame, char, emote, costume, name, text, font, portrait, custom, boxType, nameBoxSrc, fontReady]);
+  }, [activeGame, char, emote, costume, name, text, font, portrait, custom, boxType, nameBoxSrc, fontReady, assetTick]);
 
-  const onLoad = () => redraw();
+  const onLoad = () => {
+    setAssetTick(t => t + 1);
+    redraw();
+  };
 
   return (
     <div id="canvasDiv" style={{ minHeight: DH, minWidth: DW }}>
