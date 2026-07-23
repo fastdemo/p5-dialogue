@@ -240,7 +240,7 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
             ctx.font = `18pt ${f}`;
             ctx.textAlign = 'left';
             ctx.textBaseline = 'alphabetic';
-            wrapText(ctx, text.replace(/\n/g, ' '), 520, 390, 580, 28, 3);
+            wrapText(ctx, text.replace(/\n/g, ' '), 510, 390, 520, 28, 3);
           });
         } catch (e) { console.error('P5 text draw error:', e); }
       } else {
@@ -313,20 +313,26 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
 
           /* Layer 5: Name text on banner */
           withLayer(ctx, () => {
-            ctx.font = `bold 24px 'New Rodin', 'Skip', ${f}`;
+            ctx.beginPath();
+            ctx.rect(85, 292, 315, 56);
+            ctx.clip();
+            ctx.font = `bold 22px 'Skip', 'New Rodin', sans-serif`;
             ctx.fillStyle = '#2C160E';
             ctx.textAlign = 'left';
-            ctx.textBaseline = 'alphabetic';
-            ctx.fillText(name, 75, 322);
+            ctx.textBaseline = 'middle';
+            ctx.fillText(name, 85, 320, 315);
           });
 
           /* Layer 6: Wrapped dialogue text inside dark brown box, never touching the sprite */
           withLayer(ctx, () => {
+            ctx.beginPath();
+            ctx.rect(90, 354, 700, 106);
+            ctx.clip();
             ctx.font = `bold 26px ${f}`;
             ctx.fillStyle = '#FFFFFF';
             ctx.textAlign = 'left';
             ctx.textBaseline = 'alphabetic';
-            wrapText(ctx, text.replace(/\n/g, ' '), 85, 390, 720, 34, 3);
+            wrapText(ctx, text.replace(/\n/g, ' '), 90, 380, 700, 32, 3);
           });
         } catch (e) { console.error('P4 text draw error:', e); }
       }
