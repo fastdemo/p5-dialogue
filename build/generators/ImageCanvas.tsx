@@ -66,7 +66,7 @@ const withLayer = (ctx: CanvasRenderingContext2D, draw: () => void) => {
   }
 };
 
-const assetUrl = (path: string) => `${process.env.PUBLIC_URL || ''}${path.startsWith('/') ? path : `/${path}`}`;
+const assetUrl = (path: string) => `./${path.replace(/^\//, '')}`;
 
 const drawFallbackBackground = (ctx: CanvasRenderingContext2D, isP5: boolean) => {
   ctx.fillStyle = isP5 ? '#111111' : '#FEE727';
@@ -184,7 +184,6 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
             const useCustom = Boolean(custom) && Boolean(customPortraitRef.current?.complete) && (customPortraitRef.current?.naturalWidth ?? 0) > 0;
             const img = useCustom ? customPortraitRef.current : portraitRef.current;
             if (img && img.complete && img.naturalWidth > 0) {
-              if (custom && setCustom) setCustom('');
               const pos = simplePositions[char as keyof typeof simplePositions] || findSpecialPosition(char, emote, costume);
               let x = pos[0], y = pos[1], w = 500, h = 500;
               if (costume === "Humanity's Companion") w = 580;
@@ -250,9 +249,9 @@ const ImageCanvas = ({ activeGame, char, emote, costume, name, text, font, portr
         /* Layer 2: Character Sprite — Chie FIRST, anchored bottom-right (x ≈ 820) */
         withLayer(ctx, () => {
           if (char !== 'None') {
-            const img = portraitRef.current;
+            const useCustom = Boolean(custom) && Boolean(customPortraitRef.current?.complete) && (customPortraitRef.current?.naturalWidth ?? 0) > 0;
+            const img = useCustom ? customPortraitRef.current : portraitRef.current;
             if (img && img.complete && img.naturalWidth > 0) {
-              if (custom && setCustom) setCustom('');
               const iH = img.height as number, iW = img.width as number;
               if (!iH || !iW) return;
               const sw = findWidth(char, emote, costume);
